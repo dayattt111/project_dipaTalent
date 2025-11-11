@@ -5,7 +5,7 @@
       rel="stylesheet"
       as="style"
       onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
     />
 
     <title>Stitch Design</title>
@@ -14,7 +14,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
   <body>
-    <div class="relative flex h-auto min-h-screen w-full flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Lexend, "Noto Sans", sans-serif;'>
       <div class="layout-container flex h-full grow flex-col">
         <div class="gap-1 px-6 flex flex-1 justify-center py-5">
           <div class="layout-content-container flex flex-col w-80">
@@ -28,21 +28,21 @@
                   <h1 class="text-[#111318] text-base font-medium leading-normal">DipaTalent</h1>
                 </div>
                 <div class="flex flex-col gap-2">
-                  <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f0f1f4]">
-                    <div class="text-[#111318]" data-icon="GraduationCap" data-size="24px" data-weight="fill">
+                  <div class="flex items-center gap-3 px-3 py-2">
+                    <div class="text-[#111318]" data-icon="GraduationCap" data-size="24px" data-weight="regular">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                         <path
-                          d="M176,207.24a119,119,0,0,0,16-7.73V240a8,8,0,0,1-16,0Zm11.76-88.43-56-29.87a8,8,0,0,0-7.52,14.12L171,128l17-9.06Zm64-29.87-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V130.67L171,128l-43,22.93L43.83,106l0,0L25,96,128,41.07,231,96l-18.78,10-.06,0L188,118.94a8,8,0,0,1,4,6.93v73.64a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12Z"
+                          d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z"
                         ></path>
                       </svg>
                     </div>
                     <p class="text-[#111318] text-sm font-medium leading-normal">Beasiswa</p>
                   </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#111318]" data-icon="Trophy" data-size="24px" data-weight="regular">
+                  <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f0f1f4]">
+                    <div class="text-[#111318]" data-icon="Trophy" data-size="24px" data-weight="fill">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                         <path
-                          d="M232,64H208V56a16,16,0,0,0-16-16H64A16,16,0,0,0,48,56v8H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8Zm144-8.9c0,35.52-28.49,64.64-63.51,64.9H128a64,64,0,0,1-64-64V56H192ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"
+                          d="M232,64H208V56a16,16,0,0,0-16-16H64A16,16,0,0,0,48,56v8H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"
                         ></path>
                       </svg>
                     </div>
@@ -72,7 +72,7 @@
               </div>
               <div class="flex flex-col gap-4">
                 <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#153fb2] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#1540b7] text-white text-sm font-bold leading-normal tracking-[0.015em]"
                 >
                   <span class="truncate">Ajukan Beasiswa</span>
                 </button>
@@ -95,23 +95,23 @@
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <p class="text-[#111318] tracking-light text-[32px] font-bold leading-tight min-w-72">Selamat datang, Amelia</p>
             </div>
-            <h2 class="text-[#111318] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Beasiswa Aktif</h2>
+            <h2 class="text-[#111318] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Prestasi</h2>
             <div class="p-4">
               <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
                 <div class="flex flex-[2_2_0px] flex-col gap-4">
                   <div class="flex flex-col gap-1">
-                    <p class="text-[#111318] text-base font-bold leading-tight">Beasiswa Prestasi Akademik</p>
-                    <p class="text-[#636d88] text-sm font-normal leading-normal">Deadline: 30 November 2024</p>
+                    <p class="text-[#111318] text-base font-bold leading-tight">Juara 1 Lomba Debat Nasional</p>
+                    <p class="text-[#636d88] text-sm font-normal leading-normal">Tanggal: 15 Oktober 2024</p>
                   </div>
                   <button
                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#111318] text-sm font-medium leading-normal w-fit"
                   >
-                    <span class="truncate">Ajukan</span>
+                    <span class="truncate">Menunggu Verifikasi</span>
                   </button>
                 </div>
                 <div
                   class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5uYeMPVqxjg6x24xWKuRJUF6rllapFa6tWdnOjlXNTGZ6lwp2spUYO9wv-fH4vv1VKQBCbp4qsW9kzRViRRaBH2daxZBYps2x8MPPT_b-vjhtIAah38qyrShlVhwQdzotPTu_Fl5z3Tiy7ZR96nx9JERmhv4a5-C97mlgzE6LsYvVbM3Unj31NQ_KwI_bWNfNfeQC0hEZ02oa9mDO-83yy-UTHEG3-aOYlTVcpEZCC_OyUKUWlcwsjNi71nW-KMDcJCieVpA5ow");'
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjd5yzP1h33HgFTVTDoOzlil6tLbxqCTM10iOCaTIaz1vC2b6SWyQsHkFA_kU-J1ph_HH4tWuRypgpoXLT2RfAKySaCiGj1Mxbpg2aNV4KSM9JCvh85YLBEea5bfBmIUTJJ-nTbY5zjYZ92u81cnSRTzm1cE-RZSrDPtadXWwLxzT-vi1fCWrJdnN8IMUJgV0BSyLuuZc9RW0UdTOZ6YXvheOUsu48GNnwMJzVNT7DyOxbXe9SSw0HfTBWt9UmUfqikc7_bPXwkg");'
                 ></div>
               </div>
             </div>
@@ -119,33 +119,27 @@
               <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
                 <div class="flex flex-[2_2_0px] flex-col gap-4">
                   <div class="flex flex-col gap-1">
-                    <p class="text-[#111318] text-base font-bold leading-tight">Beasiswa Bakti Nusa</p>
-                    <p class="text-[#636d88] text-sm font-normal leading-normal">Deadline: 15 Desember 2024</p>
+                    <p class="text-[#111318] text-base font-bold leading-tight">Publikasi Artikel Ilmiah di Jurnal Internasional</p>
+                    <p class="text-[#636d88] text-sm font-normal leading-normal">Tanggal: 20 September 2024</p>
                   </div>
                   <button
                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#111318] text-sm font-medium leading-normal w-fit"
                   >
-                    <span class="truncate">Ajukan</span>
+                    <span class="truncate">Disetujui</span>
                   </button>
                 </div>
                 <div
                   class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAHM19Vyz_8ZkGiKpkuER0Q0FP7APzl0SVIkJG3zSLey43zGhKMrxA8SFQpdZgYNj0NkuOWWIgKEtLqBo9_KNrEJvx7_BLsV_QdmiJeRGj_XyQNmuyn8xKuwTpXn05gkMQJWRWwM4WBxWISrDwOvfDon7gAx_-C-V3iGakD14OoJK0ryKrPZOeLo7SiSKKZ5icmL1lEiwzNDZDTLtKQ74WENjNU-xWBrVfrDIHwNbBdOXvKuySpl9t1CZHrzeDiFA7RHSzpaF3tA");'
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8Mqe70ZCbmvk7gJZwGE9QieIQvujOYY02mAIjK9UzPxHyR5sFPvZpZuCQ9OfWP3I07GzqP__PUYFBFjHVPqjSvANXhbU_Skc2F8rA77iEEo2-zbmY4pbJScVdy7WQMRNW_N97ufio2uQIJAaZn8Ik_YQiICleccRm6rF8RcZoo_GBzMYzO2sRAwuc1_ziitftk6tu9BgHA0Cd1Q5ZqiszXVFmPGmKqjuWH_OJdqqezVFGuBAFv7tDIgPaBsNCkNUjcVEw_QAHXA");'
                 ></div>
               </div>
             </div>
-            <h2 class="text-[#111318] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Status Beasiswa Terakhir</h2>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-col gap-1 flex-[2_2_0px]">
-                  <p class="text-[#111318] text-base font-bold leading-tight">Beasiswa Prestasi Akademik</p>
-                  <p class="text-[#636d88] text-sm font-normal leading-normal">Status: Diajukan</p>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnPmxfUPwv8CfqxyM9yw_u6ofTmhqkJ53SPodZsZTMqWHqBOIMSEKj3HpISPYLN-k6Q53G1mYLj8UJ1uhOUSPm66nyMczBF4yPy9X_HtCBZp0MIYPK1xpFx0ARcTv0ZUEDIG981cYMYMWTKnnr-4QyqbdZoYr9L767rQI-BTioEHPvuGc4LrU5Cy-dCMc1-NyZ35wWmeCnKxBwj8FM7c-nc1PQ-BTZYouLTPDqcqxBg2NC8-fh8D1UTenyjF7YHNfhykOBLAbFOA");'
-                ></div>
-              </div>
+            <div class="flex px-4 py-3 justify-start">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#1540b7] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate">Ajukan Prestasi Baru</span>
+              </button>
             </div>
           </div>
         </div>

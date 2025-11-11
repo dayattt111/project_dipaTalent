@@ -25,17 +25,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // profile
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Halaman dashboard (hanya untuk user terverifikasi)
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
@@ -48,7 +42,6 @@ Route::get('/dashboard', function () {
         return redirect()->route('umum.dashboard');
     }
 })->middleware(['auth', 'verified']);
-
 
 // Verifikasi email
 Route::get('/email/verify', function () {
@@ -67,3 +60,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 require __DIR__.'/auth.php';
 
+
+// Halaman dashboard (hanya untuk user terverifikasi)
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
