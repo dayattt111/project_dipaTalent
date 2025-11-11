@@ -22,7 +22,7 @@
               <div class="flex flex-col gap-4">
                 <div class="flex flex-col">
                   <h1 class="text-[#121217] text-base font-medium leading-normal">DipaTalent Admin</h1>
-                  <p class="text-[#656586] text-sm font-normal leading-normal">Universitas Maju Jaya</p>
+                  <p class="text-[#656586] text-sm font-normal leading-normal">Universitas Dipa Makassar</p>
                 </div>
                 <div class="flex flex-col gap-2">
                   <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f0f0f4]">

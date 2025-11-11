@@ -41,7 +41,7 @@ Route::get('/dashboard', function () {
     } else {
         return redirect()->route('umum.dashboard');
     }
-})->middleware(['auth', 'verified']);
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Verifikasi email
 Route::get('/email/verify', function () {
