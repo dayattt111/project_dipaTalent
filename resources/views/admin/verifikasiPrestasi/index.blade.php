@@ -215,7 +215,7 @@
                 </table>
               </div>
               <style>
-                          @container(max-width:120px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120{display: none;}}
+                @container(max-width:120px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120{display: none;}}
                 @container(max-width:240px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240{display: none;}}
                 @container(max-width:360px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360{display: none;}}
                 @container(max-width:480px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480{display: none;}}
