@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\BeasiswaController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -20,9 +21,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('admin.dashboard');
+    // })->name('admin.dashboard');
+
+    Route::get('/dashboard', [BeasiswaController::class, 'index'])->name('admin.dashboard');
+    // Route::post('/verifikasi-pen-daftar/{id}', [BeasiswaController::class, 'verifikasi'])->name('verifikasiPendaftar.index');
+    Route::get('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'showVerifikasi'])->name('admin.verifikasiPendaftar.form');
+    Route::post('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
 
     // Kelola Beasiswa
     Route::get('/kelola-beasiswa', function () {
