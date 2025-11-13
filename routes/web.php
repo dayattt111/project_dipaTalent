@@ -11,9 +11,69 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/admin/dashboard', function () {
+
+    // Route::get('/admin/dashboard', function () {
+    //     return view('admin.dashboard');
+    // })->name('admin.dashboard');
+
+    // ADMIN ROUTES
+
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+
+    Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // Kelola Beasiswa
+    Route::get('/kelola-beasiswa', function () {
+        return view('admin.kelolaBeasiswa.index');
+    })->name('admin.kelolaBeasiswa.index');
+
+    Route::get('/kelola-beasiswa/atur-bobot', function () {
+        return view('admin.kelolaBeasiswa.aturBobot');
+    })->name('admin.kelolaBeasiswa.aturBobot');
+
+    Route::get('/kelola-beasiswa/data', function () {
+        return view('admin.kelolaBeasiswa.data');
+    })->name('admin.kelolaBeasiswa.data');
+
+    // Verifikasi Pendaftar
+    Route::get('/verifikasi-pendaftar', function () {
+        return view('admin.verifikasiPendaftar.index');
+    })->name('admin.verifikasiPendaftar.index');
+
+    Route::get('/verifikasi-pendaftar/form', function () {
+        return view('admin.verifikasiPendaftar.form');
+    })->name('admin.verifikasiPendaftar.form');
+
+    // Verifikasi Prestasi
+    Route::get('/verifikasi-prestasi', function () {
+        return view('admin.verifikasiPrestasi.index');
+    })->name('admin.verifikasiPrestasi.index');
+
+    Route::get('/verifikasi-prestasi/form', function () {
+        return view('admin.verifikasiPrestasi.form');
+    })->name('admin.verifikasiPrestasi.form');
+
+    // Metode SAW
+    Route::get('/metode', function () {
+        return view('admin.metode.index');
+    })->name('admin.metode.index');
+
+    Route::get('/metode/data', function () {
+        return view('admin.metode.data');
+    })->name('admin.metode.data');
+
+    Route::get('/metode/skot-saw', function () {
+        return view('admin.metode.skotSaw');
+    })->name('admin.metode.skotSaw');
+
+    // Laporan
+    Route::get('/laporan', function () {
+        return view('admin.laporan.index');
+    })->name('admin.laporan.index');
+});
+
 
     Route::get('/mahasiswa/dashboard', function () {
         return view('mahasiswa.dashboard');
