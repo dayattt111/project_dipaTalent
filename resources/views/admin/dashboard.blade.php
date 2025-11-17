@@ -26,7 +26,7 @@
                       </th>
                     </tr>
                   </thead>
-          <tbody>
+          {{-- <tbody>
             @foreach ($pendaftaran as $data)
             <tr class="border-t border-t-[#dcdce5]">
               <td class="px-4 py-2 text-[#121217] text-sm">{{ $data->user->name }}</td>
@@ -51,11 +51,9 @@
     </form>
   @endif
 </td>
-
-
             </tr>
             @endforeach
-          </tbody>
+          </tbody> --}}
 
                 </table>
               </div>

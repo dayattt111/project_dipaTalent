@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\BeasiswaController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -21,12 +22,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
+    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
     // Route::get('/dashboard', function () {
     //     return view('admin.dashboard');
     // })->name('admin.dashboard');
-
-    Route::get('/dashboard', [BeasiswaController::class, 'index'])->name('admin.dashboard');
     // Route::post('/verifikasi-pen-daftar/{id}', [BeasiswaController::class, 'verifikasi'])->name('verifikasiPendaftar.index');
+    Route::get('/verifikasi-pendaftar', [BeasiswaController::class, 'index'])->name('admin.verifikasiPendaftar.index');
+
     Route::get('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'showVerifikasi'])->name('admin.verifikasiPendaftar.form');
     Route::post('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
 
@@ -44,9 +46,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     })->name('admin.kelolaBeasiswa.data');
 
     // Verifikasi Pendaftar
-    Route::get('/verifikasi-pendaftar', function () {
-        return view('admin.verifikasiPendaftar.index');
-    })->name('admin.verifikasiPendaftar.index');
+    // Route::get('/verifikasi-pendaftar', function () {
+    //     return view('admin.verifikasiPendaftar.index');
+    // })->name('admin.verifikasiPendaftar.index');
 
     Route::get('/verifikasi-pendaftar/form', function () {
         return view('admin.verifikasiPendaftar.form');

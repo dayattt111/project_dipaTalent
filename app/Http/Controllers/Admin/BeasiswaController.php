@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pendaftaran;
 use App\Models\PendaftaranBeasiswa;
 use Illuminate\Http\Request;
 
@@ -10,19 +11,27 @@ class BeasiswaController extends Controller
 {
     public function index()
     {
-        $pendaftaran = PendaftaranBeasiswa::with(['user', 'beasiswa'])->get();
-        return view('admin.dashboard', compact('pendaftaran'));
+        $pendaftaran = Pendaftaran::with(['user', 'beasiswa'])->get();
+        return view('admin.verifikasiPendaftar.index', compact('pendaftaran'));
     }
 
     public function showVerifikasi($id)
     {
-        $pendaftaran = \App\Models\PendaftaranBeasiswa::with(['user', 'beasiswa'])->findOrFail($id);
-        return view('admin.verifikasiPendaftar.form', compact('pendaftaran'));
+        // ambil data pendaftaran sesuai ID
+        $pendaftaran = Pendaftaran::with(['user', 'beasiswa'])->findOrFail($id);
+        // $pendaftaran = Pendaftaran::with(['user', 'beasiswa'])->find($id);
+
+        if (!$pendaftaran) {
+            abort(404, 'Data pendaftar tidak ditemukan');
+        }
+
+        return view('admin.verifikasiPendaftar.forms', compact('pendaftaran'));
     }
 
     public function verifikasi($id)
     {
-        $pendaftaran = PendaftaranBeasiswa::findOrFail($id);
+        // $pendaftaran = PendaftaranBeasiswa::findOrFail($id);
+        $pendaftaran = Pendaftaran::findOrFail($id);
 
         // toggle status
         if ($pendaftaran->status === 'diterima') {
@@ -33,6 +42,6 @@ class BeasiswaController extends Controller
 
         $pendaftaran->save();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Status verifikasi diperbarui!');
+        return redirect()->route('admin.verifikasiPendaftar.index')->with('success', 'Status verifikasi diperbarui!');
     }
 }

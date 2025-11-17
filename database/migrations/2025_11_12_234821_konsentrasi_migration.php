@@ -20,19 +20,35 @@ return new class extends Migration {
         });
 
         // 2. Pendaftaran Beasiswa (relasi mahasiswa)
-        Schema::create('pendaftaran_beasiswas', function (Blueprint $table) {
+        Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('beasiswa_id')->constrained('beasiswas')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // relasi ke tabel users
+            $table->foreignId('beasiswa_id')->constrained()->onDelete('cascade'); // relasi ke tabel beasiswas
+            $table->decimal('ipk', 3, 2)->nullable();
+            $table->string('prestasi')->nullable();
+            $table->string('organisasi')->nullable();
+            $table->string('keterampilan')->nullable();
+            $table->string('transkrip')->nullable();
+            $table->string('foto')->nullable();
             $table->enum('status', ['menunggu', 'diterima', 'ditolak'])->default('menunggu');
-            $table->text('keterangan')->nullable();
+            $table->text('catatan_admin')->nullable();
             $table->timestamps();
         });
+
+
+        // Schema::create('pendaftaran_beasiswas', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        //     $table->foreignId('beasiswa_id')->constrained('beasiswas')->onDelete('cascade');
+        //     $table->enum('status', ['menunggu', 'diterima', 'ditolak'])->default('menunggu');
+        //     $table->text('keterangan')->nullable();
+        //     $table->timestamps();
+        // });
 
         // 3. Dokumen Beasiswa
         Schema::create('dokumen_beasiswas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pendaftaran_id')->constrained('pendaftaran_beasiswas')->onDelete('cascade');
+            $table->foreignId('pendaftaran_id')->constrained('pendaftarans')->onDelete('cascade');
             $table->string('jenis_dokumen');
             $table->string('path_file');
             $table->timestamps();
@@ -127,7 +143,7 @@ return new class extends Migration {
         Schema::dropIfExists('bobot_kriterias');
         Schema::dropIfExists('prestasis');
         Schema::dropIfExists('dokumen_beasiswas');
-        Schema::dropIfExists('pendaftaran_beasiswas');
+        Schema::dropIfExists('pendaftarans');
         Schema::dropIfExists('beasiswas');
     }
 };

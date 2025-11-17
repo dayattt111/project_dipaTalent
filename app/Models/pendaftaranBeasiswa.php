@@ -18,12 +18,12 @@ class PendaftaranBeasiswa extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function beasiswa()
     {
-        return $this->belongsTo(Beasiswa::class);
+        return $this->belongsTo(Beasiswa::class, 'beasiswa_id');
     }
 
     public function dokumen()

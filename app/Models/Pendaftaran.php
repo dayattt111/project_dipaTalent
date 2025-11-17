@@ -13,6 +13,7 @@ class Pendaftaran extends Model
     protected $fillable = [
         'user_id',
         'beasiswa_id',
+        'nim',
         'ipk',
         'prestasi',
         'organisasi',
@@ -32,4 +33,8 @@ class Pendaftaran extends Model
     {
         return $this->belongsTo(Beasiswa::class);
     }
+    // public function dokumen()
+    // {
+    //     return $this->hasMany(DokumenBeasiswa::class);
+    // }
 }

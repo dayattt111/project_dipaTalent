@@ -61,7 +61,7 @@
 
   <div class="flex justify-stretch">
     <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-end">
-      <form method="POST" action="{{ route('admin.verifikasiPendaftaran.submit', $pendaftaran->id) }}">
+      <form method="POST" action="{{ route('admin.verifikasiPendaftar.verifikasi', $pendaftaran->id) }}">
         @csrf
         <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#1e40ae] text-white text-sm font-bold leading-normal tracking-[0.015em]">
           <span class="truncate">Setujui</span>
