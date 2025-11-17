@@ -129,7 +129,6 @@ class BeasiswaController extends Controller
         $validated = $request->validate([
             'user_id' => 'required',
             'beasiswa_id' => 'required',
-            'nim' => 'required',
             'ipk' => 'required',
             'prestasi' => 'nullable',
             'organisasi' => 'nullable',

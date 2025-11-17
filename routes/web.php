@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\BeasiswaController;
+use App\Http\Controllers\Admin\prestasiController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,14 +31,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     // Route::get('/admin/get-user/{id}', [BeasiswaController::class, 'getUserData'])->name('admin.getUser');
     Route::get('/get-user/{id}', function ($id) {
         $user = \App\Models\User::find($id);
-
-        return response()->json([
-            'nim' => $user->nim ?? null,
-        ]);
-    })->name('admin.getUser');
+        return response()->json(['nim' => $user->nim ?? null,]);})->name('admin.getUser');
 
     Route::post('/verifikasi/{id}/update', [BeasiswaController::class, 'update'])->name('admin.verifikasiPendaftar.update');
-
     Route::get('/verifikasi-pendaftar', [BeasiswaController::class, 'index'])->name('admin.verifikasiPendaftar.index');
 
 
@@ -84,13 +80,28 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     })->name('admin.verifikasiPendaftar.form');
 
     // Verifikasi Prestasi
-    Route::get('/verifikasi-prestasi', function () {
-        return view('admin.verifikasiPrestasi.index');
-    })->name('admin.verifikasiPrestasi.index');
+    Route::get('/verifikasi-prestasi', [PrestasiController::class, 'index'])->name('admin.verifikasiPrestasi.index');
 
-    Route::get('/verifikasi-prestasi/form', function () {
-        return view('admin.verifikasiPrestasi.form');
-    })->name('admin.verifikasiPrestasi.form');
+    Route::get('/verifikasi-prestasi/create', [PrestasiController::class, 'create'])->name('admin.verifikasiPrestasi.create');
+    Route::post('/verifikasi-prestasi/store', [PrestasiController::class, 'store'])->name('admin.verifikasiPrestasi.store');
+
+    Route::get('/verifikasi-prestasi/{id}/edit', [PrestasiController::class, 'edit'])->name('admin.verifikasiPrestasi.form');
+    Route::post('/verifikasi-prestasi/{id}/update-status', [PrestasiController::class, 'updateStatus'])->name('admin.verifikasiPrestasi.updateStatus');
+
+    Route::delete('/verifikasi-prestasi/{id}/delete', [PrestasiController::class, 'destroy'])->name('admin.verifikasiPrestasi.destroy');
+
+    Route::get('/verifikasi-prestasi/{id}/bukti', [PrestasiController::class, 'showBukti'])->name('admin.verifikasiPrestasi.bukti');
+
+
+    // Route::get('/verifikasi-prestasi', function () {
+    //     return view('admin.verifikasiPrestasi.index');
+    // })->name('admin.verifikasiPrestasi.index');
+
+    // Route::get('/verifikasi-prestasi/form', function () {
+    //     return view('admin.verifikasiPrestasi.form');
+    // })->name('admin.verifikasiPrestasi.form');
+
+
 
     // Metode SAW
     Route::get('/metode', function () {

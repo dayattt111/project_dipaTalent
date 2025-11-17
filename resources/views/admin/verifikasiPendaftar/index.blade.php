@@ -20,6 +20,9 @@
                 <table class="flex-1">
                   <thead>
                     <tr class="bg-white">
+                        <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-120 px-4 py-3 text-left text-[#121217] w-[400px] text-sm font-medium leading-normal">
+                            Nim
+                        </th>
                       <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-120 px-4 py-3 text-left text-[#121217] w-[400px] text-sm font-medium leading-normal">
                         Nama Mahasiswa
                       </th>
@@ -40,6 +43,7 @@
                 <tbody>
                 @foreach ($pendaftaran as $data)
                 <tr class="border-t border-t-[#dcdce5]">
+                    <td class="px-4 py-2 text-[#121217] text-sm">{{ $data->user->nim }}</td>
                     <td class="px-4 py-2 text-[#121217] text-sm">{{ $data->user->name }}</td>
                     <td class="px-4 py-2 text-[#656586] text-sm">{{ $data->beasiswa->nama_beasiswa }}</td>
                     <td class="px-4 py-2 text-[#656586] text-sm">{{ $data->catatan_admin }}</td>

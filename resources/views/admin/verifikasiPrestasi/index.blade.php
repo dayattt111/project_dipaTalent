@@ -1,230 +1,181 @@
-<html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
+@extends('layouts.admin')
 
-    <title>Stitch Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+@section('content')
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Verifikasi Prestasi Mahasiswa</h2>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div class="relative flex h-auto min-h-screen w-full flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Lexend, "Noto Sans", sans-serif;'>
-      <div class="layout-container flex h-full grow flex-col">
-        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-          <div class="layout-content-container flex flex-col w-80">
-            <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
-              <div class="flex flex-col gap-4">
-                <div class="flex flex-col">
-                  <h1 class="text-[#121317] text-base font-medium leading-normal">DipaTalent Admin</h1>
-                  <p class="text-[#656d86] text-sm font-normal leading-normal">Universitas Dipa Makassar</p>
-                </div>
-                <div class="flex flex-col gap-2">
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#121317]" data-icon="GraduationCap" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#121317] text-sm font-medium leading-normal">Kelola Beasiswa</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#121317]" data-icon="Check" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#121317] text-sm font-medium leading-normal">Verifikasi Pendaftaran</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f0f1f4]">
-                    <div class="text-[#121317]" data-icon="Trophy" data-size="24px" data-weight="fill">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M232,64H208V56a16,16,0,0,0-16-16H64A16,16,0,0,0,48,56v8H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#121317] text-sm font-medium leading-normal">Validasi Prestasi</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#121317]" data-icon="SlidersHorizontal" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#121317] text-sm font-medium leading-normal">Atur Bobot SAW</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#121317]" data-icon="PresentationChart" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M216,40H136V24a8,8,0,0,0-16,0V40H40A16,16,0,0,0,24,56V176a16,16,0,0,0,16,16H79.36L57.75,219a8,8,0,0,0,12.5,10l29.59-37h56.32l29.59,37a8,8,0,1,0,12.5-10l-21.61-27H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,136H40V56H216V176ZM104,120v24a8,8,0,0,1-16,0V120a8,8,0,0,1,16,0Zm32-16v40a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm32-16v56a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#121317] text-sm font-medium leading-normal">Laporan</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-[#121317] tracking-light text-[32px] font-bold leading-tight min-w-72">Validasi Prestasi</p></div>
-            <div class="flex flex-wrap gap-4 p-4">
-              <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 bg-[#f0f1f4]">
-                <p class="text-[#121317] text-base font-medium leading-normal">Total Menunggu Validasi</p>
-                <p class="text-[#121317] tracking-light text-2xl font-bold leading-tight">27</p>
-              </div>
-            </div>
-            <div class="px-4 py-3 @container">
-              <div class="flex overflow-hidden rounded-lg border border-[#dcdee5] bg-white">
-                <table class="flex-1">
-                  <thead>
-                    <tr class="bg-white">
-                      <th class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120 px-4 py-3 text-left text-[#121317] w-[400px] text-sm font-medium leading-normal">
-                        Nama Mahasiswa
-                      </th>
-                      <th class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240 px-4 py-3 text-left text-[#121317] w-[400px] text-sm font-medium leading-normal">
-                        Jenis Prestasi
-                      </th>
-                      <th class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360 px-4 py-3 text-left text-[#121317] w-60 text-sm font-medium leading-normal">Tingkat</th>
-                      <th class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480 px-4 py-3 text-left text-[#121317] w-60 text-[#656d86] text-sm font-medium leading-normal">
-                        Bukti Dokumen
-                      </th>
-                      <th class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600 px-4 py-3 text-left text-[#121317] w-60 text-[#656d86] text-sm font-medium leading-normal">
-                        Aksi
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-t border-t-[#dcdee5]">
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120 h-[72px] px-4 py-2 w-[400px] text-[#121317] text-sm font-normal leading-normal">
-                        Budi Santoso
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240 h-[72px] px-4 py-2 w-[400px] text-[#656d86] text-sm font-normal leading-normal">
-                        Juara 1 Lomba Debat Nasional
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Nasional</span>
-                        </button>
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Lihat
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Validasi
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dcdee5]">
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120 h-[72px] px-4 py-2 w-[400px] text-[#121317] text-sm font-normal leading-normal">
-                        Siti Rahayu
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240 h-[72px] px-4 py-2 w-[400px] text-[#656d86] text-sm font-normal leading-normal">
-                        Penghargaan Karya Ilmiah
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Internasional</span>
-                        </button>
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Lihat
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Validasi
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dcdee5]">
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120 h-[72px] px-4 py-2 w-[400px] text-[#121317] text-sm font-normal leading-normal">
-                        Ahmad Fadil
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240 h-[72px] px-4 py-2 w-[400px] text-[#656d86] text-sm font-normal leading-normal">
-                        Medali Emas Olimpiade Olahraga
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Internasional</span>
-                        </button>
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Lihat
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Validasi
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dcdee5]">
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120 h-[72px] px-4 py-2 w-[400px] text-[#121317] text-sm font-normal leading-normal">
-                        Dewi Lestari
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240 h-[72px] px-4 py-2 w-[400px] text-[#656d86] text-sm font-normal leading-normal">
-                        Ketua Organisasi Mahasiswa Berprestasi
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Universitas</span>
-                        </button>
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Lihat
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Validasi
-                      </td>
-                    </tr>
-                    <tr class="border-t border-t-[#dcdee5]">
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120 h-[72px] px-4 py-2 w-[400px] text-[#121317] text-sm font-normal leading-normal">
-                        Rizki Pratama
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240 h-[72px] px-4 py-2 w-[400px] text-[#656d86] text-sm font-normal leading-normal">
-                        Publikasi Jurnal Ilmiah Terindeks
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                        <button
-                          class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-full"
-                        >
-                          <span class="truncate">Nasional</span>
-                        </button>
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Lihat
-                      </td>
-                      <td class="table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600 h-[72px] px-4 py-2 w-60 text-[#656d86] text-sm font-bold leading-normal tracking-[0.015em]">
-                        Validasi
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <style>
-                @container(max-width:120px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-120{display: none;}}
-                @container(max-width:240px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-240{display: none;}}
-                @container(max-width:360px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-360{display: none;}}
-                @container(max-width:480px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-480{display: none;}}
-                @container(max-width:600px){.table-09c98fbc-083a-4a2a-86b4-44cf7def4e33-column-600{display: none;}}
-              </style>
-            </div>
-          </div>
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
+            {{ session('success') }}
         </div>
-      </div>
+    @endif
+
+    <!-- Tombol Tambah Prestasi -->
+    <button onclick="openAddModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded mb-4">
+        Tambah Prestasi
+    </button>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border rounded-lg">
+            <thead class="bg-gray-100 border-b">
+                <tr>
+                    <th class="px-4 py-2 text-left text-gray-700">#</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Nama Mahasiswa</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Jenis</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Prestasi</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Tingkat</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Tahun</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Status</th>
+                    <th class="px-4 py-2 text-left text-gray-700">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($prestasi as $index => $item)
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-2">{{ $index + 1 }}</td>
+                    <td class="px-4 py-2">{{ $item->user->name }}</td>
+                    <td class="px-4 py-2">{{ ucfirst($item->jenis) }}</td>
+                    <td class="px-4 py-2">{{ $item->nama_prestasi }}</td>
+                    <td class="px-4 py-2">{{ $item->tingkat ?? '-' }}</td>
+                    <td class="px-4 py-2">{{ $item->tahun ?? '-' }}</td>
+                    <td class="px-4 py-2">
+                        <span class="px-2 py-1 rounded 
+                            @if($item->status == 'valid') bg-green-200 text-green-800 
+                            @elseif($item->status == 'invalid') bg-red-200 text-red-800 
+                            @else bg-yellow-200 text-yellow-800 @endif">
+                            {{ ucfirst($item->status) }}
+                        </span>
+                    </td>
+                    <td class="px-4 py-2 space-x-2">
+                        <!-- Lihat Dokumen -->
+                        @if($item->file_sertifikat)
+                        <button onclick="openModal('{{ route('admin.verifikasiPrestasi.bukti', $item->id) }}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                            Lihat Dokumen
+                        </button>
+                        @endif
+
+                        <!-- Verifikasi / Edit Status -->
+                        <button onclick="openEditModal({{ $item->id }}, '{{ $item->status }}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
+                            Verifikasi
+                        </button>
+
+                        <!-- Hapus -->
+                        <form action="{{ route('admin.verifikasiPrestasi.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus prestasi ini?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                Hapus
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-  </body>
-</html>
+</div>
+
+<!-- Modal Dokumen -->
+<div id="modalDokumen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg w-11/12 md:w-3/4 lg:w-1/2 p-4 relative">
+        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
+        <iframe id="dokumenFrame" src="" class="w-full h-96 rounded" frameborder="0"></iframe>
+    </div>
+</div>
+
+<!-- Modal Tambah Prestasi -->
+<div id="modalAddPrestasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative">
+        <button onclick="closeAddModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
+        <h3 class="text-lg font-bold mb-4">Tambah Prestasi</h3>
+        <form action="{{ route('admin.verifikasiPrestasi.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <label class="block text-gray-700">Mahasiswa</label>
+                <select name="user_id" class="w-full border px-3 py-2 rounded" required>
+                    <option value="">Pilih Mahasiswa</option>
+                    @foreach(App\Models\User::all() as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="block text-gray-700">Jenis Prestasi</label>
+                <select name="jenis" class="w-full border px-3 py-2 rounded" required>
+                    <option value="akademik">Akademik</option>
+                    <option value="non-akademik">Non-Akademik</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="block text-gray-700">Nama Prestasi</label>
+                <input type="text" name="nama_prestasi" class="w-full border px-3 py-2 rounded" required>
+            </div>
+            <div class="mb-3">
+                <label class="block text-gray-700">Tingkat</label>
+                <input type="text" name="tingkat" class="w-full border px-3 py-2 rounded" placeholder="Lokal / Nasional / Internasional">
+            </div>
+            <div class="mb-3">
+                <label class="block text-gray-700">Tahun</label>
+                <input type="number" name="tahun" class="w-full border px-3 py-2 rounded">
+            </div>
+            <div class="mb-3">
+                <label class="block text-gray-700">Upload Sertifikat (PDF / JPG / PNG)</label>
+                <input type="file" name="file_sertifikat" class="w-full">
+            </div>
+            <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">Simpan</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Edit Status -->
+<div id="modalEditPrestasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg w-11/12 md:w-1/3 p-6 relative">
+        <button onclick="closeEditModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
+        <h3 class="text-lg font-bold mb-4">Verifikasi Prestasi</h3>
+        <form id="formEditPrestasi" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="mb-3">
+                <label class="block text-gray-700">Status</label>
+                <select name="status" class="w-full border px-3 py-2 rounded" required>
+                    <option value="menunggu">Menunggu</option>
+                    <option value="valid">Valid</option>
+                    <option value="invalid">Invalid</option>
+                </select>
+            </div>
+            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Update</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function openModal(url) {
+    document.getElementById('dokumenFrame').src = url;
+    document.getElementById('modalDokumen').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('modalDokumen').classList.add('hidden');
+    document.getElementById('dokumenFrame').src = '';
+}
+
+// Tambah Prestasi
+function openAddModal() {
+    document.getElementById('modalAddPrestasi').classList.remove('hidden');
+}
+function closeAddModal() {
+    document.getElementById('modalAddPrestasi').classList.add('hidden');
+}
+
+// Edit / Verifikasi
+function openEditModal(id, status) {
+    const form = document.getElementById('formEditPrestasi');
+    form.action = '/admin/verifikasi-prestasi/' + id + '/status';
+    form.status.value = status;
+    document.getElementById('modalEditPrestasi').classList.remove('hidden');
+}
+function closeEditModal() {
+    document.getElementById('modalEditPrestasi').classList.add('hidden');
+}
+</script>
+@endsection

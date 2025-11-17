@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BeasiswaSeeder::class,
             PendaftaranSeeder::class,
+            PrestasiSeeder::class,
         ]);
     }
 }
