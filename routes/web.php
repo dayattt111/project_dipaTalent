@@ -23,14 +23,43 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
-    // Route::get('/dashboard', function () {
-    //     return view('admin.dashboard');
-    // })->name('admin.dashboard');
-    // Route::post('/verifikasi-pen-daftar/{id}', [BeasiswaController::class, 'verifikasi'])->name('verifikasiPendaftar.index');
+
+    // Route::post('/admin/verifikasi/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
+    Route::post('/verifikasi/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
+
+    // Route::get('/admin/get-user/{id}', [BeasiswaController::class, 'getUserData'])->name('admin.getUser');
+    Route::get('/get-user/{id}', function ($id) {
+        $user = \App\Models\User::find($id);
+
+        return response()->json([
+            'nim' => $user->nim ?? null,
+        ]);
+    })->name('admin.getUser');
+
+    Route::post('/verifikasi/{id}/update', [BeasiswaController::class, 'update'])->name('admin.verifikasiPendaftar.update');
+
     Route::get('/verifikasi-pendaftar', [BeasiswaController::class, 'index'])->name('admin.verifikasiPendaftar.index');
+
 
     Route::get('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'showVerifikasi'])->name('admin.verifikasiPendaftar.form');
     Route::post('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
+
+    Route::post('/verifikasi/{id}/batal', [BeasiswaController::class, 'batal'])->name('admin.verifikasiPendaftar.batal');
+    
+    // Create form tambah pendaftar
+    Route::get('/admin/pendaftaran/create', [BeasiswaController::class, 'create'])
+        ->name('admin.pendaftaran.create');
+
+    // Proses simpan pendaftar baru
+    Route::post('/admin/pendaftaran/store', [BeasiswaController::class, 'store'])
+        ->name('admin.pendaftaran.store');
+
+    // Hapus pendaftar
+    Route::delete('/admin/pendaftaran/delete/{id}', [BeasiswaController::class, 'destroy'])
+        ->name('admin.pendaftaran.delete');
+
+
+        
 
     // Kelola Beasiswa
     Route::get('/kelola-beasiswa', function () {
