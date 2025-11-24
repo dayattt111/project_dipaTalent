@@ -35,10 +35,25 @@ class PrestasiController extends Controller
             'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
         ]);
 
+        // if ($request->hasFile('file_sertifikat')) {
+        //     $validated['file_sertifikat'] = $request->file('file_sertifikat')->store('public/sertifikat');
+        // }
+
         if ($request->hasFile('file_sertifikat')) {
-            $validated['file_sertifikat'] = $request->file('file_sertifikat')->store('sertifikat');
+            // $path = $request->file('file_sertifikat')->store('public/sertifikat');
+            $path = $request->file('file_sertifikat')->store('sertifikat', 'public');
+            // dd("UPLOAD SAVE TO:", $path);
+            $validated['file_sertifikat'] = $path;
         }
 
+        // if ($request->hasFile('file_sertifikat')) {
+        //     $path = $request->file('file_sertifikat')->store('public/sertifikat');
+        //     // dd($path);
+        //     $validated['file_sertifikat'] = $path;
+        // }
+
+
+        // dd($validated);
         Prestasi::create($validated);
 
         return redirect()->route('admin.verifikasiPrestasi.index')
@@ -82,17 +97,17 @@ class PrestasiController extends Controller
     // Tampilkan dokumen (PDF/JPG) di modal
     public function showBukti($id)
     {
-        $prestasi = Prestasi::findOrFail($id);
+    $prestasi = Prestasi::findOrFail($id);
 
-        if (!$prestasi->file_sertifikat || !file_exists(storage_path('app/' . $prestasi->file_sertifikat))) {
-            abort(404, 'File tidak ditemukan.');
-        }
+    // Pastikan nama kolom dan folder benar!
+    $path = storage_path('app/public/' . $prestasi->file_sertifikat);
 
-        $path = storage_path('app/' . $prestasi->file_sertifikat);
-        $mime = mime_content_type($path);
-
-        return response()->file($path, [
-            'Content-Type' => $mime
-        ]);
+    if (!file_exists($path)) {
+        abort(404, 'File tidak ditemukan');
     }
+
+    return response()->file($path);
+    }
+
+
 }

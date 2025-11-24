@@ -2,126 +2,135 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\BeasiswaController;
-use App\Http\Controllers\Admin\prestasiController;
+use App\Http\Controllers\Admin\PrestasiController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
-
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
+// ===============================
+// Halaman Welcome
+// ===============================
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
 
-    // Route::get('/admin/dashboard', function () {
-    //     return view('admin.dashboard');
-    // })->name('admin.dashboard');
+// ===============================
+// ROUTE ADMIN (auth + verified + prefix admin)
+// ===============================
+Route::middleware(['auth', 'verified'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-    // ADMIN ROUTES
+    // Dashboard
+    Route::get('/dashboard', [DashboardAdminController::class, 'index'])
+        ->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    // ===============================
+    // VERIFIKASI PENDAFTAR
+    // ===============================
+    Route::get('/verifikasi-pendaftar', [BeasiswaController::class, 'index'])
+        ->name('verifikasiPendaftar.index');
 
-    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'showVerifikasi'])
+        ->name('verifikasiPendaftar.form');
 
-    // Route::post('/admin/verifikasi/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
-    Route::post('/verifikasi/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
+    Route::post('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'verifikasi'])
+        ->name('verifikasiPendaftar.verifikasi');
 
-    // Route::get('/admin/get-user/{id}', [BeasiswaController::class, 'getUserData'])->name('admin.getUser');
+    Route::post('/verifikasi/{id}', [BeasiswaController::class, 'verifikasi'])
+        ->name('verifikasiPendaftar.verifikasi2'); // opsi kedua
+
+    Route::post('/verifikasi/{id}/update', [BeasiswaController::class, 'update'])
+        ->name('verifikasiPendaftar.update');
+
+    Route::post('/verifikasi/{id}/batal', [BeasiswaController::class, 'batal'])
+        ->name('verifikasiPendaftar.batal');
+
+    // Ambil data user
     Route::get('/get-user/{id}', function ($id) {
         $user = \App\Models\User::find($id);
-        return response()->json(['nim' => $user->nim ?? null,]);})->name('admin.getUser');
+        return response()->json([
+            'nim' => $user->nim ?? null,
+        ]);
+    })->name('getUser');
 
-    Route::post('/verifikasi/{id}/update', [BeasiswaController::class, 'update'])->name('admin.verifikasiPendaftar.update');
-    Route::get('/verifikasi-pendaftar', [BeasiswaController::class, 'index'])->name('admin.verifikasiPendaftar.index');
+    // ===============================
+    // CRUD PENDAFTAR
+    // ===============================
+    Route::get('/pendaftaran/create', [BeasiswaController::class, 'create'])
+        ->name('pendaftaran.create');
 
+    Route::post('/pendaftaran/store', [BeasiswaController::class, 'store'])
+        ->name('pendaftaran.store');
 
-    Route::get('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'showVerifikasi'])->name('admin.verifikasiPendaftar.form');
-    Route::post('/verifikasi-pendaftaran/{id}', [BeasiswaController::class, 'verifikasi'])->name('admin.verifikasiPendaftar.verifikasi');
+    Route::delete('/pendaftaran/delete/{id}', [BeasiswaController::class, 'destroy'])
+        ->name('pendaftaran.delete');
 
-    Route::post('/verifikasi/{id}/batal', [BeasiswaController::class, 'batal'])->name('admin.verifikasiPendaftar.batal');
-    
-    // Create form tambah pendaftar
-    Route::get('/admin/pendaftaran/create', [BeasiswaController::class, 'create'])
-        ->name('admin.pendaftaran.create');
+    // ===============================
+    // KELOLA BEASISWA
+    // ===============================
+    Route::get('/kelola-beasiswa', fn() => view('admin.kelolaBeasiswa.index'))
+        ->name('kelolaBeasiswa.index');
 
-    // Proses simpan pendaftar baru
-    Route::post('/admin/pendaftaran/store', [BeasiswaController::class, 'store'])
-        ->name('admin.pendaftaran.store');
+    Route::get('/kelola-beasiswa/atur-bobot', fn() => view('admin.kelolaBeasiswa.aturBobot'))
+        ->name('kelolaBeasiswa.aturBobot');
 
-    // Hapus pendaftar
-    Route::delete('/admin/pendaftaran/delete/{id}', [BeasiswaController::class, 'destroy'])
-        ->name('admin.pendaftaran.delete');
+    Route::get('/kelola-beasiswa/data', fn() => view('admin.kelolaBeasiswa.data'))
+        ->name('kelolaBeasiswa.data');
 
+    // ===============================
+    // VERIFIKASI PRESTASI
+    // ===============================
+    Route::get('/verifikasi-prestasi', [PrestasiController::class, 'index'])
+        ->name('verifikasiPrestasi.index');
 
-        
+    Route::get('/verifikasi-prestasi/create', [PrestasiController::class, 'create'])
+        ->name('verifikasiPrestasi.create');
 
-    // Kelola Beasiswa
-    Route::get('/kelola-beasiswa', function () {
-        return view('admin.kelolaBeasiswa.index');
-    })->name('admin.kelolaBeasiswa.index');
+    Route::post('/verifikasi-prestasi/store', [PrestasiController::class, 'store'])
+        ->name('verifikasiPrestasi.store');
 
-    Route::get('/kelola-beasiswa/atur-bobot', function () {
-        return view('admin.kelolaBeasiswa.aturBobot');
-    })->name('admin.kelolaBeasiswa.aturBobot');
+    Route::get('/verifikasi-prestasi/{id}/edit', [PrestasiController::class, 'edit'])
+        ->name('verifikasiPrestasi.edit');
 
-    Route::get('/kelola-beasiswa/data', function () {
-        return view('admin.kelolaBeasiswa.data');
-    })->name('admin.kelolaBeasiswa.data');
+    Route::post('/verifikasi-prestasi/{id}/update-status', [PrestasiController::class, 'updateStatus'])
+        ->name('verifikasiPrestasi.updateStatus');
+    Route::put('/verifikasi-prestasi/{id}/update-status', [PrestasiController::class, 'updateStatus'])
+        ->name('verifikasiPrestasi.updateStatus');
 
-    // Verifikasi Pendaftar
-    // Route::get('/verifikasi-pendaftar', function () {
-    //     return view('admin.verifikasiPendaftar.index');
-    // })->name('admin.verifikasiPendaftar.index');
+    Route::delete('/verifikasi-prestasi/{id}/delete', [PrestasiController::class, 'destroy'])
+        ->name('verifikasiPrestasi.destroy');
 
-    Route::get('/verifikasi-pendaftar/form', function () {
-        return view('admin.verifikasiPendaftar.form');
-    })->name('admin.verifikasiPendaftar.form');
+    Route::get('/verifikasi-prestasi/{id}/bukti', [PrestasiController::class, 'showBukti'])
+        ->name('verifikasiPrestasi.bukti');
 
-    // Verifikasi Prestasi
-    Route::get('/verifikasi-prestasi', [PrestasiController::class, 'index'])->name('admin.verifikasiPrestasi.index');
+    // ===============================
+    // METODE SAW
+    // ===============================
+    Route::get('/metode', fn() => view('admin.metode.index'))
+        ->name('metode.index');
 
-    Route::get('/verifikasi-prestasi/create', [PrestasiController::class, 'create'])->name('admin.verifikasiPrestasi.create');
-    Route::post('/verifikasi-prestasi/store', [PrestasiController::class, 'store'])->name('admin.verifikasiPrestasi.store');
+    Route::get('/metode/data', fn() => view('admin.metode.data'))
+        ->name('metode.data');
 
-    Route::get('/verifikasi-prestasi/{id}/edit', [PrestasiController::class, 'edit'])->name('admin.verifikasiPrestasi.form');
-    Route::post('/verifikasi-prestasi/{id}/update-status', [PrestasiController::class, 'updateStatus'])->name('admin.verifikasiPrestasi.updateStatus');
+    Route::get('/metode/skot-saw', fn() => view('admin.metode.skotSaw'))
+        ->name('metode.skotSaw');
 
-    Route::delete('/verifikasi-prestasi/{id}/delete', [PrestasiController::class, 'destroy'])->name('admin.verifikasiPrestasi.destroy');
-
-    Route::get('/verifikasi-prestasi/{id}/bukti', [PrestasiController::class, 'showBukti'])->name('admin.verifikasiPrestasi.bukti');
-
-
-    // Route::get('/verifikasi-prestasi', function () {
-    //     return view('admin.verifikasiPrestasi.index');
-    // })->name('admin.verifikasiPrestasi.index');
-
-    // Route::get('/verifikasi-prestasi/form', function () {
-    //     return view('admin.verifikasiPrestasi.form');
-    // })->name('admin.verifikasiPrestasi.form');
-
-
-
-    // Metode SAW
-    Route::get('/metode', function () {
-        return view('admin.metode.index');
-    })->name('admin.metode.index');
-
-    Route::get('/metode/data', function () {
-        return view('admin.metode.data');
-    })->name('admin.metode.data');
-
-    Route::get('/metode/skot-saw', function () {
-        return view('admin.metode.skotSaw');
-    })->name('admin.metode.skotSaw');
-
-    // Laporan
-    Route::get('/laporan', function () {
-        return view('admin.laporan.index');
-    })->name('admin.laporan.index');
+    // ===============================
+    // LAPORAN
+    // ===============================
+    Route::get('/laporan', fn() => view('admin.laporan.index'))
+        ->name('laporan.index');
 });
 
+
+// ===============================
+// ROUTE MAHASISWA DAN UMUM
+// ===============================
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/mahasiswa/dashboard', function () {
         return view('mahasiswa.dashboard');
@@ -132,44 +141,56 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     })->name('umum.dashboard');
 });
 
-// profile
+
+// ===============================
+// PROFILE
+// ===============================
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
-Route::get('/dashboard', function () {
-    $user = Auth::user();
 
-    if ($user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    } elseif ($user->role === 'mahasiswa') {
-        return redirect()->route('mahasiswa.dashboard');
-    } else {
-        return redirect()->route('umum.dashboard');
-    }
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Verifikasi email
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+// ===============================
+// VERIFIKASI EMAIL
+// ===============================
+Route::get('/email/verify', fn() => view('auth.verify-email'))
+    ->middleware('auth')
+    ->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/dashboard');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['auth', 'signed'])
+  ->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Link verifikasi telah dikirim ulang!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+})->middleware(['auth', 'throttle:6,1'])
+  ->name('verification.send');
 
+
+// ===============================
+// REDIRECT DASHBOARD UTAMA
+// ===============================
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+    return match ($user->role) {
+        'admin'     => redirect()->route('admin.dashboard'),
+        'mahasiswa' => redirect()->route('mahasiswa.dashboard'),
+        default     => redirect()->route('umum.dashboard'),
+    };
+})->middleware(['auth', 'verified'])
+  ->name('dashboard');
+
+
+// Auth Routes
 require __DIR__.'/auth.php';
-
-
-// Halaman dashboard (hanya untuk user terverifikasi)
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');

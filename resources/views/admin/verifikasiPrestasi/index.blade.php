@@ -170,10 +170,11 @@ function closeAddModal() {
 // Edit / Verifikasi
 function openEditModal(id, status) {
     const form = document.getElementById('formEditPrestasi');
-    form.action = '/admin/verifikasi-prestasi/' + id + '/status';
+    form.action = '/admin/verifikasi-prestasi/' + id + '/update-status';
     form.status.value = status;
     document.getElementById('modalEditPrestasi').classList.remove('hidden');
 }
+
 function closeEditModal() {
     document.getElementById('modalEditPrestasi').classList.add('hidden');
 }

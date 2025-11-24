@@ -8,6 +8,15 @@
 
     {{-- MENU --}}
     <div class="flex flex-col gap-2">
+      
+      <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <x-dropdown-link :href="route('logout')"
+              onclick="event.preventDefault(); this.closest('form').submit();">
+              {{-- {{ __('Log Out') }} --}}
+              Logou
+          </x-dropdown-link>
+      </form>
 
       <a href="{{ route('admin.dashboard') }}"
          class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f0f4] {{ request()->routeIs('admin.dashboard') ? 'bg-[#f0f0f4]' : '' }}">
@@ -16,7 +25,7 @@
       </a>
 
       <a href="{{ route('admin.verifikasiPendaftar.index') }}"
-         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f0f4] {{ request()->routeIs('admin.verifikasiPendaftar.index') ? 'bg-[#f0f0f4]' : '' }}">
+         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#f0f0f4] {{ request()->routeIs('admin.verifikasiPendaftar.*') ? 'bg-[#f0f0f4]' : '' }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"><path d="..."/></svg>
         <span class="text-sm font-medium text-[#121217]">Verifikasi Pendaftaran</span>
       </a>
