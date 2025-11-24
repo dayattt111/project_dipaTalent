@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\BeasiswaController;
 use App\Http\Controllers\Admin\PrestasiController;
+use App\Http\Controllers\Admin\sawController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -110,14 +111,20 @@ Route::middleware(['auth', 'verified'])
     // ===============================
     // METODE SAW
     // ===============================
-    Route::get('/metode', fn() => view('admin.metode.index'))
-        ->name('metode.index');
+    Route::get('/bobot-saw', [sawController::class, 'index'])->name('metode.index');
+    Route::post('/bobot-saw/store', [sawController::class, 'store'])->name('bobot.store');
+    Route::get('/bobot-saw/edit', [sawController::class, 'update'])->name('metode.edit');
+    Route::post('/bobot-saw/edit', [sawController::class, 'update'])->name('metode.edit');
+    Route::post('/bobot-saw/update', [sawController::class, 'update'])->name('bobot.update');
 
-    Route::get('/metode/data', fn() => view('admin.metode.data'))
-        ->name('metode.data');
+    // Route::get('/metode', fn() => view('admin.metode.index'))
+    //     ->name('metode.index');
 
-    Route::get('/metode/skot-saw', fn() => view('admin.metode.skotSaw'))
-        ->name('metode.skotSaw');
+    // Route::get('/metode/data', fn() => view('admin.metode.data'))
+    //     ->name('metode.data');
+
+    // Route::get('/metode/skot-saw', fn() => view('admin.metode.skotSaw'))
+    //     ->name('metode.skotSaw');
 
     // ===============================
     // LAPORAN
