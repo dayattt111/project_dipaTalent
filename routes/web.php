@@ -113,8 +113,15 @@ Route::middleware(['auth', 'verified'])
     // ===============================
     Route::get('/bobot-saw', [sawController::class, 'index'])->name('metode.index');
     Route::post('/bobot-saw/store', [sawController::class, 'store'])->name('bobot.store');
-    Route::get('/bobot-saw/edit', [sawController::class, 'update'])->name('metode.edit');
-    Route::post('/bobot-saw/edit', [sawController::class, 'update'])->name('metode.edit');
+
+    // Tampilkan form edit
+    Route::get('/bobot-saw/edit/{id}', [sawController::class, 'edit'])->name('metode.edit');
+
+    // Proses update
+    Route::post('/bobot-saw/edit/{id}', [sawController::class, 'update'])->name('metode.update');
+
+    // Route::get('/bobot-saw/edit', [sawController::class, 'update'])->name('metode.edit');
+    // Route::post('/bobot-saw/edit', [sawController::class, 'update'])->name('metode.edit');
     Route::post('/bobot-saw/update', [sawController::class, 'update'])->name('bobot.update');
 
     // Route::get('/metode', fn() => view('admin.metode.index'))

@@ -25,26 +25,39 @@ class SawController extends Controller
 
     public function update(Request $request, $id)
     {
-        $kriteria = BobotKriteria::findOrFail($id);
-
         $request->validate([
             'nama_kriteria' => 'required|string',
-            'bobot'         => 'required|numeric',
+            'bobot'         => 'required|numeric|min:0|max:1',
             'tipe'          => 'required|in:benefit,cost',
         ]);
 
-        // 1. Update bobot kriteria
+        // Update kriteria yang diedit
+        $kriteria = BobotKriteria::findOrFail($id);
         $kriteria->update([
             'nama_kriteria' => $request->nama_kriteria,
             'bobot'         => $request->bobot,
             'tipe'          => $request->tipe,
         ]);
 
-        // 2. Recalculate Normalisasi + Skor
+        // Ambil semua kriteria kecuali yang diedit
+        $otherKriterias = BobotKriteria::where('id', '!=', $id)->get();
+
+        // Hitung sisa total untuk dibagi ke kriteria lain
+        $remaining = 1 - $request->bobot;
+        $countOthers = $otherKriterias->count();
+
+        if ($countOthers > 0) {
+            $share = $remaining / $countOthers;
+            foreach ($otherKriterias as $k) {
+                $k->update(['bobot' => round($share, 4)]);
+            }
+        }
+
         $this->hitungNormalisasiSaw();
         $this->hitungSkorSaw();
 
-        return redirect()->route('admin.metode.index')->with('success', 'Bobot diperbarui & SAW dihitung ulang.');
+        return redirect()->route('admin.metode.index')
+                        ->with('success', 'Bobot diperbarui & SAW dihitung ulang.');
     }
 
 
