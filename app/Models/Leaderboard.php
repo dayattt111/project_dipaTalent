@@ -12,7 +12,7 @@ class Leaderboard extends Model
     protected $fillable = [
         'user_id',
         'skor_id',
-        'ranking',
+        'peringkat',
     ];
 
     public function user()

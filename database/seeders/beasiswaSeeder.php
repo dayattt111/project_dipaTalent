@@ -68,5 +68,45 @@ class BeasiswaSeeder extends Seeder
             'tanggal_selesai' => now()->addMonths(6),
             'status' => 'aktif',
         ]);
+
+        // Beasiswa 7 - Inovasi & Entrepreneurship
+        Beasiswa::create([
+            'nama_beasiswa' => 'Beasiswa Inovasi & Entrepreneurship',
+            'deskripsi' => 'Untuk mahasiswa dengan ide bisnis inovatif dan potensi entrepreneurship tinggi',
+            'kuota' => 7,
+            'tanggal_mulai' => now()->subWeeks(2),
+            'tanggal_selesai' => now()->addMonths(3),
+            'status' => 'aktif',
+        ]);
+
+        // Beasiswa 8 - Penelitian & Publikasi
+        Beasiswa::create([
+            'nama_beasiswa' => 'Beasiswa Penelitian & Publikasi',
+            'deskripsi' => 'Beasiswa untuk mahasiswa aktif dalam penelitian dan publikasi ilmiah',
+            'kuota' => 6,
+            'tanggal_mulai' => now()->subWeeks(1),
+            'tanggal_selesai' => now()->addMonths(4),
+            'status' => 'aktif',
+        ]);
+
+        // Beasiswa 9 - Olahraga & Seni
+        Beasiswa::create([
+            'nama_beasiswa' => 'Beasiswa Olahraga & Seni',
+            'deskripsi' => 'Untuk mahasiswa yang berprestasi di bidang olahraga dan seni dengan akademik baik',
+            'kuota' => 9,
+            'tanggal_mulai' => now(),
+            'tanggal_selesai' => now()->addMonths(5),
+            'status' => 'aktif',
+        ]);
+
+        // Beasiswa 10 - Kepemimpinan & Organisasi
+        Beasiswa::create([
+            'nama_beasiswa' => 'Beasiswa Kepemimpinan & Organisasi',
+            'deskripsi' => 'Beasiswa untuk mahasiswa pemimpin aktif dalam organisasi mahasiswa dan kepemimpinan',
+            'kuota' => 8,
+            'tanggal_mulai' => now()->addDays(5),
+            'tanggal_selesai' => now()->addMonths(4),
+            'status' => 'aktif',
+        ]);
     }
 }

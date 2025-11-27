@@ -243,26 +243,42 @@ class MahasiswaController extends Controller
     {
         $user = Auth::user();
         
+        // Get all scores from SkorSaw, ordered by total_skor descending
+        $skorSawList = SkorSaw::with('user')
+            ->orderBy('total_skor', 'desc')
+            ->get();
+        
         // Get user's ranking and score
-        $myRanking = Leaderboard::where('user_id', $user->id)->latest()->first();
+        $userScore = SkorSaw::where('user_id', $user->id)->latest()->first();
+        $myRanking = $skorSawList->search(function($item) use ($user) {
+            return $item->user_id === $user->id;
+        });
+        $myRanking = $myRanking !== false ? $myRanking + 1 : null;
         
         // Get total users
-        $totalMahasiswa = \App\Models\User::where('role', 'mahasiswa')->count();
+        $totalMahasiswa = $skorSawList->count();
         
         // Get average score
-        $avgScore = SkorSaw::avg('total_skor') ?? 0;
+        $avgScore = $skorSawList->avg('total_skor') ?? 0;
         
         // Get max score
-        $maxScore = SkorSaw::max('total_skor') ?? 0;
+        $maxScore = $skorSawList->max('total_skor') ?? 0;
         
-        // Get paginated leaderboard with user relationships
-        $leaderboard = Leaderboard::with('user')
-            ->orderBy('ranking', 'asc')
+        // Get paginated leaderboard from SkorSaw data
+        $leaderboard = SkorSaw::with('user')
+            ->orderBy('total_skor', 'desc')
             ->paginate(15);
+        
+        // Add ranking number to each item
+        $leaderboard->getCollection()->transform(function($item, $key) use ($leaderboard) {
+            $item->ranking = (($leaderboard->currentPage() - 1) * $leaderboard->perPage()) + $key + 1;
+            return $item;
+        });
         
         return view('mahasiswa.leaderboard', [
             'leaderboard' => $leaderboard,
             'myRanking' => $myRanking,
+            'myScore' => $userScore,
             'totalMahasiswa' => $totalMahasiswa,
             'avgScore' => number_format($avgScore, 2),
             'maxScore' => number_format($maxScore, 2),

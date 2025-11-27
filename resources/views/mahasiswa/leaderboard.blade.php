@@ -9,16 +9,16 @@
     </div>
 
     <!-- My Ranking Card -->
-    @if($myRanking)
+    @if($myRanking && $myScore)
     <div class="bg-gradient-to-r from-indigo-500 via-blue-500 to-blue-600 rounded-2xl shadow-xl p-8 mb-8 text-white">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="text-center">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">POSISI ANDA</p>
-                <p class="text-6xl font-bold">{{ $myRanking->ranking }}</p>
+                <p class="text-6xl font-bold">#{{ $myRanking }}</p>
             </div>
             <div class="border-l-2 border-r-2 border-white border-opacity-30 pl-6 pr-6">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">SKOR SAW</p>
-                <p class="text-6xl font-bold">{{ number_format($myRanking->score, 2) }}</p>
+                <p class="text-6xl font-bold">{{ number_format($myScore->total_skor, 2) }}</p>
             </div>
             <div class="text-center">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">DARI TOTAL</p>
@@ -54,15 +54,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($leaderboard as $index => $leader)
+                    @forelse($leaderboard as $leader)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition {{ Auth::id() == $leader->user_id ? 'bg-indigo-50 border-indigo-200' : '' }}">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
-                                @if($index == 0)
+                                @if($leader->ranking == 1)
                                     <span class="text-2xl">🥇</span>
-                                @elseif($index == 1)
+                                @elseif($leader->ranking == 2)
                                     <span class="text-2xl">🥈</span>
-                                @elseif($index == 2)
+                                @elseif($leader->ranking == 3)
                                     <span class="text-2xl">🥉</span>
                                 @else
                                     <span class="font-bold text-gray-700 w-6 text-center">#{{ $leader->ranking }}</span>
@@ -78,12 +78,12 @@
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $leader->user->nim ?? '-' }}</td>
                         <td class="px-6 py-4 text-center">
                             <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-sm">
-                                {{ number_format($leader->score, 2) }}
+                                {{ number_format($leader->total_skor, 2) }}
                             </span>
                         </td>
                         <td class="px-6 py-4">
                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ ($leader->score / 100) * 100 }}%"></div>
+                                <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ ($leader->total_skor / 100) * 100 }}%"></div>
                             </div>
                         </td>
                     </tr>
