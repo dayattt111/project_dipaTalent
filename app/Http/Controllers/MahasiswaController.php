@@ -301,7 +301,7 @@ class MahasiswaController extends Controller
 
     public function galeri()
     {
-        $galeri = GaleriPrestasi::with('user')
+        $galeri = Prestasi::with('user')
             ->where('status', 'valid')
             ->latest()
             ->paginate(12);

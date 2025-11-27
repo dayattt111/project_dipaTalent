@@ -36,14 +36,10 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow prestasi-card" data-jenis="{{ $prestasi->jenis }}" data-nama="{{ strtolower($prestasi->nama_prestasi) }}">
                 <!-- Image Section -->
                 <div class="relative bg-gradient-to-br from-blue-400 to-indigo-600 h-48 overflow-hidden flex items-center justify-center">
-                    @if($prestasi->galeri_path)
-                        <img src="{{ Storage::url($prestasi->galeri_path) }}" alt="{{ $prestasi->nama_prestasi }}" class="w-full h-full object-cover">
-                    @else
-                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="text-white opacity-30">
-                            <path d="M.5 1a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5V1.5a.5.5 0 0 0-.5-.5H.5zm1 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
-                            <path d="m3 5 2-2 3 3-2 5 3-1 2-6 3 1v5l-6-1-4-5z"/>
-                        </svg>
-                    @endif
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="text-white opacity-30">
+                        <path d="M.5 1a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5V1.5a.5.5 0 0 0-.5-.5H.5zm1 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
+                        <path d="m3 5 2-2 3 3-2 5 3-1 2-6 3 1v5l-6-1-4-5z"/>
+                    </svg>
                     <!-- Badge -->
                     <div class="absolute top-3 right-3">
                         <span class="inline-block px-3 py-1 bg-white bg-opacity-90 text-indigo-600 text-xs font-bold rounded-full">
@@ -70,7 +66,7 @@
                     </div>
 
                     <!-- Deskripsi -->
-                    <p class="text-sm text-gray-600 line-clamp-2">{{ $prestasi->deskripsi }}</p>
+                    <p class="text-sm text-gray-600 line-clamp-2">{{ $prestasi->deskripsi ?? 'Tidak ada deskripsi' }}</p>
 
                     <!-- Details -->
                     <div class="space-y-2 text-sm border-t border-gray-200 pt-3">
@@ -79,23 +75,23 @@
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                 <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                             </svg>
-                            <span class="text-gray-600">{{ \Carbon\Carbon::parse($prestasi->tanggal_pencapaian)->format('d M Y') }}</span>
+                            <span class="text-gray-600">{{ $prestasi->tanggal_pencapaian ? \Carbon\Carbon::parse($prestasi->tanggal_pencapaian)->format('d M Y') : '-' }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-gray-400">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                 <path d="M6.5 6a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H6.5z"/>
                             </svg>
-                            <span class="text-gray-600">{{ $prestasi->penyelenggara }}</span>
+                            <span class="text-gray-600">{{ $prestasi->penyelenggara ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer -->
                 <div class="px-6 py-3 border-t border-gray-200 bg-gray-50">
-                    <button onclick="openModal({{ $prestasi->id }})" class="w-full px-4 py-2 text-center bg-indigo-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-100 transition-colors">
-                        Lihat Detail
-                    </button>
+                    <a href="{{ Storage::url($prestasi->sertifikat) }}" target="_blank" class="w-full block px-4 py-2 text-center bg-indigo-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-100 transition-colors">
+                        Lihat Sertifikat
+                    </a>
                 </div>
             </div>
             @empty

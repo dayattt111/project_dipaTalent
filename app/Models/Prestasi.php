@@ -17,6 +17,10 @@ class Prestasi extends Model
         'tahun',
         'file_sertifikat',
         'status',
+        'deskripsi',
+        'tanggal_pencapaian',
+        'penyelenggara',
+        'sertifikat',
     ];
 
     public function user()
