@@ -164,6 +164,14 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::c
     // ===============================
     Route::get('/laporan', fn() => view('admin.laporan.index'))
         ->name('laporan.index');
+
+    // Report generation & export (PDF)
+    Route::get('/laporan/generate', [\App\Http\Controllers\Admin\ReportController::class, 'generate'])
+        ->name('laporan.generate');
+    Route::get('/laporan/export', [\App\Http\Controllers\Admin\ReportController::class, 'exportPdf'])
+        ->name('laporan.export');
+    Route::get('/laporan/view', [\App\Http\Controllers\Admin\ReportController::class, 'index'])
+        ->name('laporan.view');
 });
 
 
