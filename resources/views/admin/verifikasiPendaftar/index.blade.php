@@ -1,52 +1,76 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
 @extends('layouts.admin')
 
-@section('content')
-<div class="flex min-h-screen bg-gray-50">
+@section('title', 'Verifikasi Pendaftaran')
 
-    {{-- Main Content --}}
-          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-                <p class="text-[#121217] tracking-light text-[32px] font-bold leading-tight min-w-72">
-                    Kelola Pendaftaran Beasiswa
-                </p>
-                <a href="{{ route('admin.pendaftaran.create') }}"
-                    class="bg-[#1e40ae] text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-[#16348f]">
-                        + Tambah Pendaftar
-                </a>
-            </div>
-            <div class="px-4 py-3 @container">
-              <div class="flex overflow-hidden rounded-lg border border-[#dcdce5] bg-white">
-                <table class="flex-1">
-                  <thead>
-                    <tr class="bg-white">
-                        <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-120 px-4 py-3 text-left text-[#121217] w-[400px] text-sm font-medium leading-normal">
-                            Nim
-                        </th>
-                      <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-120 px-4 py-3 text-left text-[#121217] w-[400px] text-sm font-medium leading-normal">
-                        Nama Mahasiswa
-                      </th>
-                      <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-240 px-4 py-3 text-left text-[#121217] w-[400px] text-sm font-medium leading-normal">
-                        Nama Beasiswa
-                      </th>
-                      <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-240 px-4 py-3 text-left text-[#121217] w-[400px] text-sm font-medium leading-normal">
-                        Catatan
-                      </th>
-                      <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-360 px-4 py-3 text-left text-[#121217] w-60 text-sm font-medium leading-normal">
-                        Status Dokumen
-                      </th>
-                      <th class="table-5336220f-7ace-4efa-803e-5a450cb68363-column-480 px-4 py-3 text-left text-[#121217] w-60 text-[#656586] text-sm font-medium leading-normal">
-                        Aksi
-                      </th>
+@section('content')
+<div class="max-w-7xl">
+    {{-- Header --}}
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">Verifikasi Pendaftaran</h1>
+            <p class="text-gray-600 mt-1">Kelola verifikasi pendaftaran beasiswa mahasiswa</p>
+        </div>
+        <a href="{{ route('admin.pendaftaran.create') }}" class="mt-4 md:mt-0 inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Tambah Pendaftar
+        </a>
+    </div>
+
+    {{-- Table Card --}}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">NIM</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Mahasiswa</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Beasiswa</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Catatan</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
+                        <th class="px-6 py-4 text-right text-sm font-semibold text-gray-700">Aksi</th>
                     </tr>
-                  </thead>
-                <tbody>
-                @foreach ($pendaftaran as $data)
-                <tr class="border-t border-t-[#dcdce5]">
-                    <td class="px-4 py-2 text-[#121217] text-sm">{{ $data->user->nim }}</td>
-                    <td class="px-4 py-2 text-[#121217] text-sm">{{ $data->user->name }}</td>
-                    <td class="px-4 py-2 text-[#656586] text-sm">{{ $data->beasiswa->nama_beasiswa }}</td>
-                    <td class="px-4 py-2 text-[#656586] text-sm">{{ $data->catatan_admin }}</td>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @foreach ($pendaftaran as $data)
+                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                        <td class="px-6 py-4 text-sm font-medium text-gray-700">{{ $data->user->nim ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ $data->user->name ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ optional($data->beasiswa)->nama_beasiswa ?? optional($data->beasiswa)->judul ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">{{ $data->catatan_admin ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $data->status_admin === 'verified' ? 'bg-green-100 text-green-800' : ($data->status_admin === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                {{ ucfirst(str_replace('_', ' ', $data->status_admin ?? 'pending')) }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-right space-x-2">
+                            <a href="{{ route('admin.verifikasiPendaftar.form', $data->id) }}" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg text-xs font-medium transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                </svg>
+                                Lihat
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Empty State --}}
+    @if(count($pendaftaran) === 0)
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="mx-auto text-gray-400 mb-3">
+            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+        </svg>
+        <p class="text-gray-600">Tidak ada pendaftaran untuk diverifikasi</p>
+    </div>
+    @endif
+</div>
+
+@endsection
 
                     <td class="px-4 py-2 text-sm">
                         <button

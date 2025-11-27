@@ -36,7 +36,7 @@
                         <td>{{ $i + 1 }}</td>
                         <td>{{ $item->judul ?? $item->nama ?? '' }}</td>
                         <td>{{ \\Illuminate\\Support\\Str::limit(strip_tags($item->deskripsi ?? $item->keterangan ?? ''), 200) }}</td>
-                        <td>{{ optional($item->created_at)->format('Y-m-d') }}</td>
+                        <td>{{ !empty($item->created_at) ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -61,7 +61,7 @@
                         <td>{{ optional($item->user)->name ?? ($item->nama ?? '-') }}</td>
                         <td>{{ optional($item->beasiswa)->judul ?? '-' }}</td>
                         <td>{{ $item->status ?? '-' }}</td>
-                        <td>{{ optional($item->created_at)->format('Y-m-d') }}</td>
+                        <td>{{ !empty($item->created_at) ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -86,7 +86,7 @@
                         <td>{{ optional($item->user)->name ?? ($item->nama ?? '-') }}</td>
                         <td>{{ $item->judul ?? '-' }}</td>
                         <td>{{ $item->tingkat ?? '-' }}</td>
-                        <td>{{ optional($item->created_at)->format('Y-m-d') }}</td>
+                        <td>{{ !empty($item->created_at) ? \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') : '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>
