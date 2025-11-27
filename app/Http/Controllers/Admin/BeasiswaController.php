@@ -154,5 +154,67 @@ class BeasiswaController extends Controller
         return redirect()->route('admin.verifikasiPendaftar.index')->with('success', 'Pendaftar berhasil dihapus.');
     }
 
+    // ===============================
+    // KELOLA BEASISWA (CRUD)
+    // ===============================
+    public function beasiswaIndex()
+    {
+        $beasiswas = Beasiswa::orderBy('created_at', 'desc')->paginate(15);
+        return view('admin.kelolaBeasiswa.index', compact('beasiswas'));
+    }
+
+    public function beasiswaCreate()
+    {
+        return view('admin.kelolaBeasiswa.create');
+    }
+
+    public function beasiswaStore(Request $request)
+    {
+        $data = $request->validate([
+            'nama_beasiswa' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kuota' => 'nullable|integer|min:0',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'status' => 'required|in:aktif,nonaktif,ditutup',
+        ]);
+
+        Beasiswa::create($data);
+
+        return redirect()->route('admin.kelolaBeasiswa.index')->with('success', 'Beasiswa berhasil dibuat.');
+    }
+
+    public function beasiswaEdit($id)
+    {
+        $beasiswa = Beasiswa::findOrFail($id);
+        return view('admin.kelolaBeasiswa.edit', compact('beasiswa'));
+    }
+
+    public function beasiswaUpdate(Request $request, $id)
+    {
+        $beasiswa = Beasiswa::findOrFail($id);
+
+        $data = $request->validate([
+            'nama_beasiswa' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kuota' => 'nullable|integer|min:0',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'status' => 'required|in:aktif,nonaktif,ditutup',
+        ]);
+
+        $beasiswa->update($data);
+
+        return redirect()->route('admin.kelolaBeasiswa.index')->with('success', 'Beasiswa diperbarui.');
+    }
+
+    public function beasiswaDestroy($id)
+    {
+        $beasiswa = Beasiswa::findOrFail($id);
+        $beasiswa->delete();
+
+        return redirect()->route('admin.kelolaBeasiswa.index')->with('success', 'Beasiswa dihapus.');
+    }
+
 
 }

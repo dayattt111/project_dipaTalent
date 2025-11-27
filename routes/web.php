@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BeasiswaController;
 use App\Http\Controllers\Admin\PrestasiController;
 use App\Http\Controllers\Admin\sawController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ Route::get('/', function () {
 // ===============================
 // ROUTE ADMIN (auth + verified + prefix admin)
 // ===============================
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::class])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -73,14 +74,39 @@ Route::middleware(['auth', 'verified'])
     // ===============================
     // KELOLA BEASISWA
     // ===============================
-    Route::get('/kelola-beasiswa', fn() => view('admin.kelolaBeasiswa.index'))
+    Route::get('/kelola-beasiswa', [BeasiswaController::class, 'beasiswaIndex'])
         ->name('kelolaBeasiswa.index');
+
+    Route::get('/kelola-beasiswa/create', [BeasiswaController::class, 'beasiswaCreate'])
+        ->name('kelolaBeasiswa.create');
+
+    Route::post('/kelola-beasiswa/store', [BeasiswaController::class, 'beasiswaStore'])
+        ->name('kelolaBeasiswa.store');
+
+    Route::get('/kelola-beasiswa/{id}/edit', [BeasiswaController::class, 'beasiswaEdit'])
+        ->name('kelolaBeasiswa.edit');
+
+    Route::post('/kelola-beasiswa/{id}/update', [BeasiswaController::class, 'beasiswaUpdate'])
+        ->name('kelolaBeasiswa.update');
+
+    Route::delete('/kelola-beasiswa/{id}/delete', [BeasiswaController::class, 'beasiswaDestroy'])
+        ->name('kelolaBeasiswa.destroy');
 
     Route::get('/kelola-beasiswa/atur-bobot', fn() => view('admin.kelolaBeasiswa.aturBobot'))
         ->name('kelolaBeasiswa.aturBobot');
 
     Route::get('/kelola-beasiswa/data', fn() => view('admin.kelolaBeasiswa.data'))
         ->name('kelolaBeasiswa.data');
+
+    // ===============================
+    // KELOLA PENGGUNA
+    // ===============================
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('users.destroy');
 
     // ===============================
     // VERIFIKASI PRESTASI

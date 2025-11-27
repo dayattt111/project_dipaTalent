@@ -17,6 +17,27 @@ class SawController extends Controller
         return view('admin.metode.index', compact('kriterias'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_kriteria' => 'required|string',
+            'bobot' => 'required|numeric|min:0|max:1',
+            'tipe' => 'required|in:benefit,cost',
+        ]);
+
+        BobotKriteria::create([
+            'nama_kriteria' => $request->nama_kriteria,
+            'bobot' => $request->bobot,
+            'tipe' => $request->tipe,
+        ]);
+
+        // Recalculate if needed
+        $this->hitungNormalisasiSaw();
+        $this->hitungSkorSaw();
+
+        return redirect()->route('metode.index')->with('success', 'Kriteria berhasil ditambahkan.');
+    }
+
     public function edit($id)
     {
         $kriteria = BobotKriteria::findOrFail($id);
