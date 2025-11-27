@@ -81,20 +81,3 @@
 </div>
 
 @endsection
-                <tr>
-                    <td colspan="2" class="font-semibold p-3 text-right">Total Bobot:</td>
-                    <td colspan="3" class="font-bold p-3 text-gray-800">
-                        {{ number_format($totalBobot, 2) }}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-
-    {{-- Catatan --}}
-    <p class="mt-4 text-gray-500 text-sm">
-        Pastikan total bobot selalu <span class="font-semibold">1.0</span>. Mengubah satu kriteria akan menyesuaikan kriteria lainnya.
-    </p>
-
-</div>
-@endsection

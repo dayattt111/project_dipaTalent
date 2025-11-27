@@ -40,17 +40,39 @@
                         <td class="px-6 py-4 text-sm text-gray-700">{{ optional($data->beasiswa)->nama_beasiswa ?? optional($data->beasiswa)->judul ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">{{ $data->catatan_admin ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $data->status_admin === 'verified' ? 'bg-green-100 text-green-800' : ($data->status_admin === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
-                                {{ ucfirst(str_replace('_', ' ', $data->status_admin ?? 'pending')) }}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $data->status === 'diterima' ? 'bg-green-100 text-green-800' : ($data->status === 'ditolak' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                {{ ucfirst($data->status ?? 'menunggu') }}
                             </span>
                         </td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
+                            @if($data->status === 'menunggu')
                             <a href="{{ route('admin.verifikasiPendaftar.form', $data->id) }}" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg text-xs font-medium transition-colors duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10.5 10.5a.5.5 0 0 1-.168.11l-5 1.667a.5.5 0 0 1-.65-.65l1.667-5a.5.5 0 0 1 .11-.168l10.5-10.5z"/>
                                 </svg>
-                                Lihat
+                                Verifikasi
                             </a>
+                            @else
+                            <form action="{{ route('admin.verifikasiPendaftar.batal', $data->id) }}" method="POST" class="inline" onsubmit="return confirm('Batalkan verifikasi?')">
+                                @csrf
+                                <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 hover:bg-amber-200 rounded-lg text-xs font-medium transition-colors duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    </svg>
+                                    Batalkan
+                                </button>
+                            </form>
+                            @endif
+                            <form action="{{ route('admin.pendaftaran.delete', $data->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus pendaftar ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-800 hover:bg-red-200 rounded-lg text-xs font-medium transition-colors duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    </svg>
+                                    Hapus
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -71,68 +93,6 @@
 </div>
 
 @endsection
-
-                    <td class="px-4 py-2 text-sm">
-                        <button
-                            class="flex items-center justify-center h-8 px-4 rounded-lg 
-                            {{ $data->status === 'diterima' ? 'bg-green-100 text-green-800' : ($data->status === 'ditolak' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800') }}">
-                            {{ ucfirst($data->status) }}
-                        </button>
-                    </td>
-
-                    <td class="px-4 py-2 text-sm font-bold">
-
-                        {{-- Jika belum diverifikasi → buka form --}}
-                        @if($data->status === 'menunggu')
-                            <a href="{{ route('admin.verifikasiPendaftar.form', $data->id) }}"
-                            class="text-[#1e40ae] hover:underline">
-                            Verifikasi
-                            </a>
-
-                        {{-- Jika sudah diterima atau ditolak → tombol batal (popup) --}}
-                        @else
-                            <form action="{{ route('admin.verifikasiPendaftar.batal', $data->id) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-red-600 hover:underline">
-                                Batalkan
-                            </button>
-                        </form>
-
-                        @endif
-
-                            {{-- Tombol Hapus --}}
-                        <form action="{{ route('admin.pendaftaran.delete', $data->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-700 hover:underline" onclick="return confirm('Hapus pendaftar ini?')">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-
-
-                </table>
-              </div>
-              <style>
-                @container(max-width:120px){.table-5336220f-7ace-4efa-803e-5a450cb68363-column-120{display: none;}}
-                @container(max-width:240px){.table-5336220f-7ace-4efa-803e-5a450cb68363-column-240{display: none;}}
-                @container(max-width:360px){.table-5336220f-7ace-4efa-803e-5a450cb68363-column-360{display: none;}}
-                @container(max-width:480px){.table-5336220f-7ace-4efa-803e-5a450cb68363-column-480{display: none;}}
-              </style>
-            </div>
-          </div>
-          
-    {{-- Sidebar Admin --}}
-    @include('layouts.navigation')
-
-  {{-- Popup Modal --}}
-  <div id="popup-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl shadow-lg w-[90%] max-w-md p-6 text-center">
-      <h2 id="popup-title" class="text-lg font-semibold text-[#121317] mb-4"></h2>
-      <p id="popup-text" class="text-sm text-gray-600 mb-6"></p>
 
       <div class="flex justify-center gap-4">
         <button onclick="closePopup()" class="px-4 py-2 bg-gray-200 rounded-lg text-gray-800 text-sm font-medium hover:bg-gray-300">

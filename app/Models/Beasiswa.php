@@ -18,6 +18,11 @@ class Beasiswa extends Model
         'status',
     ];
 
+    protected $casts = [
+        'tanggal_mulai' => 'datetime',
+        'tanggal_selesai' => 'datetime',
+    ];
+
     // Relasi ke Pendaftaran
     public function pendaftarans()
     {

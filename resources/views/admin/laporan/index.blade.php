@@ -153,35 +153,3 @@
 </div>
 
 @endsection
-
-    <div class="bg-white shadow rounded p-6">
-        <h3 class="text-lg font-semibold mb-4">Riwayat Laporan</h3>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Nama Laporan</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Tanggal Dibuat</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Jenis</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-700">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y">
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-900">Laporan Beasiswa 2023</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">15 Mei 2024</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">Beasiswa</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">Selesai</td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 text-sm text-gray-900">Laporan Prestasi 2024</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">20 Juni 2024</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">Prestasi</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">Selesai</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-@endsection
