@@ -72,7 +72,21 @@ class MahasiswaController extends Controller
     public function ajukanBeasiswa()
     {
         $beasiswas = Beasiswa::where('status', 'aktif')->get();
-        return view('mahasiswa.ajukanBeasiswa', ['beasiswas' => $beasiswas]);
+        
+        // Check if beasiswa_id is provided in query string
+        $selectedBeasiswa = null;
+        $beasiswaId = request()->query('beasiswa_id') ?? request()->query('beasiswa');
+        
+        if ($beasiswaId) {
+            $selectedBeasiswa = Beasiswa::where('id', $beasiswaId)
+                ->where('status', 'aktif')
+                ->first();
+        }
+        
+        return view('mahasiswa.ajukanBeasiswa', [
+            'beasiswas' => $beasiswas,
+            'selectedBeasiswa' => $selectedBeasiswa
+        ]);
     }
 
     public function storeAjukanBeasiswa()

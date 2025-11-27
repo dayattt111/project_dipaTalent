@@ -43,7 +43,7 @@
                 <div class="space-y-3">
                     @forelse($beasiswas as $beasiswa)
                     <label class="flex items-start gap-4 p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-indigo-300 hover:bg-indigo-50 transition-all {{ $errors->has('beasiswa_id') ? 'border-red-300' : '' }}">
-                        <input type="radio" name="beasiswa_id" value="{{ $beasiswa->id }}" class="mt-1 w-4 h-4 text-indigo-600 cursor-pointer" {{ old('beasiswa_id') == $beasiswa->id ? 'checked' : '' }} required>
+                        <input type="radio" name="beasiswa_id" value="{{ $beasiswa->id }}" class="mt-1 w-4 h-4 text-indigo-600 cursor-pointer beasiswa-radio" data-beasiswa-id="{{ $beasiswa->id }}" {{ old('beasiswa_id') == $beasiswa->id || (isset($selectedBeasiswa) && $selectedBeasiswa->id == $beasiswa->id) ? 'checked' : '' }} required>
                         <div class="flex-1">
                             <h3 class="font-semibold text-gray-900">{{ $beasiswa->nama_beasiswa }}</h3>
                             <p class="text-sm text-gray-600 mt-1">{{ $beasiswa->deskripsi }}</p>
@@ -84,11 +84,15 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="ipk" class="block text-sm font-medium text-gray-700 mb-2">IPK <span class="text-red-500">*</span></label>
+                        <label for="ipk" class="block text-sm font-medium text-gray-700 mb-2">
+                            IPK <span class="text-red-500">*</span>
+                            <span id="ipk-status" class="text-xs text-gray-500"></span>
+                        </label>
                         <input type="number" id="ipk" name="ipk" step="0.01" min="0" max="4" value="{{ old('ipk') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent {{ $errors->has('ipk') ? 'border-red-500' : '' }}" placeholder="3.50" required>
                         @error('ipk')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
+                        <p class="text-xs text-gray-500 mt-1">💡 Unggah transkrip di bawah untuk auto-populate nilai IPK</p>
                     </div>
                     <div>
                         <label for="prestasi_akademik" class="block text-sm font-medium text-gray-700 mb-2">Prestasi Akademik <span class="text-red-500">*</span></label>
@@ -198,4 +202,126 @@
         </form>
     </div>
 </div>
+
+<!-- Script untuk PDF Parsing dan Auto-select Beasiswa -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    // Set PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // Auto-select beasiswa dari query parameter
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const beasiswaId = urlParams.get('beasiswa_id') || urlParams.get('beasiswa');
+        
+        if (beasiswaId) {
+            const radio = document.querySelector(`input[type="radio"][value="${beasiswaId}"]`);
+            if (radio) {
+                radio.checked = true;
+                // Scroll to the selected beasiswa with smooth animation
+                setTimeout(() => {
+                    radio.closest('label').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+    });
+
+    const transkripInput = document.getElementById('transkrip');
+    const ipkInput = document.getElementById('ipk');
+    const ipkStatus = document.getElementById('ipk-status');
+
+    transkripInput.addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        try {
+            ipkStatus.textContent = '⏳ Menganalisis...';
+            ipkStatus.className = 'text-xs text-blue-500';
+
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            let fullText = '';
+
+            // Extract text from all pages
+            for (let i = 1; i <= Math.min(pdf.numPages, 3); i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const text = textContent.items.map(item => item.str).join(' ');
+                fullText += text + ' ';
+            }
+
+            // Pattern matching untuk IPK
+            const ipkPatterns = [
+                /IPK\s*[:=]?\s*([\d,\.]+)/gi,
+                /Indeks Prestasi\s*[:=]?\s*([\d,\.]+)/gi,
+                /Indeks Prestasi Kumulatif\s*[:=]?\s*([\d,\.]+)/gi,
+                /([\d,\.]+)\s*(?:adalah\s+)?IPK/gi,
+            ];
+
+            let extractedIPK = null;
+            for (const pattern of ipkPatterns) {
+                const match = fullText.match(pattern);
+                if (match) {
+                    const valueMatch = match[0].match(/([\d,\.]+)/);
+                    if (valueMatch) {
+                        extractedIPK = valueMatch[1].replace(',', '.');
+                        break;
+                    }
+                }
+            }
+
+            if (extractedIPK && extractedIPK >= 0 && extractedIPK <= 4) {
+                ipkInput.value = parseFloat(extractedIPK).toFixed(2);
+                ipkStatus.textContent = '✅ IPK terdeteksi: ' + parseFloat(extractedIPK).toFixed(2);
+                ipkStatus.className = 'text-xs text-green-500';
+            } else {
+                ipkStatus.textContent = '⚠️ IPK tidak ditemukan, silakan isi manual';
+                ipkStatus.className = 'text-xs text-orange-500';
+            }
+        } catch (error) {
+            console.error('Error parsing PDF:', error);
+            ipkStatus.textContent = '❌ Error membaca PDF, silakan isi manual';
+            ipkStatus.className = 'text-xs text-red-500';
+        }
+    });
+
+    // Drag and drop support
+    const transkripDiv = transkripInput.parentElement;
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        transkripDiv.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        transkripDiv.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        transkripDiv.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        transkripDiv.classList.add('border-indigo-500', 'bg-indigo-50');
+    }
+
+    function unhighlight(e) {
+        transkripDiv.classList.remove('border-indigo-500', 'bg-indigo-50');
+    }
+
+    transkripDiv.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        transkripInput.files = files;
+
+        // Trigger change event
+        const event = new Event('change', { bubbles: true });
+        transkripInput.dispatchEvent(event);
+    }
+</script>
 @endsection
