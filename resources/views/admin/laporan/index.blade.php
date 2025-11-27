@@ -73,8 +73,10 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">#</th>
-                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Judul</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Beasiswa</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Deskripsi</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Kuota</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Status</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Tanggal</th>
                     </tr>
                 </thead>
@@ -82,8 +84,14 @@
                     @foreach($data as $i => $item)
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $i + 1 }}</td>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->judul ?? $item->nama ?? '-' }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">{{ \Illuminate\Support\Str::limit(strip_tags($item->deskripsi ?? $item->keterangan ?? ''), 100) }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $item->nama_beasiswa ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ \Illuminate\Support\Str::limit(strip_tags($item->deskripsi ?? ''), 80) }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ $item->kuota ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $item->status === 'aktif' ? 'bg-green-100 text-green-800' : ($item->status === 'ditutup' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800') }}">
+                                {{ ucfirst($item->status ?? '-') }}
+                            </span>
+                        </td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ !empty($item->created_at) ? \Carbon\Carbon::parse($item->created_at)->format('d M Y') : '-' }}</td>
                     </tr>
                     @endforeach
@@ -104,11 +112,11 @@
                     @foreach($data as $i => $item)
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $i + 1 }}</td>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ optional($item->user)->name ?? ($item->nama ?? '-') }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-700">{{ optional($item->beasiswa)->judul ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ optional($item->user)->name ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ optional($item->beasiswa)->nama_beasiswa ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {{ $item->status ?? '-' }}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $item->status === 'diterima' ? 'bg-green-100 text-green-800' : ($item->status === 'ditolak' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                {{ ucfirst($item->status ?? 'menunggu') }}
                             </span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ !empty($item->created_at) ? \Carbon\Carbon::parse($item->created_at)->format('d M Y') : '-' }}</td>
@@ -131,7 +139,7 @@
                     @foreach($data as $i => $item)
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $i + 1 }}</td>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ optional($item->user)->name ?? ($item->nama ?? '-') }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ optional($item->user)->name ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $item->judul ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $item->tingkat ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ !empty($item->created_at) ? \Carbon\Carbon::parse($item->created_at)->format('d M Y') : '-' }}</td>
