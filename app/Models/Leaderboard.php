@@ -12,7 +12,7 @@ class Leaderboard extends Model
     protected $fillable = [
         'user_id',
         'skor_id',
-        'peringkat',
+        'ranking',
     ];
 
     public function user()
@@ -21,6 +21,11 @@ class Leaderboard extends Model
     }
 
     public function skor()
+    {
+        return $this->belongsTo(SkorSaw::class, 'skor_id');
+    }
+
+    public function skorSaw()
     {
         return $this->belongsTo(SkorSaw::class, 'skor_id');
     }

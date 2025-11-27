@@ -180,9 +180,35 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::c
 // ===============================
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/mahasiswa/dashboard', function () {
-        return view('mahasiswa.dashboard');
-    })->name('mahasiswa.dashboard');
+    // MAHASISWA ROUTES
+    Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [\App\Http\Controllers\MahasiswaController::class, 'dashboard'])->name('dashboard');
+        
+        // Beasiswa Routes
+        Route::get('/daftar-beasiswa', [\App\Http\Controllers\MahasiswaController::class, 'listBeasiswa'])->name('listBeasiswa');
+        Route::get('/beasiswa/{id}', [\App\Http\Controllers\MahasiswaController::class, 'beasiswaDetail'])->name('beasiswa.detail');
+        
+        // Ajukan Beasiswa Routes
+        Route::get('/ajukan-beasiswa', [\App\Http\Controllers\MahasiswaController::class, 'ajukanBeasiswa'])->name('ajukanBeasiswa');
+        Route::post('/ajukan-beasiswa', [\App\Http\Controllers\MahasiswaController::class, 'storeAjukanBeasiswa'])->name('ajukanBeasiswa.store');
+        
+        // Riwayat Pendaftaran Routes
+        Route::get('/riwayat-pendaftaran', [\App\Http\Controllers\MahasiswaController::class, 'riwayatPendaftaran'])->name('riwayatPendaftaran');
+        
+        // Prestasi Routes
+        Route::get('/prestasi', [\App\Http\Controllers\MahasiswaController::class, 'prestasi'])->name('prestasi');
+        Route::post('/prestasi', [\App\Http\Controllers\MahasiswaController::class, 'storePrestasi'])->name('prestasi.store');
+        Route::get('/prestasi/{id}/edit', [\App\Http\Controllers\MahasiswaController::class, 'editPrestasi'])->name('prestasi.edit');
+        Route::post('/prestasi/{id}', [\App\Http\Controllers\MahasiswaController::class, 'updatePrestasi'])->name('prestasi.update');
+        Route::delete('/prestasi/{id}', [\App\Http\Controllers\MahasiswaController::class, 'deletePrestasi'])->name('prestasi.delete');
+        
+        // Leaderboard Routes
+        Route::get('/leaderboard', [\App\Http\Controllers\MahasiswaController::class, 'leaderboard'])->name('leaderboard');
+        
+        // Galeri Routes
+        Route::get('/galeri', [\App\Http\Controllers\MahasiswaController::class, 'galeri'])->name('galeri');
+    });
 
     Route::get('/umum/dashboard', function () {
         return view('umum.dashboard');

@@ -82,7 +82,7 @@ class ReportController extends Controller
 
         // Note: requires barryvdh/laravel-dompdf to be installed
         try {
-            $pdf = Pdf::loadHTML($view->render());
+            $pdf = Pdf::loadView('admin.laporan.pdf', compact('type', 'from', 'to', 'data'))->setPaper('a4', 'portrait');
             $filename = 'laporan_' . $type . '_' . now()->format('Ymd_His') . '.pdf';
             return $pdf->download($filename);
         } catch (\Throwable $e) {

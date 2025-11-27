@@ -1,124 +1,187 @@
-<html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
+@extends('layouts.mahasiswa')
 
-    <title>Stitch Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div class="relative flex h-auto min-h-screen w-full flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Lexend, "Noto Sans", sans-serif;'>
-      <div class="layout-container flex h-full grow flex-col">
-        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f1f4] px-10 py-3">
-          <div class="flex items-center gap-4 text-[#121317]">
-            <div class="size-4">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
-              </svg>
-            </div>
-            <h2 class="text-[#121317] text-lg font-bold leading-tight tracking-[-0.015em]">DipaTalent</h2>
-          </div>
-          <div class="flex flex-1 justify-end gap-8">
-            <div class="flex items-center gap-9">
-              <a class="text-[#121317] text-sm font-medium leading-normal" href="#">Beasiswa</a>
-              <a class="text-[#121317] text-sm font-medium leading-normal" href="#">Prestasi</a>
-              <a class="text-[#121317] text-sm font-medium leading-normal" href="#">Leaderboard</a>
-              <a class="text-[#121317] text-sm font-medium leading-normal" href="#">Profil</a>
-            </div>
-            <button
-              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f0f1f4] text-[#121317] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
-            >
-              <div class="text-[#121317]" data-icon="Bell" data-size="20px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                  <path
-                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
-                  ></path>
-                </svg>
-              </div>
-            </button>
-            <div
-              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBdVMxyxvE63uoY2UrurCnNsxURd8wRPZHw2QV6g_PJnEuaeLFbWggjFvWvH2CsoamWwiwjjthxfE6fjcowSQb-_z0GKf3Ol6NFe1TrfVUvV0WxAHxBvWbC-r0MVxZaK_XPiQc1vToU1nZHaD2FtPNVdj7c_pXVkz7CQtBwnMqjQVSOt3A3Fb6u35zsc2oRRmevWczHA2pG75X1VtLn0HauHZGRiWnBZtoVfArVxPZ4Xko_ownMeKSo5zhjr38FRpWcBlCdEaviw");'
-            ></div>
-          </div>
-        </header>
-        <div class="px-40 flex flex-1 justify-center py-5">
-          <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
-            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-[#121317] tracking-light text-[32px] font-bold leading-tight min-w-72">Ajukan Beasiswa</p></div>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-[2_2_0px] flex-col gap-4">
-                  <div class="flex flex-col gap-1">
-                    <p class="text-[#121317] text-base font-bold leading-tight">Beasiswa Prestasi Akademik</p>
-                    <p class="text-[#656d86] text-sm font-normal leading-normal">Status: Terbuka</p>
-                  </div>
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-fit"
-                  >
-                    <span class="truncate">Ajukan</span>
-                  </button>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5uYeMPVqxjg6x24xWKuRJUF6rllapFa6tWdnOjlXNTGZ6lwp2spUYO9wv-fH4vv1VKQBCbp4qsW9kzRViRRaBH2daxZBYps2x8MPPT_b-vjhtIAah38qyrShlVhwQdzotPTu_Fl5z3Tiy7ZR96nx9JERmhv4a5-C97mlgzE6LsYvVbM3Unj31NQ_KwI_bWNfNfeQC0hEZ02oa9mDO-83yy-UTHEG3-aOYlTVcpEZCC_OyUKUWlcwsjNi71nW-KMDcJCieVpA5ow");'
-                ></div>
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-[2_2_0px] flex-col gap-4">
-                  <div class="flex flex-col gap-1">
-                    <p class="text-[#121317] text-base font-bold leading-tight">Beasiswa Bakti Nusa</p>
-                    <p class="text-[#656d86] text-sm font-normal leading-normal">Status: Terbuka</p>
-                  </div>
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-fit"
-                  >
-                    <span class="truncate">Ajukan</span>
-                  </button>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAHM19Vyz_8ZkGiKpkuER0Q0FP7APzl0SVIkJG3zSLey43zGhKMrxA8SFQpdZgYNj0NkuOWWIgKEtLqBo9_KNrEJvx7_BLsV_QdmiJeRGj_XyQNmuyn8xKuwTpXn05gkMQJWRWwM4WBxWISrDwOvfDon7gAx_-C-V3iGakD14OoJK0ryKrPZOeLo7SiSKKZ5icmL1lEiwzNDZDTLtKQ74WENjNU-xWBrVfrDIHwNbBdOXvKuySpl9t1CZHrzeDiFA7RHSzpaF3tA");'
-                ></div>
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-[2_2_0px] flex-col gap-4">
-                  <div class="flex flex-col gap-1">
-                    <p class="text-[#121317] text-base font-bold leading-tight">Beasiswa Unggulan</p>
-                    <p class="text-[#656d86] text-sm font-normal leading-normal">Status: Ditutup</p>
-                  </div>
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-fit"
-                  >
-                    <span class="truncate">Lihat Detail</span>
-                  </button>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnPmxfUPwv8CfqxyM9yw_u6ofTmhqkJ53SPodZsZTMqWHqBOIMSEKj3HpISPYLN-k6Q53G1mYLj8UJ1uhOUSPm66nyMczBF4yPy9X_HtCBZp0MIYPK1xpFx0ARcTv0ZUEDIG981cYMYMWTKnnr-4QyqbdZoYr9L767rQI-BTioEHPvuGc4LrU5Cy-dCMc1-NyZ35wWmeCnKxBwj8FM7c-nc1PQ-BTZYouLTPDqcqxBg2NC8-fh8D1UTenyjF7YHNfhykOBLAbFOA");'
-                ></div>
-              </div>
-            </div>
-            <div class="flex px-4 py-3 justify-end">
-              <button
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f0f1f4] text-[#121317] text-sm font-bold leading-normal tracking-[0.015em]"
-              >
-                <span class="truncate">Kembali</span>
-              </button>
-            </div>
-          </div>
+@section('content')
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">Daftar Beasiswa</h1>
+            <p class="text-gray-600 mt-2">Lihat semua program beasiswa yang tersedia dan pilih yang paling sesuai dengan Anda</p>
         </div>
-      </div>
+
+        <!-- Filter & Search -->
+        <div class="mb-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Cari Beasiswa</label>
+                    <input type="text" id="search" placeholder="Ketikkan nama beasiswa..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <select id="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="">Semua Status</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="ditutup">Ditutup</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button onclick="resetFilters()" class="w-full px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors">Reset Filter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beasiswa Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            @forelse($beasiswas as $beasiswa)
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow beasiswa-card" data-status="{{ $beasiswa->status }}" data-nama="{{ strtolower($beasiswa->nama_beasiswa) }}">
+                <!-- Header Card -->
+                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
+                    <h3 class="text-lg font-bold text-white">{{ $beasiswa->nama_beasiswa }}</h3>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="inline-block px-3 py-1 bg-white bg-opacity-20 text-white text-xs font-semibold rounded-full">
+                            {{ ucfirst($beasiswa->status) }}
+                        </span>
+                        @if($beasiswa->status === 'aktif')
+                            <span class="inline-block w-2 h-2 bg-green-400 rounded-full"></span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6 space-y-4">
+                    <!-- Deskripsi -->
+                    <div>
+                        <p class="text-sm text-gray-600 line-clamp-3">{{ $beasiswa->deskripsi }}</p>
+                    </div>
+
+                    <!-- Info Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-3">
+                            <p class="text-xs text-gray-600 mb-1">Kuota Tersedia</p>
+                            <p class="text-lg font-bold text-blue-600">{{ $beasiswa->kuota }}</p>
+                        </div>
+                        <div class="bg-indigo-50 rounded-lg p-3">
+                            <p class="text-xs text-gray-600 mb-1">Nomor Beasiswa</p>
+                            <p class="text-lg font-bold text-indigo-600">#{{ str_pad($beasiswa->id, 3, '0', STR_PAD_LEFT) }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Details List -->
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-blue-600 mt-0.5 flex-shrink-0">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                            </svg>
+                            <span class="text-gray-700">Jenis: <strong>{{ ucwords(str_replace('_', ' ', $beasiswa->kategori ?? 'Umum')) }}</strong></span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-green-600 mt-0.5 flex-shrink-0">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022l-3.477 2.905-2.068-2.323a.75.75 0 0 0-1.085.002l-.001.001a.75.75 0 0 0 .171 1.08l2.540 2.882 3.900-3.256a.75.75 0 0 0-.936-1.137L5.5 9.236l2.428 2.428 3.35-3.365a.75.75 0 1 0-1.06-1.06l-2.395 2.465-2.889-2.889a.75.75 0 1 0-1.061 1.061l2.889 2.889-3.183 2.652a.75.75 0 1 0 .976 1.138l3.183-2.652 3.477-2.905a.75.75 0 0 0 .02-1.102z"/>
+                            </svg>
+                            <span class="text-gray-700">Persyaratan: IPK, Prestasi, Dokumen</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex gap-2">
+                    <a href="{{ route('mahasiswa.beasiswa.detail', $beasiswa->id) }}" class="flex-1 px-4 py-2 text-center bg-blue-50 text-blue-600 font-medium rounded-lg hover:bg-blue-100 transition-colors">
+                        Lihat Detail
+                    </a>
+                    @if($beasiswa->status === 'aktif')
+                        <a href="{{ route('mahasiswa.ajukanBeasiswa') }}?beasiswa={{ $beasiswa->id }}" class="flex-1 px-4 py-2 text-center bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+                            Ajukan
+                        </a>
+                    @else
+                        <button disabled class="flex-1 px-4 py-2 text-center bg-gray-300 text-gray-500 font-medium rounded-lg cursor-not-allowed">
+                            Ditutup
+                        </button>
+                    @endif
+                </div>
+            </div>
+            @empty
+            <div class="col-span-full text-center py-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="mx-auto text-gray-300 mb-4">
+                    <path d="M8.5 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                </svg>
+                <p class="text-gray-500 text-lg">Belum ada program beasiswa yang tersedia</p>
+            </div>
+            @endforelse
+        </div>
+
+        <!-- Info Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div class="bg-white rounded-xl shadow-sm border border-blue-200 p-6">
+                <div class="flex items-start gap-3">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-blue-600">
+                            <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Program Beragam</h3>
+                        <p class="text-sm text-gray-600">Berbagai program beasiswa tersedia untuk berbagai kriteria dan kebutuhan</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-green-200 p-6">
+                <div class="flex items-start gap-3">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-green-600">
+                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Proses Mudah</h3>
+                        <p class="text-sm text-gray-600">Proses pengajuan yang sederhana dan transparan dengan penilaian yang adil</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-purple-200 p-6">
+                <div class="flex items-start gap-3">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-purple-600">
+                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.5-6a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-1">Dukungan Penuh</h3>
+                        <p class="text-sm text-gray-600">Tim support siap membantu menjawab pertanyaan Anda kapan saja</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
-</html>
+</div>
+
+<script>
+function resetFilters() {
+    document.getElementById('search').value = '';
+    document.getElementById('status').value = '';
+    filterCards();
+}
+
+function filterCards() {
+    const searchInput = document.getElementById('search').value.toLowerCase();
+    const statusInput = document.getElementById('status').value;
+    const cards = document.querySelectorAll('.beasiswa-card');
+
+    cards.forEach(card => {
+        const nama = card.dataset.nama;
+        const status = card.dataset.status;
+        
+        const matchSearch = nama.includes(searchInput);
+        const matchStatus = statusInput === '' || status === statusInput;
+        
+        card.style.display = (matchSearch && matchStatus) ? 'block' : 'none';
+    });
+}
+
+document.getElementById('search').addEventListener('keyup', filterCards);
+document.getElementById('status').addEventListener('change', filterCards);
+</script>
+@endsection

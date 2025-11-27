@@ -1,155 +1,172 @@
-<html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-      rel="stylesheet"
-      as="style"
-      onload="this.rel='stylesheet'"
-      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900"
-    />
+@extends('layouts.mahasiswa')
 
-    <title>Stitch Design</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  </head>
-  <body>
-    <div class="relative flex h-auto min-h-screen w-full flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
-      <div class="layout-container flex h-full grow flex-col">
-        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-          <div class="layout-content-container flex flex-col w-80">
-            <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
-              <div class="flex flex-col gap-4">
-                <div class="flex gap-3">
-                  <div
-                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBdVMxyxvE63uoY2UrurCnNsxURd8wRPZHw2QV6g_PJnEuaeLFbWggjFvWvH2CsoamWwiwjjthxfE6fjcowSQb-_z0GKf3Ol6NFe1TrfVUvV0WxAHxBvWbC-r0MVxZaK_XPiQc1vToU1nZHaD2FtPNVdj7c_pXVkz7CQtBwnMqjQVSOt3A3Fb6u35zsc2oRRmevWczHA2pG75X1VtLn0HauHZGRiWnBZtoVfArVxPZ4Xko_ownMeKSo5zhjr38FRpWcBlCdEaviw");'
-                  ></div>
-                  <h1 class="text-[#111318] text-base font-medium leading-normal">DipaTalent</h1>
-                </div>
-                <div class="flex flex-col gap-2">
-                  <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f0f1f4]">
-                    <div class="text-[#111318]" data-icon="GraduationCap" data-size="24px" data-weight="fill">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M176,207.24a119,119,0,0,0,16-7.73V240a8,8,0,0,1-16,0Zm11.76-88.43-56-29.87a8,8,0,0,0-7.52,14.12L171,128l17-9.06Zm64-29.87-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V130.67L171,128l-43,22.93L43.83,106l0,0L25,96,128,41.07,231,96l-18.78,10-.06,0L188,118.94a8,8,0,0,1,4,6.93v73.64a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#111318] text-sm font-medium leading-normal">Beasiswa</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#111318]" data-icon="Trophy" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M232,64H208V56a16,16,0,0,0-16-16H64A16,16,0,0,0,48,56v8H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8Zm144-8.9c0,35.52-28.49,64.64-63.51,64.9H128a64,64,0,0,1-64-64V56H192ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#111318] text-sm font-medium leading-normal">Prestasi</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#111318]" data-icon="UsersThree" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#111318] text-sm font-medium leading-normal">Leaderboard</p>
-                  </div>
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#111318]" data-icon="User" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#111318] text-sm font-medium leading-normal">Profil</p>
-                  </div>
-                </div>
-              </div>
-              <div class="flex flex-col gap-4">
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#153fb2] text-white text-sm font-bold leading-normal tracking-[0.015em]"
-                >
-                  <span class="truncate">Ajukan Beasiswa</span>
-                </button>
-                <div class="flex flex-col gap-1">
-                  <div class="flex items-center gap-3 px-3 py-2">
-                    <div class="text-[#111318]" data-icon="Question" data-size="24px" data-weight="regular">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                        <path
-                          d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
-                        ></path>
-                      </svg>
-                    </div>
-                    <p class="text-[#111318] text-sm font-medium leading-normal">Bantuan</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-            <div class="flex flex-wrap justify-between gap-3 p-4">
-              <p class="text-[#111318] tracking-light text-[32px] font-bold leading-tight min-w-72">Selamat datang, Amelia</p>
-            </div>
-            <h2 class="text-[#111318] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Beasiswa Aktif</h2>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-[2_2_0px] flex-col gap-4">
-                  <div class="flex flex-col gap-1">
-                    <p class="text-[#111318] text-base font-bold leading-tight">Beasiswa Prestasi Akademik</p>
-                    <p class="text-[#636d88] text-sm font-normal leading-normal">Deadline: 30 November 2024</p>
-                  </div>
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#111318] text-sm font-medium leading-normal w-fit"
-                  >
-                    <span class="truncate">Ajukan</span>
-                  </button>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5uYeMPVqxjg6x24xWKuRJUF6rllapFa6tWdnOjlXNTGZ6lwp2spUYO9wv-fH4vv1VKQBCbp4qsW9kzRViRRaBH2daxZBYps2x8MPPT_b-vjhtIAah38qyrShlVhwQdzotPTu_Fl5z3Tiy7ZR96nx9JERmhv4a5-C97mlgzE6LsYvVbM3Unj31NQ_KwI_bWNfNfeQC0hEZ02oa9mDO-83yy-UTHEG3-aOYlTVcpEZCC_OyUKUWlcwsjNi71nW-KMDcJCieVpA5ow");'
-                ></div>
-              </div>
-            </div>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-[2_2_0px] flex-col gap-4">
-                  <div class="flex flex-col gap-1">
-                    <p class="text-[#111318] text-base font-bold leading-tight">Beasiswa Bakti Nusa</p>
-                    <p class="text-[#636d88] text-sm font-normal leading-normal">Deadline: 15 Desember 2024</p>
-                  </div>
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#111318] text-sm font-medium leading-normal w-fit"
-                  >
-                    <span class="truncate">Ajukan</span>
-                  </button>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAHM19Vyz_8ZkGiKpkuER0Q0FP7APzl0SVIkJG3zSLey43zGhKMrxA8SFQpdZgYNj0NkuOWWIgKEtLqBo9_KNrEJvx7_BLsV_QdmiJeRGj_XyQNmuyn8xKuwTpXn05gkMQJWRWwM4WBxWISrDwOvfDon7gAx_-C-V3iGakD14OoJK0ryKrPZOeLo7SiSKKZ5icmL1lEiwzNDZDTLtKQ74WENjNU-xWBrVfrDIHwNbBdOXvKuySpl9t1CZHrzeDiFA7RHSzpaF3tA");'
-                ></div>
-              </div>
-            </div>
-            <h2 class="text-[#111318] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Status Beasiswa Terakhir</h2>
-            <div class="p-4">
-              <div class="flex items-stretch justify-between gap-4 rounded-lg bg-white p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)]">
-                <div class="flex flex-col gap-1 flex-[2_2_0px]">
-                  <p class="text-[#111318] text-base font-bold leading-tight">Beasiswa Prestasi Akademik</p>
-                  <p class="text-[#636d88] text-sm font-normal leading-normal">Status: Diajukan</p>
-                </div>
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnPmxfUPwv8CfqxyM9yw_u6ofTmhqkJ53SPodZsZTMqWHqBOIMSEKj3HpISPYLN-k6Q53G1mYLj8UJ1uhOUSPm66nyMczBF4yPy9X_HtCBZp0MIYPK1xpFx0ARcTv0ZUEDIG981cYMYMWTKnnr-4QyqbdZoYr9L767rQI-BTioEHPvuGc4LrU5Cy-dCMc1-NyZ35wWmeCnKxBwj8FM7c-nc1PQ-BTZYouLTPDqcqxBg2NC8-fh8D1UTenyjF7YHNfhykOBLAbFOA");'
-                ></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+@section('content')
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Welcome Header -->
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-900">Selamat datang, {{ Auth::user()->name }}! 👋</h2>
+        <p class="text-gray-600 mt-1">NIM: {{ Auth::user()->nim ?? 'N/A' }}</p>
     </div>
-  </body>
-</html>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <!-- Stat Card 1 - Beasiswa Aktif -->
+        <div class="bg-white rounded-xl shadow-sm border border-blue-100 p-6 hover:shadow-lg transition-all hover:scale-105">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 mb-2">Beasiswa Aktif</p>
+                    <p class="text-3xl font-bold text-blue-600">{{ $pendaftaranCount ?? 0 }}</p>
+                    <p class="text-xs text-gray-500 mt-1">pengajuan sedang diproses</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-blue-600">
+                        <path d="M4 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2V4zm2.5 7a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 0 0-5h-3zm9-7a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v-8zm-2.5 7a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 0 0-5h-3z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat Card 2 - Prestasi -->
+        <div class="bg-white rounded-xl shadow-sm border border-green-100 p-6 hover:shadow-lg transition-all hover:scale-105">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 mb-2">Total Prestasi</p>
+                    <p class="text-3xl font-bold text-green-600">{{ $prestasiCount ?? 0 }}</p>
+                    <p class="text-xs text-gray-500 mt-1">pencapaian Anda</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-green-600">
+                        <path d="M6 .5a.5.5 0 0 1 .5.5v6h3V1a.5.5 0 0 1 1 0v6h3V1a.5.5 0 0 1 1 0v6.5a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5V1a.5.5 0 0 1 .5-.5h1V.5a.5.5 0 0 1 .5-.5h1V.5a.5.5 0 0 1 .5-.5h1V.5z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat Card 3 - IPK -->
+        <div class="bg-white rounded-xl shadow-sm border border-purple-100 p-6 hover:shadow-lg transition-all hover:scale-105">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 mb-2">IPK Tertinggi</p>
+                    <p class="text-3xl font-bold text-purple-600">{{ $maxIPK ?? '0.00' }}</p>
+                    <p class="text-xs text-gray-500 mt-1">dari maksimal 4.0</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-purple-600">
+                        <path d="M12.206 3.007H3.794a.75.75 0 1 0 0 1.5h8.412a.75.75 0 1 0 0-1.5zM3.794 6.757h8.412a.75.75 0 0 0 0-1.5H3.794a.75.75 0 0 0 0 1.5zm0 3a.75.75 0 0 0 0 1.5h8.412a.75.75 0 0 0 0-1.5H3.794z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat Card 4 - Skor SAW Ranking -->
+        <div class="bg-white rounded-xl shadow-sm border border-indigo-100 p-6 hover:shadow-lg transition-all hover:scale-105">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 mb-2">Ranking SAW</p>
+                    <p class="text-3xl font-bold text-indigo-600">#{{ $ranking ?? '-' }}</p>
+                    <p class="text-xs text-gray-500 mt-1">posisi Anda saat ini</p>
+                </div>
+                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-indigo-600">
+                        <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Recent Activities -->
+        <div class="lg:col-span-2">
+            <!-- Recent Pendaftaran -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-gray-900">📝 Pendaftaran Terbaru</h3>
+                    <a href="{{ route('mahasiswa.riwayatPendaftaran') }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Lihat Semua</a>
+                </div>
+                <div class="space-y-3">
+                    @if($recentPendaftaran && count($recentPendaftaran) > 0)
+                        @foreach($recentPendaftaran as $item)
+                        <div class="border border-gray-100 rounded-lg p-4 hover:bg-gray-50 transition">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-900">{{ $item->beasiswa->nama_beasiswa ?? 'Beasiswa' }}</p>
+                                    <p class="text-sm text-gray-600">Diajukan {{ $item->created_at->diffForHumans() }}</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium 
+                                    @if($item->status == 'pending') bg-yellow-100 text-yellow-800
+                                    @elseif($item->status == 'accepted') bg-green-100 text-green-800
+                                    @else bg-red-100 text-red-800 @endif">
+                                    {{ ucfirst($item->status) }}
+                                </span>
+                            </div>
+                        </div>
+                        @endforeach
+                    @else
+                        <p class="text-gray-500 text-center py-4">Belum ada pendaftaran beasiswa</p>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200 p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">⚡ Aksi Cepat</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="{{ route('mahasiswa.listBeasiswa') }}" class="bg-white border border-blue-200 rounded-lg p-4 hover:bg-blue-50 transition text-center">
+                        <p class="text-sm font-medium text-gray-900">Cari Beasiswa</p>
+                        <p class="text-xs text-gray-500">Jelajahi program terbaru</p>
+                    </a>
+                    <a href="{{ route('mahasiswa.prestasi') }}" class="bg-white border border-green-200 rounded-lg p-4 hover:bg-green-50 transition text-center">
+                        <p class="text-sm font-medium text-gray-900">Upload Prestasi</p>
+                        <p class="text-xs text-gray-500">Tambah pencapaian Anda</p>
+                    </a>
+                    <a href="{{ route('mahasiswa.leaderboard') }}" class="bg-white border border-purple-200 rounded-lg p-4 hover:bg-purple-50 transition text-center">
+                        <p class="text-sm font-medium text-gray-900">Leaderboard</p>
+                        <p class="text-xs text-gray-500">Lihat peringkat SAW</p>
+                    </a>
+                    <a href="{{ route('mahasiswa.galeri') }}" class="bg-white border border-indigo-200 rounded-lg p-4 hover:bg-indigo-50 transition text-center">
+                        <p class="text-sm font-medium text-gray-900">Galeri Prestasi</p>
+                        <p class="text-xs text-gray-500">Inspirasi dari sesama</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column - Info & Stats -->
+        <div>
+            <!-- My Ranking Card -->
+            <div class="bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl shadow-lg p-6 text-white mb-6">
+                <h3 class="font-bold text-lg mb-4">Peringkat Anda</h3>
+                <div class="text-center mb-4">
+                    <p class="text-5xl font-bold mb-2">#{{ $ranking ?? '-' }}</p>
+                    <p class="text-indigo-100">dari {{ $totalUsers ?? 0 }} mahasiswa</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                    <p class="text-sm text-indigo-50 mb-2">Skor SAW Anda</p>
+                    <p class="text-2xl font-bold">{{ $sawScore ?? '0.00' }}</p>
+                </div>
+            </div>
+
+            <!-- Tips & Info -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h3 class="font-bold text-gray-900 mb-4">💡 Tips untuk Anda</h3>
+                <div class="space-y-3">
+                    <div class="border-l-4 border-blue-500 pl-3">
+                        <p class="text-sm font-medium text-gray-900">Perbanyak Prestasi</p>
+                        <p class="text-xs text-gray-600">Setiap prestasi meningkatkan skor SAW Anda</p>
+                    </div>
+                    <div class="border-l-4 border-green-500 pl-3">
+                        <p class="text-sm font-medium text-gray-900">Jaga IPK</p>
+                        <p class="text-xs text-gray-600">IPK adalah kriteria utama seleksi beasiswa</p>
+                    </div>
+                    <div class="border-l-4 border-purple-500 pl-3">
+                        <p class="text-sm font-medium text-gray-900">Lengkapi Dokumen</p>
+                        <p class="text-xs text-gray-600">Dokumen lengkap meningkatkan peluang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
