@@ -3,7 +3,7 @@
 @section('title', 'Verifikasi Prestasi')
 
 @section('content')
-<div class="max-w-7xl">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {{-- Header --}}
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
@@ -29,6 +29,7 @@
     @endif
 
     {{-- Table Card --}}
+    @if(count($prestasi) > 0)
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full divide-y divide-gray-200">
@@ -54,23 +55,42 @@
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $item->tingkat ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700">{{ $item->tahun ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $item->status === 'valid' ? 'bg-green-100 text-green-800' : ($item->status === 'invalid' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
-                                {{ ucfirst($item->status ?? 'pending') }}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
+                                {{ $item->status === 'valid' ? 'bg-green-100 text-green-800' : 
+                                   ($item->status === 'invalid' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                {{ ucfirst($item->status ?? 'menunggu') }}
                             </span>
                         </td>
                         <td class="px-6 py-4 text-sm text-right space-x-2">
-                            <a href="{{ route('admin.verifikasiPrestasi.bukti', $item->id) }}" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg text-xs font-medium transition-colors duration-200">
+                            @if($item->file_sertifikat)
+                            <button onclick="openModal('{{ route('admin.verifikasiPrestasi.bukti', $item->id) }}')" 
+                                class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg text-xs font-medium transition-colors duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M1.5 1a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H1.5zM0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v12a1.5 1.5 0 0 1-1.5 1.5H1.5A1.5 1.5 0 0 1 0 13.5v-12z"/>
                                 </svg>
-                                Lihat
-                            </a>
-                            <a href="{{ route('admin.verifikasiPrestasi.edit', $item->id) }}" class="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 hover:bg-amber-200 rounded-lg text-xs font-medium transition-colors duration-200">
+                                Dokumen
+                            </button>
+                            @endif
+
+                            <button onclick="openEditModal({{ $item->id }}, '{{ $item->status }}')" 
+                                class="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 hover:bg-green-200 rounded-lg text-xs font-medium transition-colors duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10.5 10.5a.5.5 0 0 1-.168.11l-5 1.667a.5.5 0 0 1-.65-.65l1.667-5a.5.5 0 0 1 .11-.168l10.5-10.5z"/>
                                 </svg>
-                                Edit
-                            </a>
+                                Verifikasi
+                            </button>
+
+                            <form action="{{ route('admin.verifikasiPrestasi.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus prestasi ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center gap-1 px-3 py-1 bg-red-100 text-red-800 hover:bg-red-200 rounded-lg text-xs font-medium transition-colors duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                    Hapus
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -78,6 +98,7 @@
             </table>
         </div>
     </div>
+    @endif
 
     {{-- Empty State --}}
     @if(count($prestasi) === 0)
@@ -90,38 +111,10 @@
     @endif
 </div>
 
-@endsection
-                        @if($item->file_sertifikat)
-                        <button onclick="openModal('{{ route('admin.verifikasiPrestasi.bukti', $item->id) }}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
-                            Lihat Dokumen
-                        </button>
-                        @endif
-
-                        <!-- Verifikasi / Edit Status -->
-                        <button onclick="openEditModal({{ $item->id }}, '{{ $item->status }}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm">
-                            Verifikasi
-                        </button>
-
-                        <!-- Hapus -->
-                        <form action="{{ route('admin.verifikasiPrestasi.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus prestasi ini?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <!-- Modal Dokumen -->
 <div id="modalDokumen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
     <div class="bg-white rounded-lg w-11/12 md:w-3/4 lg:w-1/2 p-4 relative">
-        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
+        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900 text-2xl font-bold">&times;</button>
         <iframe id="dokumenFrame" src="" class="w-full h-96 rounded" frameborder="0"></iframe>
     </div>
 </div>
@@ -129,7 +122,7 @@
 <!-- Modal Tambah Prestasi -->
 <div id="modalAddPrestasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
     <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative">
-        <button onclick="closeAddModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
+        <button onclick="closeAddModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900 text-2xl font-bold">&times;</button>
         <h3 class="text-lg font-bold mb-4">Tambah Prestasi</h3>
         <form action="{{ route('admin.verifikasiPrestasi.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -137,7 +130,7 @@
                 <label class="block text-gray-700">Mahasiswa</label>
                 <select name="user_id" class="w-full border px-3 py-2 rounded" required>
                     <option value="">Pilih Mahasiswa</option>
-                    @foreach(App\Models\User::all() as $user)
+                    @foreach(App\Models\User::where('role', 'mahasiswa')->get() as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
@@ -159,11 +152,11 @@
             </div>
             <div class="mb-3">
                 <label class="block text-gray-700">Tahun</label>
-                <input type="number" name="tahun" class="w-full border px-3 py-2 rounded">
+                <input type="number" name="tahun" min="1900" max="{{ date('Y') }}" class="w-full border px-3 py-2 rounded">
             </div>
             <div class="mb-3">
                 <label class="block text-gray-700">Upload Sertifikat (PDF / JPG / PNG)</label>
-                <input type="file" name="file_sertifikat" class="w-full">
+                <input type="file" name="file_sertifikat" class="w-full" accept=".pdf,.jpg,.jpeg,.png">
             </div>
             <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">Simpan</button>
         </form>
@@ -173,7 +166,7 @@
 <!-- Modal Edit Status -->
 <div id="modalEditPrestasi" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
     <div class="bg-white rounded-lg w-11/12 md:w-1/3 p-6 relative">
-        <button onclick="closeEditModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">&times;</button>
+        <button onclick="closeEditModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900 text-2xl font-bold">&times;</button>
         <h3 class="text-lg font-bold mb-4">Verifikasi Prestasi</h3>
         <form id="formEditPrestasi" method="POST">
             @csrf
@@ -202,19 +195,18 @@ function closeModal() {
     document.getElementById('dokumenFrame').src = '';
 }
 
-// Tambah Prestasi
 function openAddModal() {
     document.getElementById('modalAddPrestasi').classList.remove('hidden');
 }
+
 function closeAddModal() {
     document.getElementById('modalAddPrestasi').classList.add('hidden');
 }
 
-// Edit / Verifikasi
 function openEditModal(id, status) {
     const form = document.getElementById('formEditPrestasi');
     form.action = '/admin/verifikasi-prestasi/' + id + '/update-status';
-    form.status.value = status;
+    form.querySelector('select[name="status"]').value = status;
     document.getElementById('modalEditPrestasi').classList.remove('hidden');
 }
 
