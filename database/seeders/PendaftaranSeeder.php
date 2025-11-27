@@ -9,66 +9,70 @@ use App\Models\Beasiswa;
 
 class PendaftaranSeeder extends Seeder
 {
-    /**
-     * Jalankan seeder.
-     */
     public function run(): void
     {
-        // Pastikan ada user dan beasiswa agar relasi valid
-        $user = User::first() ?? User::factory()->create([
-            'name' => 'Mahasiswa Contoh',
-            'email' => 'mahasiswa@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'mahasiswa',
-        ]);
+        $users = User::where('role', 'mahasiswa')->get();
+        $beasiswas = Beasiswa::all();
 
-        $beasiswa = Beasiswa::first() ?? Beasiswa::factory()->create([
-            'nama_beasiswa' => 'Beasiswa Prestasi Akademik',
-            'deskripsi' => 'Beasiswa untuk mahasiswa berprestasi akademik tinggi',
-        ]);
+        if ($users->isEmpty() || $beasiswas->isEmpty()) {
+            return;
+        }
 
-        // Tambahkan beberapa data dummy pendaftaran
-        $pendaftarans = [
+        $statuses = ['menunggu', 'diterima', 'ditolak'];
+        $data = [
             [
-                'user_id' => $user->id,
-                'beasiswa_id' => $beasiswa->id,
                 'ipk' => 3.85,
                 'prestasi' => 'Juara 1 Lomba Karya Tulis Ilmiah Nasional',
                 'organisasi' => 'Himpunan Mahasiswa Informatika',
                 'keterampilan' => 'Python, Laravel, Public Speaking',
-                'transkrip' => 'transkrip_mahasiswa1.pdf',
-                'foto' => 'foto_mahasiswa1.jpg',
-                'status' => 'menunggu',
-                'catatan_admin' => 'Menunggu verifikasi dokumen',
+                'catatan' => 'Lolos verifikasi dengan nilai excellent',
             ],
             [
-                'user_id' => $user->id,
-                'beasiswa_id' => $beasiswa->id,
                 'ipk' => 3.65,
                 'prestasi' => 'Finalis Hackathon DIPA 2025',
                 'organisasi' => 'BEM Fakultas Teknik',
                 'keterampilan' => 'ReactJS, Leadership, UI/UX',
-                'transkrip' => 'transkrip_mahasiswa2.pdf',
-                'foto' => 'foto_mahasiswa2.jpg',
-                'status' => 'diterima',
-                'catatan_admin' => 'Lolos tahap seleksi awal',
+                'catatan' => 'Menunggu verifikasi dokumen',
             ],
             [
-                'user_id' => $user->id,
-                'beasiswa_id' => $beasiswa->id,
-                'ipk' => 3.40,
-                'prestasi' => 'Peserta Seminar Nasional AI',
-                'organisasi' => 'Komunitas Data Science',
-                'keterampilan' => 'Machine Learning, Data Visualization',
-                'transkrip' => 'transkrip_mahasiswa3.pdf',
-                'foto' => 'foto_mahasiswa3.jpg',
-                'status' => 'ditolak',
-                'catatan_admin' => 'IPK di bawah rata-rata penerima',
+                'ipk' => 3.45,
+                'prestasi' => 'Peserta Kompetisi Programmer Se-Indonesia',
+                'organisasi' => 'IKADA',
+                'keterampilan' => 'C++, Java, Problem Solving',
+                'catatan' => 'Memenuhi semua kriteria',
+            ],
+            [
+                'ipk' => 3.25,
+                'prestasi' => 'Anggota Aktif Organisasi Mahasiswa',
+                'organisasi' => 'HIMA-IMADA',
+                'keterampilan' => 'Manajemen, Komunikasi, Teamwork',
+                'catatan' => 'IPK kurang dari batas minimum 3.5',
+            ],
+            [
+                'ipk' => 3.75,
+                'prestasi' => 'Pemenang Beasiswa Penelitian Muda',
+                'organisasi' => 'Kemristek',
+                'keterampilan' => 'Research, Writing, Data Analysis',
+                'catatan' => 'Sedang dalam proses review',
             ],
         ];
 
-        foreach ($pendaftarans as $data) {
-            Pendaftaran::create($data);
+        foreach ($users as $index => $user) {
+            $beasiswa = $beasiswas->random();
+            $datum = $data[$index % count($data)];
+
+            Pendaftaran::create([
+                'user_id' => $user->id,
+                'beasiswa_id' => $beasiswa->id,
+                'ipk' => $datum['ipk'],
+                'prestasi' => $datum['prestasi'],
+                'organisasi' => $datum['organisasi'],
+                'keterampilan' => $datum['keterampilan'],
+                'transkrip' => 'transkrip_' . $user->nim . '.pdf',
+                'foto' => 'foto_' . $user->nim . '.jpg',
+                'status' => $statuses[$index % 3],
+                'catatan_admin' => $datum['catatan'],
+            ]);
         }
     }
 }
