@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UmumController;
 use App\Http\Controllers\Admin\BeasiswaController;
 use App\Http\Controllers\Admin\PrestasiController;
 use App\Http\Controllers\Admin\sawController;
@@ -250,6 +251,34 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Link verifikasi telah dikirim ulang!');
 })->middleware(['auth', 'throttle:6,1'])
   ->name('verification.send');
+
+
+// ===============================
+// ROUTE UMUM / PENGUNJUNG (auth + verified)
+// ===============================
+Route::middleware(['auth', 'verified'])
+    ->prefix('umum')
+    ->name('umum.')
+    ->group(function () {
+    
+    // Dashboard Umum
+    Route::get('/dashboard', [\App\Http\Controllers\UmumController::class, 'dashboard'])
+        ->name('dashboard');
+    
+    // Leaderboard
+    Route::get('/leaderboard', [\App\Http\Controllers\UmumController::class, 'leaderboard'])
+        ->name('leaderboard');
+    
+    // Beasiswa Routes
+    Route::get('/beasiswa', [\App\Http\Controllers\UmumController::class, 'beasiswa'])
+        ->name('beasiswa');
+    Route::get('/beasiswa/{id}', [\App\Http\Controllers\UmumController::class, 'beasiswaDetail'])
+        ->name('beasiswa.detail');
+    
+    // Mahasiswa Profile
+    Route::get('/mahasiswa/{id}', [\App\Http\Controllers\UmumController::class, 'mahasiswaProfile'])
+        ->name('mahasiswa.profile');
+});
 
 
 // ===============================

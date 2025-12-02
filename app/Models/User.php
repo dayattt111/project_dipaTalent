@@ -55,4 +55,28 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role === 'admin';
     }
+
+    /**
+     * Get the prestasi for the user.
+     */
+    public function prestasi()
+    {
+        return $this->hasMany(Prestasi::class);
+    }
+
+    /**
+     * Get the leaderboard for the user.
+     */
+    public function leaderboard()
+    {
+        return $this->hasOne(Leaderboard::class);
+    }
+
+    /**
+     * Get the pendaftaran beasiswa for the user.
+     */
+    public function pendaftaranBeasiswa()
+    {
+        return $this->hasMany(pendaftaranBeasiswa::class);
+    }
 }
