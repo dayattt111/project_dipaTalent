@@ -9,6 +9,8 @@ class PendaftaranBeasiswa extends Model
 {
     use HasFactory;
 
+    protected $table = 'pendaftarans';
+
     protected $fillable = [
         'user_id',
         'beasiswa_id',
