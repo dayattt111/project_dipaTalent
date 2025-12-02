@@ -120,15 +120,25 @@ class UmumController extends Controller
             ->where('role', 'mahasiswa')
             ->findOrFail($id);
 
-        $totalPrestasi = $mahasiswa->prestasi->count();
-        $prestasiAkademik = $mahasiswa->prestasi->where('jenis', 'akademik')->count();
-        $prestasiNonAkademik = $mahasiswa->prestasi->where('jenis', 'non-akademik')->count();
+        // Get leaderboard data
+        $leaderboard = $mahasiswa->leaderboard;
+
+        // Get prestasi
+        $prestasis = $mahasiswa->prestasi;
+
+        // Calculate prestasi stats
+        $prestasiStats = [
+            'total' => $prestasis->count(),
+            'internasional' => $prestasis->where('tingkat', 'internasional')->count(),
+            'nasional' => $prestasis->where('tingkat', 'nasional')->count(),
+            'regional' => $prestasis->whereIn('tingkat', ['provinsi', 'kabupaten', 'kampus'])->count(),
+        ];
 
         return view('umum.mahasiswa-profile', compact(
             'mahasiswa',
-            'totalPrestasi',
-            'prestasiAkademik',
-            'prestasiNonAkademik'
+            'leaderboard',
+            'prestasis',
+            'prestasiStats'
         ));
     }
 }
