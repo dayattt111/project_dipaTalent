@@ -27,8 +27,8 @@ class DashboardAdminController extends Controller
         
         $totalPrestasi = Prestasi::count();
         $prestasiValid = Prestasi::where('status', 'valid')->count();
-        $prestasiPending = Prestasi::where('status', 'pending')->count();
-        $prestasiDitolak = Prestasi::where('status', 'ditolak')->count();
+        $prestasiPending = Prestasi::where('status', 'menunggu')->count();
+        $prestasiDitolak = Prestasi::where('status', 'invalid')->count();
         
         $totalUsers = User::count();
         $totalAdmin = User::where('role', 'admin')->count();

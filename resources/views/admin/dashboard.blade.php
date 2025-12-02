@@ -6,7 +6,7 @@
         
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">📊 Dashboard Admin</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
             <p class="text-gray-600 mt-2">Selamat datang kembali, {{ Auth::user()->name }}!</p>
             <div class="flex items-center gap-2 mt-3 text-sm text-gray-500">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -118,13 +118,17 @@
             <!-- Prestasi by Tingkat Chart -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                 <h3 class="text-lg font-bold text-gray-900 mb-4">📈 Prestasi Berdasarkan Tingkat</h3>
-                <canvas id="prestasiTingkatChart" height="250"></canvas>
+                <div style="position: relative; height: 250px;">
+                    <canvas id="prestasiTingkatChart"></canvas>
+                </div>
             </div>
 
             <!-- Prestasi by Jenis Chart -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                 <h3 class="text-lg font-bold text-gray-900 mb-4">🎯 Prestasi Berdasarkan Jenis</h3>
-                <canvas id="prestasiJenisChart" height="250"></canvas>
+                <div style="position: relative; height: 250px;">
+                    <canvas id="prestasiJenisChart"></canvas>
+                </div>
             </div>
 
         </div>
@@ -132,7 +136,9 @@
         <!-- Pendaftaran Trend Chart -->
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
             <h3 class="text-lg font-bold text-gray-900 mb-4">📊 Tren Pendaftaran Beasiswa (6 Bulan Terakhir)</h3>
-            <canvas id="pendaftaranTrendChart" height="100"></canvas>
+            <div style="position: relative; height: 300px;">
+                <canvas id="pendaftaranTrendChart"></canvas>
+            </div>
         </div>
 
         <!-- Recent Activities -->
@@ -200,8 +206,8 @@
                                 </span>
                                 <span class="px-2 py-1 rounded-full text-xs font-semibold
                                     {{ $prestasi->status == 'valid' ? 'bg-green-100 text-green-700' : '' }}
-                                    {{ $prestasi->status == 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
-                                    {{ $prestasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : '' }}">
+                                    {{ $prestasi->status == 'menunggu' ? 'bg-yellow-100 text-yellow-700' : '' }}
+                                    {{ $prestasi->status == 'invalid' ? 'bg-red-100 text-red-700' : '' }}">
                                     {{ ucfirst($prestasi->status) }}
                                 </span>
                             </div>
@@ -314,7 +320,8 @@
                     colors.blue,
                     colors.yellow
                 ],
-                borderWidth: 0
+                borderColor: '#fff',
+                borderWidth: 3
             }]
         },
         options: {
@@ -322,7 +329,13 @@
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        font: {
+                            size: 12
+                        }
+                    }
                 }
             }
         }
