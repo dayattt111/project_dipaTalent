@@ -54,30 +54,45 @@ class SawController extends Controller
         ]);
 
         // Get bobot dalam format decimal (0-1)
-        $newBobot = floatval($request->bobot_decimal);
+        $newBobot = round(floatval($request->bobot_decimal), 4);
 
-        // Update kriteria yang diedit
+        // Ambil semua kriteria kecuali yang diedit
+        $otherKriterias = BobotKriteria::where('id', '!=', $id)->get();
+        $countOthers = $otherKriterias->count();
+
+        // Hitung sisa total untuk dibagi ke kriteria lain
+        $remaining = round(1 - $newBobot, 4);
+        
+        if ($countOthers > 0) {
+            // Bagikan sisa bobot secara merata ke kriteria lain
+            $share = round($remaining / $countOthers, 4);
+            
+            // Hitung akumulasi untuk adjustment
+            $totalDistributed = $share * $countOthers;
+            $difference = round($remaining - $totalDistributed, 4);
+            
+            // Update kriteria lain
+            $updated = 0;
+            foreach ($otherKriterias as $k) {
+                $bobotBaru = $share;
+                
+                // Tambahkan sisa pembulatan ke kriteria terakhir
+                if ($updated === $countOthers - 1 && $difference != 0) {
+                    $bobotBaru = round($share + $difference, 4);
+                }
+                
+                $k->update(['bobot' => $bobotBaru]);
+                $updated++;
+            }
+        }
+
+        // Update kriteria yang diedit SETELAH update yang lain
         $kriteria = BobotKriteria::findOrFail($id);
         $kriteria->update([
             'nama_kriteria' => $request->nama_kriteria,
             'bobot'         => $newBobot,
             'tipe'          => $request->tipe,
         ]);
-
-        // Ambil semua kriteria kecuali yang diedit
-        $otherKriterias = BobotKriteria::where('id', '!=', $id)->get();
-
-        // Hitung sisa total untuk dibagi ke kriteria lain
-        $remaining = 1 - $newBobot;
-        $countOthers = $otherKriterias->count();
-
-        if ($countOthers > 0) {
-            // Bagikan sisa bobot secara merata ke kriteria lain
-            $share = $remaining / $countOthers;
-            foreach ($otherKriterias as $k) {
-                $k->update(['bobot' => round($share, 4)]);
-            }
-        }
 
         // Recalculate SAW
         $this->hitungNormalisasiSaw();
