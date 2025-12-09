@@ -83,7 +83,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                                    {{ $mahasiswa->updated_at->format('d M Y, H:i') }}
+                                    {{ \Carbon\Carbon::parse($mahasiswa->updated_at)->format('d M Y, H:i') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <div class="flex items-center justify-center gap-2">
@@ -181,7 +181,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                                    {{ $mahasiswa->ipk_verified_at ? $mahasiswa->ipk_verified_at->format('d M Y, H:i') : '-' }}
+                                    {{ $mahasiswa->ipk_verified_at ? \Carbon\Carbon::parse($mahasiswa->ipk_verified_at)->format('d M Y, H:i') : '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-500">
                                     {{ $mahasiswa->ipk_catatan_admin ?? '-' }}
