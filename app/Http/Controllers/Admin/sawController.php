@@ -56,43 +56,71 @@ class SawController extends Controller
         // Get bobot dalam format decimal (0-1)
         $newBobot = round(floatval($request->bobot_decimal), 4);
 
-        // Ambil semua kriteria kecuali yang diedit
-        $otherKriterias = BobotKriteria::where('id', '!=', $id)->get();
-        $countOthers = $otherKriterias->count();
-
-        // Hitung sisa total untuk dibagi ke kriteria lain
-        $remaining = round(1 - $newBobot, 4);
-        
-        if ($countOthers > 0) {
-            // Bagikan sisa bobot secara merata ke kriteria lain
-            $share = round($remaining / $countOthers, 4);
-            
-            // Hitung akumulasi untuk adjustment
-            $totalDistributed = $share * $countOthers;
-            $difference = round($remaining - $totalDistributed, 4);
-            
-            // Update kriteria lain
-            $updated = 0;
-            foreach ($otherKriterias as $k) {
-                $bobotBaru = $share;
-                
-                // Tambahkan sisa pembulatan ke kriteria terakhir
-                if ($updated === $countOthers - 1 && $difference != 0) {
-                    $bobotBaru = round($share + $difference, 4);
-                }
-                
-                $k->update(['bobot' => $bobotBaru]);
-                $updated++;
-            }
-        }
-
-        // Update kriteria yang diedit SETELAH update yang lain
+        // Update kriteria yang diedit dulu
         $kriteria = BobotKriteria::findOrFail($id);
+        $oldBobot = $kriteria->bobot;
+        
         $kriteria->update([
             'nama_kriteria' => $request->nama_kriteria,
             'bobot'         => $newBobot,
             'tipe'          => $request->tipe,
         ]);
+
+        // Ambil semua kriteria lain
+        $otherKriterias = BobotKriteria::where('id', '!=', $id)->get();
+        $countOthers = $otherKriterias->count();
+
+        if ($countOthers > 0) {
+            // Hitung total bobot kriteria lain saat ini
+            $totalOtherBobot = $otherKriterias->sum('bobot');
+            
+            // Sisa bobot yang harus dibagi ke kriteria lain
+            $remaining = round(1 - $newBobot, 4);
+            
+            if ($totalOtherBobot > 0) {
+                // Sesuaikan setiap kriteria lain secara proporsional
+                $updated = 0;
+                $totalAdjusted = 0;
+                
+                foreach ($otherKriterias as $k) {
+                    // Hitung proporsi kriteria ini terhadap total kriteria lain
+                    $proportion = $k->bobot / $totalOtherBobot;
+                    
+                    // Hitung bobot baru berdasarkan proporsi
+                    if ($updated === $countOthers - 1) {
+                        // Kriteria terakhir: berikan sisa agar total tepat 100%
+                        $bobotBaru = round($remaining - $totalAdjusted, 4);
+                    } else {
+                        $bobotBaru = round($remaining * $proportion, 4);
+                        $totalAdjusted += $bobotBaru;
+                    }
+                    
+                    // Pastikan tidak negatif
+                    $bobotBaru = max(0, $bobotBaru);
+                    
+                    $k->update(['bobot' => $bobotBaru]);
+                    $updated++;
+                }
+            } else {
+                // Jika total kriteria lain = 0, bagikan merata
+                $share = round($remaining / $countOthers, 4);
+                $totalDistributed = 0;
+                $updated = 0;
+                
+                foreach ($otherKriterias as $k) {
+                    if ($updated === $countOthers - 1) {
+                        // Kriteria terakhir: berikan sisa
+                        $bobotBaru = round($remaining - $totalDistributed, 4);
+                    } else {
+                        $bobotBaru = $share;
+                        $totalDistributed += $bobotBaru;
+                    }
+                    
+                    $k->update(['bobot' => max(0, $bobotBaru)]);
+                    $updated++;
+                }
+            }
+        }
 
         // Recalculate SAW
         $this->hitungNormalisasiSaw();
