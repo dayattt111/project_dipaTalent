@@ -12,6 +12,13 @@ class sawSeeder extends Seeder
 {
     public function run(): void
     {
+        // Hapus semua data lama
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        BobotKriteria::truncate();
+        SkorSaw::truncate();
+        Leaderboard::truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         // 1. Buat Bobot Kriteria dengan nama yang lebih deskriptif
         $kriterias = [
             [
@@ -35,50 +42,50 @@ class sawSeeder extends Seeder
                 'tipe' => 'benefit',
             ],
             [
-                'nama_kriteria' => 'Pengalaman Profesional',
+                'nama_kriteria' => 'Prestasi Non-Akademik',
                 'bobot' => 0.20,
                 'tipe' => 'benefit',
             ],
         ];
 
-        $bobot_kriterias = [];
         foreach ($kriterias as $k) {
-            $bobot_kriterias[] = BobotKriteria::create($k);
+            BobotKriteria::create($k);
         }
 
-        // 2. Buat data Skor SAW untuk setiap mahasiswa
+        // 2. Isi data mahasiswa dengan IPK, Organisasi, Sertifikasi
         $mahasiswa = User::where('role', 'mahasiswa')->get();
 
-        $skors = [];
-        foreach ($mahasiswa as $index => $user) {
-            // Generate skor random antara 0.60-1.00 (normalized)
-            $nilai_akhir = (rand(60, 100) + rand(0, 99) / 100);
-            $nilai_akhir = round($nilai_akhir / 100, 4); // Convert to 0-1 scale
+        foreach ($mahasiswa as $user) {
+            // Update IPK random 2.50 - 4.00
+            $user->update(['ipk' => rand(250, 400) / 100]);
 
-            $skor = SkorSaw::create([
-                'user_id' => $user->id,
-                'total_skor' => $nilai_akhir,
-                'nilai_akhir' => $nilai_akhir,
-            ]);
-            
-            $skors[] = $skor;
+            // Buat 1-3 organisasi
+            for ($i = 0; $i < rand(1, 3); $i++) {
+                \App\Models\Organisasi::create([
+                    'user_id' => $user->id,
+                    'nama_organisasi' => ['HMTI', 'BEM', 'Himpunan Mahasiswa', 'UKM Olahraga', 'Pecinta Alam'][array_rand(['HMTI', 'BEM', 'Himpunan Mahasiswa', 'UKM Olahraga', 'Pecinta Alam'])],
+                    'jabatan' => ['Anggota', 'Sekretaris', 'Bendahara', 'Ketua'][array_rand(['Anggota', 'Sekretaris', 'Bendahara', 'Ketua'])],
+                    'periode' => '2023-2024',
+                    'status' => 'valid',
+                    'poin' => 1,
+                ]);
+            }
 
-            // 3. Buat Leaderboard berdasarkan skor
-            Leaderboard::create([
-                'user_id' => $user->id,
-                'skor_id' => $skor->id,
-                'peringkat' => $index + 1,
-            ]);
+            // Buat 0-2 sertifikasi
+            for ($i = 0; $i < rand(0, 2); $i++) {
+                \App\Models\Sertifikasi::create([
+                    'user_id' => $user->id,
+                    'nama_sertifikat' => ['AWS Certified', 'BNSP Junior Web Developer', 'Google Data Analytics', 'Microsoft Azure'][array_rand(['AWS Certified', 'BNSP Junior Web Developer', 'Google Data Analytics', 'Microsoft Azure'])],
+                    'penerbit' => ['BNSP', 'Google', 'Microsoft', 'AWS'][array_rand(['BNSP', 'Google', 'Microsoft', 'AWS'])],
+                    'jenis' => ['BNSP', 'Bootcamp', 'Online Course'][array_rand(['BNSP', 'Bootcamp', 'Online Course'])],
+                    'tanggal_terbit' => now()->subMonths(rand(1, 12)),
+                    'status' => 'valid',
+                    'poin' => rand(1, 3),
+                ]);
+            }
         }
 
-        // Urutkan ulang ranking berdasarkan nilai_akhir
-        $leaderboards = Leaderboard::join('skor_saw', 'leaderboards.skor_id', '=', 'skor_saw.id')
-            ->orderBy('skor_saw.nilai_akhir', 'desc')
-            ->select('leaderboards.*')
-            ->get();
-
-        foreach ($leaderboards as $index => $lb) {
-            $lb->update(['peringkat' => $index + 1]);
-        }
+        // 3. Trigger perhitungan SAW
+        app(\App\Http\Controllers\Admin\SawController::class)->hitungSaw();
     }
 }

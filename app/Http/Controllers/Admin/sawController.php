@@ -12,10 +12,21 @@ use Illuminate\Http\Request;
 
 class SawController extends Controller
 {
+    private $rawData = [];
+
     public function index()
     {
         $kriterias = BobotKriteria::all();
         return view('admin.metode.index', compact('kriterias'));
+    }
+
+    /**
+     * Public method untuk trigger perhitungan SAW dari controller lain
+     */
+    public function hitungSaw()
+    {
+        $this->hitungNormalisasiSaw();
+        $this->hitungSkorSaw();
     }
 
     public function store(Request $request)
@@ -134,51 +145,37 @@ class SawController extends Controller
     // ======================================
     // ==========  NORMALISASI SAW ==========
     // ======================================
+    // Kriteria Baru:
+    // 1. IPK (benefit)
+    // 2. Prestasi Akademik (benefit) - total poin
+    // 3. Organisasi (benefit) - jumlah valid
+    // 4. Sertifikasi (benefit) - total poin
+    // 5. Prestasi Non-Akademik (benefit) - total poin
 
     private function hitungNormalisasiSaw()
     {
+        $users = \App\Models\User::where('role', 'mahasiswa')->get();
         $kriterias = BobotKriteria::all();
-        $prestasis = Prestasi::all();
 
-        foreach ($kriterias as $kriteria) {
-
-            // Ambil nilai asli prestasi berdasar kriteria
-            $nilai_asli = NormalisasiSaw::where('kriteria_id', $kriteria->id)
-                                        ->pluck('nilai_normalisasi')
-                                        ->toArray();
-
-            if (empty($nilai_asli)) {
-                continue;
-            }
-
-            // Benefit = nilai / max
-            // Cost    = min / nilai
-            $max = max($nilai_asli);
-            $min = min($nilai_asli);
-
-            foreach ($prestasis as $p) {
-
-                $data = NormalisasiSaw::where('prestasi_id', $p->id)
-                                       ->where('kriteria_id', $kriteria->id)
-                                       ->first();
-
-                if (!$data) {
-                    continue;
-                }
-
-                $nilai = $data->nilai_normalisasi;
-
-                if ($kriteria->tipe == 'benefit') {
-                    $hasil = $max == 0 ? 0 : $nilai / $max;
-                } else {
-                    $hasil = $nilai == 0 ? 0 : $min / $nilai;
-                }
-
-                $data->update([
-                    'nilai_normalisasi' => round($hasil, 4),
-                ]);
-            }
+        if ($kriterias->count() != 5) {
+            return; // Harus ada 5 kriteria
         }
+
+        $dataMahasiswa = [];
+
+        // Kumpulkan data mentah setiap mahasiswa
+        foreach ($users as $user) {
+            $dataMahasiswa[$user->id] = [
+                'ipk' => $user->ipk ?? 0,
+                'prestasi_akademik' => $user->prestasi()->valid()->akademik()->get()->sum('poin'),
+                'organisasi' => $user->organisasi()->valid()->count(),
+                'sertifikasi' => $user->sertifikasi()->valid()->get()->sum('poin'),
+                'prestasi_non_akademik' => $user->prestasi()->valid()->nonAkademik()->get()->sum('poin'),
+            ];
+        }
+
+        // Simpan untuk normalisasi
+        $this->rawData = $dataMahasiswa;
     }
 
 
@@ -188,30 +185,48 @@ class SawController extends Controller
 
     private function hitungSkorSaw()
     {
-        $kriterias = BobotKriteria::all();
-        $prestasis = Prestasi::all();
+        if (!isset($this->rawData) || empty($this->rawData)) {
+            return;
+        }
 
-        foreach ($prestasis as $p) {
+        $kriterias = BobotKriteria::orderBy('id')->get();
+        $dataMahasiswa = $this->rawData;
 
-            $total = 0;
+        // Cari nilai max untuk setiap kriteria (semua benefit)
+        $maxValues = [
+            'ipk' => 4.00, // IPK maksimal
+            'prestasi_akademik' => max(array_column($dataMahasiswa, 'prestasi_akademik')) ?: 1,
+            'organisasi' => max(array_column($dataMahasiswa, 'organisasi')) ?: 1,
+            'sertifikasi' => max(array_column($dataMahasiswa, 'sertifikasi')) ?: 1,
+            'prestasi_non_akademik' => max(array_column($dataMahasiswa, 'prestasi_non_akademik')) ?: 1,
+        ];
 
-            foreach ($kriterias as $kriteria) {
+        $kriteriaKeys = ['ipk', 'prestasi_akademik', 'organisasi', 'sertifikasi', 'prestasi_non_akademik'];
 
-                $norm = NormalisasiSaw::where('prestasi_id', $p->id)
-                        ->where('kriteria_id', $kriteria->id)
-                        ->first();
+        // Hitung skor SAW untuk setiap mahasiswa
+        foreach ($dataMahasiswa as $userId => $data) {
+            $totalSkor = 0;
 
-                if ($norm) {
-                    $total += $norm->nilai_normalisasi * $kriteria->bobot;
-                }
+            foreach ($kriterias as $index => $kriteria) {
+                $key = $kriteriaKeys[$index] ?? null;
+                if (!$key) continue;
+
+                $nilaiAsli = $data[$key];
+                $maxValue = $maxValues[$key];
+
+                // Normalisasi (benefit): nilai / max
+                $nilaiNormalisasi = $maxValue > 0 ? ($nilaiAsli / $maxValue) : 0;
+
+                // Kalikan dengan bobot
+                $totalSkor += $nilaiNormalisasi * $kriteria->bobot;
             }
 
             // Update atau buat skor
             SkorSaw::updateOrCreate(
-                ['user_id' => $p->user_id],
+                ['user_id' => $userId],
                 [
-                    'total_skor' => round($total, 4),
-                    'nilai_akhir' => round($total, 4)
+                    'total_skor' => round($totalSkor, 4),
+                    'nilai_akhir' => round($totalSkor, 4)
                 ]
             );
         }

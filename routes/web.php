@@ -161,6 +161,26 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::c
     //     ->name('metode.skotSaw');
 
     // ===============================
+    // VALIDASI ORGANISASI
+    // ===============================
+    Route::get('/validasi-organisasi', [\App\Http\Controllers\Admin\OrganisasiValidationController::class, 'index'])
+        ->name('validasi.organisasi.index');
+    Route::post('/validasi-organisasi/{id}/approve', [\App\Http\Controllers\Admin\OrganisasiValidationController::class, 'approve'])
+        ->name('validasi.organisasi.approve');
+    Route::post('/validasi-organisasi/{id}/reject', [\App\Http\Controllers\Admin\OrganisasiValidationController::class, 'reject'])
+        ->name('validasi.organisasi.reject');
+
+    // ===============================
+    // VALIDASI SERTIFIKASI
+    // ===============================
+    Route::get('/validasi-sertifikasi', [\App\Http\Controllers\Admin\SertifikasiValidationController::class, 'index'])
+        ->name('validasi.sertifikasi.index');
+    Route::post('/validasi-sertifikasi/{id}/approve', [\App\Http\Controllers\Admin\SertifikasiValidationController::class, 'approve'])
+        ->name('validasi.sertifikasi.approve');
+    Route::post('/validasi-sertifikasi/{id}/reject', [\App\Http\Controllers\Admin\SertifikasiValidationController::class, 'reject'])
+        ->name('validasi.sertifikasi.reject');
+
+    // ===============================
     // LAPORAN
     // ===============================
     Route::get('/laporan', fn() => view('admin.laporan.index'))
@@ -209,6 +229,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         // Galeri Routes
         Route::get('/galeri', [\App\Http\Controllers\MahasiswaController::class, 'galeri'])->name('galeri');
+        
+        // Organisasi Routes
+        Route::resource('organisasi', \App\Http\Controllers\OrganisasiController::class)->except(['show']);
+        
+        // Sertifikasi Routes
+        Route::resource('sertifikasi', \App\Http\Controllers\SertifikasiController::class)->except(['show']);
     });
 
     Route::get('/umum/dashboard', function () {
