@@ -57,13 +57,17 @@
 
                 <div>
                     <label class="block text-gray-700 font-medium mb-2">Bobot (%)</label>
-                    <div class="relative">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <input type="number" step="0.01" min="0" max="100" id="bobotInput" value="{{ old('bobot', $kriteria->bobot * 100) }}"
+                                   class="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold text-blue-600 text-lg"
+                                   placeholder="Masukkan bobot (0-100)">
+                            <span class="text-2xl font-bold text-blue-600">%</span>
+                        </div>
                         <input type="range" id="bobotSlider" min="0" max="100" step="0.01" value="{{ old('bobot', $kriteria->bobot * 100) }}"
-                               class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600 mb-2">
-                        <input type="number" step="0.01" name="bobot" id="bobotInput" value="{{ old('bobot', $kriteria->bobot) }}"
-                               class="w-full border-gray-300 border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold text-blue-600"
-                               readonly>
+                               class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
                         <input type="hidden" name="bobot_decimal" id="bobotDecimal" value="{{ old('bobot', $kriteria->bobot) }}">
+                        <p class="text-xs text-gray-500">Anda bisa mengetik angka langsung atau menggunakan slider di bawah</p>
                     </div>
                 </div>
 
@@ -153,12 +157,27 @@
 
     const otherCount = {{ $otherKriterias->count() }};
 
-    function updateBobot() {
-        const currentBobot = parseFloat(bobotSlider.value);
-        const currentDecimal = currentBobot / 100;
+    function updateBobot(source = 'slider') {
+        let currentBobot;
         
-        // Update input display (dalam persen)
-        bobotInput.value = currentBobot.toFixed(2) + '%';
+        if (source === 'input') {
+            // Dari input text
+            currentBobot = parseFloat(bobotInput.value);
+            if (isNaN(currentBobot)) currentBobot = 0;
+            
+            // Validasi range
+            currentBobot = Math.max(0, Math.min(100, currentBobot));
+            
+            // Update slider
+            bobotSlider.value = currentBobot;
+            bobotInput.value = currentBobot.toFixed(2);
+        } else {
+            // Dari slider
+            currentBobot = parseFloat(bobotSlider.value);
+            bobotInput.value = currentBobot.toFixed(2);
+        }
+        
+        const currentDecimal = currentBobot / 100;
         bobotDecimal.value = currentDecimal.toFixed(4);
 
         // Hitung sisa bobot untuk kriteria lain
@@ -166,7 +185,17 @@
         
         // Update total display
         totalBobotDisplay.textContent = '100.00%';
-        totalBobotStatus.innerHTML = '<span class="text-green-600">✓ Valid</span>';
+        
+        // Validasi total
+        if (currentBobot >= 0 && currentBobot <= 100) {
+            totalBobotStatus.innerHTML = '<span class="text-green-600">✓ Valid</span>';
+            bobotInput.classList.remove('border-red-500');
+            bobotInput.classList.add('border-gray-300');
+        } else {
+            totalBobotStatus.innerHTML = '<span class="text-red-600">✗ Invalid</span>';
+            bobotInput.classList.remove('border-gray-300');
+            bobotInput.classList.add('border-red-500');
+        }
 
         // Bagikan sisa bobot ke kriteria lain
         if (otherCount > 0) {
@@ -179,20 +208,24 @@
     }
 
     // Event listeners
-    bobotSlider.addEventListener('input', updateBobot);
+    bobotSlider.addEventListener('input', function() {
+        updateBobot('slider');
+    });
     
-    // Sinkronisasi slider dengan input jika user mengubah input secara manual
     bobotInput.addEventListener('input', function() {
-        let value = parseFloat(this.value.replace('%', ''));
-        if (!isNaN(value)) {
-            value = Math.max(0, Math.min(100, value));
-            bobotSlider.value = value;
-            updateBobot();
+        updateBobot('input');
+    });
+
+    // Prevent submit jika enter di input
+    bobotInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.blur();
         }
     });
 
     // Initial update
-    updateBobot();
+    updateBobot('slider');
 </script>
 
 @endsection

@@ -18,7 +18,7 @@
             </div>
             <div class="border-l-2 border-r-2 border-white border-opacity-30 pl-6 pr-6">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">SKOR SAW</p>
-                <p class="text-6xl font-bold">{{ number_format($myScore->total_skor, 2) }}</p>
+                <p class="text-6xl font-bold">{{ number_format($myScore->nilai_akhir ?? $myScore->total_skor ?? 0, 2) }}</p>
             </div>
             <div class="text-center">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">DARI TOTAL</p>
@@ -54,36 +54,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($leaderboard as $leader)
+                    @forelse($leaderboard as $index => $leader)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition {{ Auth::id() == $leader->user_id ? 'bg-indigo-50 border-indigo-200' : '' }}">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
-                                @if($leader->ranking == 1)
+                                @php
+                                    $ranking = $leader->ranking ?? (($leaderboard->currentPage() - 1) * $leaderboard->perPage() + $loop->iteration);
+                                @endphp
+                                @if($ranking == 1)
                                     <span class="text-2xl">🥇</span>
-                                @elseif($leader->ranking == 2)
+                                @elseif($ranking == 2)
                                     <span class="text-2xl">🥈</span>
-                                @elseif($leader->ranking == 3)
+                                @elseif($ranking == 3)
                                     <span class="text-2xl">🥉</span>
                                 @else
-                                    <span class="font-bold text-gray-700 w-6 text-center">#{{ $leader->ranking }}</span>
+                                    <span class="font-bold text-gray-700 w-6 text-center">#{{ $ranking }}</span>
                                 @endif
                             </div>
                         </td>
                         <td class="px-6 py-4">
                             <div>
                                 <p class="font-bold text-gray-900">{{ $leader->user->name ?? 'Mahasiswa' }}</p>
-                                <p class="text-xs text-gray-500">{{ $leader->user->program ?? 'Program' }}</p>
+                                <p class="text-xs text-gray-500">{{ $leader->user->email ?? '-' }}</p>
                             </div>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $leader->user->nim ?? '-' }}</td>
                         <td class="px-6 py-4 text-center">
+                            @php
+                                $skor = $leader->nilai_akhir ?? $leader->total_skor ?? 0;
+                            @endphp
                             <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-sm">
-                                {{ number_format($leader->total_skor, 2) }}
+                                {{ number_format($skor, 2) }}
                             </span>
                         </td>
                         <td class="px-6 py-4">
+                            @php
+                                $maxSkor = 100; // atau ambil dari max score
+                                $percentage = $maxSkor > 0 ? ($skor / $maxSkor) * 100 : 0;
+                                $percentage = min(100, $percentage); // cap at 100%
+                            @endphp
                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ ($leader->total_skor / 100) * 100 }}%"></div>
+                                <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ $percentage }}%"></div>
                             </div>
                         </td>
                     </tr>

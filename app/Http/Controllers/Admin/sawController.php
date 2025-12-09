@@ -165,7 +165,34 @@ class SawController extends Controller
             // Update atau buat skor
             SkorSaw::updateOrCreate(
                 ['user_id' => $p->user_id],
-                ['total_skor' => round($total, 4)]
+                [
+                    'total_skor' => round($total, 4),
+                    'nilai_akhir' => round($total, 4)
+                ]
+            );
+        }
+
+        // Generate leaderboard setelah hitung skor
+        $this->generateLeaderboard();
+    }
+
+    // ======================================
+    // ======== GENERATE LEADERBOARD ========
+    // ======================================
+
+    private function generateLeaderboard()
+    {
+        // Get all scores ordered by nilai_akhir descending
+        $scores = SkorSaw::orderBy('nilai_akhir', 'desc')->get();
+
+        // Update leaderboard dengan peringkat
+        foreach ($scores as $index => $score) {
+            Leaderboard::updateOrCreate(
+                ['user_id' => $score->user_id],
+                [
+                    'skor_id' => $score->id,
+                    'peringkat' => $index + 1
+                ]
             );
         }
     }

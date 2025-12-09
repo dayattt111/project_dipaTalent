@@ -40,19 +40,14 @@ class MahasiswaController extends Controller
             ->take(5)
             ->get();
         
-        // Get SAW score
-        $skorSaw = SkorSaw::where('user_id', $user->id)
-            ->latest()
-            ->first();
-        
-        $skorSawValue = $skorSaw?->total_skor ?? 0;
-        
-        // Get ranking from leaderboard
+        // Get SAW score and ranking from leaderboard
         $leaderboard = Leaderboard::where('user_id', $user->id)
+            ->with('skorSaw')
             ->latest()
             ->first();
         
-        $ranking = $leaderboard?->ranking ?? '-';
+        $ranking = $leaderboard?->peringkat ?? '-';
+        $skorSawValue = $leaderboard?->skorSaw?->nilai_akhir ?? 0;
         
         // Get total users (mahasiswa)
         $totalUsers = \App\Models\User::where('role', 'mahasiswa')->count();

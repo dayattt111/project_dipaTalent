@@ -14,6 +14,7 @@ class SkorSaw extends Model
     protected $fillable = [
         'user_id',
         'total_skor',
+        'nilai_akhir',
     ];
 
     public function user()
