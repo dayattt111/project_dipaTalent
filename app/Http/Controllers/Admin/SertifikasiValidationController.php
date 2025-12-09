@@ -10,10 +10,20 @@ class SertifikasiValidationController extends Controller
 {
     public function index()
     {
-        $pending = Sertifikasi::with('user')->where('status', 'pending')->orderBy('created_at', 'desc')->get();
-        $validated = Sertifikasi::with('user')->whereIn('status', ['valid', 'invalid'])->orderBy('updated_at', 'desc')->paginate(20);
+        $pendingSertifikasi = Sertifikasi::with('user')
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20, ['*'], 'pending');
+        
+        $validatedSertifikasi = Sertifikasi::with('user')
+            ->whereIn('status', ['valid', 'invalid'])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(20, ['*'], 'validated');
 
-        return view('admin.validasi.sertifikasi', compact('pending', 'validated'));
+        $pendingCount = Sertifikasi::where('status', 'pending')->count();
+        $validatedCount = Sertifikasi::whereIn('status', ['valid', 'invalid'])->count();
+
+        return view('admin.validasi.sertifikasi', compact('pendingSertifikasi', 'validatedSertifikasi', 'pendingCount', 'validatedCount'));
     }
 
     public function approve(Request $request, $id)
