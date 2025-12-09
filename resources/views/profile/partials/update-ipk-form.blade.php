@@ -51,7 +51,7 @@
                         
                         @if($user->ipk_status === 'valid' && $user->ipk_verified_at)
                             <p class="text-xs text-green-600 mt-1">
-                                Divalidasi pada {{ $user->ipk_verified_at->format('d M Y, H:i') }}
+                                Divalidasi pada {{ \Carbon\Carbon::parse($user->ipk_verified_at)->format('d M Y, H:i') }}
                             </p>
                         @endif
 
