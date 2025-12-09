@@ -252,9 +252,9 @@ class MahasiswaController extends Controller
     {
         $user = Auth::user();
         
-        // Get all scores from SkorSaw, ordered by total_skor descending
+        // Get all scores from SkorSaw, ordered by nilai_akhir descending
         $skorSawList = SkorSaw::with('user')
-            ->orderBy('total_skor', 'desc')
+            ->orderBy('nilai_akhir', 'desc')
             ->get();
         
         // Get user's ranking and score
@@ -268,14 +268,14 @@ class MahasiswaController extends Controller
         $totalMahasiswa = $skorSawList->count();
         
         // Get average score
-        $avgScore = $skorSawList->avg('total_skor') ?? 0;
+        $avgScore = $skorSawList->avg('nilai_akhir') ?? 0;
         
         // Get max score
-        $maxScore = $skorSawList->max('total_skor') ?? 0;
+        $maxScore = $skorSawList->max('nilai_akhir') ?? 1;
         
         // Get paginated leaderboard from SkorSaw data
         $leaderboard = SkorSaw::with('user')
-            ->orderBy('total_skor', 'desc')
+            ->orderBy('nilai_akhir', 'desc')
             ->paginate(15);
         
         // Add ranking number to each item
@@ -289,8 +289,8 @@ class MahasiswaController extends Controller
             'myRanking' => $myRanking,
             'myScore' => $userScore,
             'totalMahasiswa' => $totalMahasiswa,
-            'avgScore' => number_format($avgScore, 2),
-            'maxScore' => number_format($maxScore, 2),
+            'avgScore' => $avgScore,
+            'maxScore' => $maxScore,
         ]);
     }
 

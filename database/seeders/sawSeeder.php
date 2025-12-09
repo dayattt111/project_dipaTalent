@@ -51,12 +51,14 @@ class sawSeeder extends Seeder
 
         $skors = [];
         foreach ($mahasiswa as $index => $user) {
-            // Generate skor random antara 60-100
-            $total_skor = rand(60, 100) + rand(0, 40) / 10;
+            // Generate skor random antara 0.60-1.00 (normalized)
+            $nilai_akhir = (rand(60, 100) + rand(0, 99) / 100);
+            $nilai_akhir = round($nilai_akhir / 100, 4); // Convert to 0-1 scale
 
             $skor = SkorSaw::create([
                 'user_id' => $user->id,
-                'total_skor' => $total_skor,
+                'total_skor' => $nilai_akhir,
+                'nilai_akhir' => $nilai_akhir,
             ]);
             
             $skors[] = $skor;
@@ -69,9 +71,9 @@ class sawSeeder extends Seeder
             ]);
         }
 
-        // Urutkan ulang ranking berdasarkan total_skor
+        // Urutkan ulang ranking berdasarkan nilai_akhir
         $leaderboards = Leaderboard::join('skor_saw', 'leaderboards.skor_id', '=', 'skor_saw.id')
-            ->orderBy('skor_saw.total_skor', 'desc')
+            ->orderBy('skor_saw.nilai_akhir', 'desc')
             ->select('leaderboards.*')
             ->get();
 

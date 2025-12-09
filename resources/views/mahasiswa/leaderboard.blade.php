@@ -18,7 +18,8 @@
             </div>
             <div class="border-l-2 border-r-2 border-white border-opacity-30 pl-6 pr-6">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">SKOR SAW</p>
-                <p class="text-6xl font-bold">{{ number_format($myScore->nilai_akhir ?? $myScore->total_skor ?? 0, 2) }}</p>
+                <p class="text-6xl font-bold">{{ number_format(($myScore->nilai_akhir ?? $myScore->total_skor ?? 0) * 100, 2) }}</p>
+                <p class="text-sm text-indigo-100 mt-1">dari 100</p>
             </div>
             <div class="text-center">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">DARI TOTAL</p>
@@ -82,20 +83,21 @@
                         <td class="px-6 py-4 text-center">
                             @php
                                 $skor = $leader->nilai_akhir ?? $leader->total_skor ?? 0;
+                                $skorDisplay = $skor * 100; // Convert to 0-100 scale
                             @endphp
                             <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-sm">
-                                {{ number_format($skor, 2) }}
+                                {{ number_format($skorDisplay, 2) }}
                             </span>
                         </td>
                         <td class="px-6 py-4">
                             @php
-                                $maxSkor = 100; // atau ambil dari max score
-                                $percentage = $maxSkor > 0 ? ($skor / $maxSkor) * 100 : 0;
-                                $percentage = min(100, $percentage); // cap at 100%
+                                // skorDisplay already calculated above (0-100 scale)
+                                $percentage = min(100, max(0, $skorDisplay)); // Already in 0-100 scale
                             @endphp
                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ $percentage }}%"></div>
+                                <div class="bg-indigo-600 h-2 rounded-full transition-all" style="width: {{ number_format($percentage, 1) }}%"></div>
                             </div>
+                            <p class="text-xs text-gray-500 mt-1">{{ number_format($percentage, 1) }}%</p>
                         </td>
                     </tr>
                     @empty
@@ -129,7 +131,7 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-3xl font-bold text-blue-600">{{ number_format($avgScore ?? 0, 2) }}</p>
+            <p class="text-3xl font-bold text-blue-600">{{ number_format(($avgScore ?? 0) * 100, 2) }}</p>
             <p class="text-xs text-gray-500 mt-2">dari semua mahasiswa</p>
         </div>
 
@@ -143,7 +145,7 @@
                     </svg>
                 </div>
             </div>
-            <p class="text-3xl font-bold text-green-600">{{ number_format($maxScore ?? 0, 2) }}</p>
+            <p class="text-3xl font-bold text-green-600">{{ number_format(($maxScore ?? 0) * 100, 2) }}</p>
             <p class="text-xs text-gray-500 mt-2">skor maksimal yang dicapai</p>
         </div>
 
