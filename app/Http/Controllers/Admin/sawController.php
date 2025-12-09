@@ -48,15 +48,18 @@ class SawController extends Controller
     {
         $request->validate([
             'nama_kriteria' => 'required|string',
-            'bobot'         => 'required|numeric|min:0|max:1',
+            'bobot_decimal' => 'required|numeric|min:0|max:1',
             'tipe'          => 'required|in:benefit,cost',
         ]);
+
+        // Get bobot dalam format decimal (0-1)
+        $newBobot = floatval($request->bobot_decimal);
 
         // Update kriteria yang diedit
         $kriteria = BobotKriteria::findOrFail($id);
         $kriteria->update([
             'nama_kriteria' => $request->nama_kriteria,
-            'bobot'         => $request->bobot,
+            'bobot'         => $newBobot,
             'tipe'          => $request->tipe,
         ]);
 
@@ -64,21 +67,23 @@ class SawController extends Controller
         $otherKriterias = BobotKriteria::where('id', '!=', $id)->get();
 
         // Hitung sisa total untuk dibagi ke kriteria lain
-        $remaining = 1 - $request->bobot;
+        $remaining = 1 - $newBobot;
         $countOthers = $otherKriterias->count();
 
         if ($countOthers > 0) {
+            // Bagikan sisa bobot secara merata ke kriteria lain
             $share = $remaining / $countOthers;
             foreach ($otherKriterias as $k) {
                 $k->update(['bobot' => round($share, 4)]);
             }
         }
 
+        // Recalculate SAW
         $this->hitungNormalisasiSaw();
         $this->hitungSkorSaw();
 
         return redirect()->route('admin.metode.index')
-                        ->with('success', 'Bobot diperbarui & SAW dihitung ulang.');
+                        ->with('success', 'Bobot berhasil diperbarui! Kriteria lain telah disesuaikan otomatis. Total bobot: 100%');
     }
 
 
