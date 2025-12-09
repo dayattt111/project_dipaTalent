@@ -10,19 +10,29 @@ class IpkValidationController extends Controller
 {
     public function index()
     {
-        $pending = User::where('role', 'mahasiswa')
+        $pendingIpk = User::where('role', 'mahasiswa')
             ->where('ipk_status', 'pending')
             ->whereNotNull('ipk')
             ->orderBy('updated_at', 'desc')
-            ->get();
+            ->paginate(20, ['*'], 'pending');
 
-        $validated = User::where('role', 'mahasiswa')
+        $validatedIpk = User::where('role', 'mahasiswa')
             ->whereIn('ipk_status', ['valid', 'invalid'])
             ->whereNotNull('ipk')
             ->orderBy('ipk_verified_at', 'desc')
-            ->paginate(20);
+            ->paginate(20, ['*'], 'validated');
 
-        return view('admin.validasi.ipk', compact('pending', 'validated'));
+        $pendingCount = User::where('role', 'mahasiswa')
+            ->where('ipk_status', 'pending')
+            ->whereNotNull('ipk')
+            ->count();
+
+        $validatedCount = User::where('role', 'mahasiswa')
+            ->whereIn('ipk_status', ['valid', 'invalid'])
+            ->whereNotNull('ipk')
+            ->count();
+
+        return view('admin.validasi.ipk', compact('pendingIpk', 'validatedIpk', 'pendingCount', 'validatedCount'));
     }
 
     public function approve(Request $request, $id)

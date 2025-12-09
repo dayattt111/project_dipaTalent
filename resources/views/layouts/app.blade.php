@@ -16,7 +16,17 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navAdmin')
+            @if(auth()->check())
+                @if(auth()->user()->role === 'admin')
+                    @include('layouts.navAdmin')
+                @elseif(auth()->user()->role === 'mahasiswa')
+                    @include('layouts.navMahasiswa')
+                @else
+                    @include('layouts.navigation')
+                @endif
+            @else
+                @include('layouts.navigation')
+            @endif
 
             <!-- Page Heading -->
             @isset($header)

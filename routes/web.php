@@ -164,11 +164,11 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::c
     // VALIDASI IPK
     // ===============================
     Route::get('/validasi-ipk', [\App\Http\Controllers\Admin\IpkValidationController::class, 'index'])
-        ->name('validasi.ipk.index');
+        ->name('validasi-ipk.index');
     Route::post('/validasi-ipk/{id}/approve', [\App\Http\Controllers\Admin\IpkValidationController::class, 'approve'])
-        ->name('validasi.ipk.approve');
+        ->name('validasi-ipk.approve');
     Route::post('/validasi-ipk/{id}/reject', [\App\Http\Controllers\Admin\IpkValidationController::class, 'reject'])
-        ->name('validasi.ipk.reject');
+        ->name('validasi-ipk.reject');
 
     // ===============================
     // VALIDASI ORGANISASI
