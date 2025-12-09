@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BobotKriteria;
+use App\Models\Leaderboard;
 use App\Models\NormalisasiSaw;
 use App\Models\Prestasi;
 use App\Models\SkorSaw;
