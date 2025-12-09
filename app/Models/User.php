@@ -21,6 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'nim',
+        'ipk',
         'email',
         'password',
         'role',
@@ -78,5 +79,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function pendaftaranBeasiswa()
     {
         return $this->hasMany(pendaftaranBeasiswa::class);
+    }
+
+    /**
+     * Get the organisasi for the user.
+     */
+    public function organisasi()
+    {
+        return $this->hasMany(Organisasi::class);
+    }
+
+    /**
+     * Get the sertifikasi for the user.
+     */
+    public function sertifikasi()
+    {
+        return $this->hasMany(Sertifikasi::class);
     }
 }
