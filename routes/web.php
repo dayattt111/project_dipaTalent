@@ -161,6 +161,16 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::c
     //     ->name('metode.skotSaw');
 
     // ===============================
+    // VALIDASI IPK
+    // ===============================
+    Route::get('/validasi-ipk', [\App\Http\Controllers\Admin\IpkValidationController::class, 'index'])
+        ->name('validasi.ipk.index');
+    Route::post('/validasi-ipk/{id}/approve', [\App\Http\Controllers\Admin\IpkValidationController::class, 'approve'])
+        ->name('validasi.ipk.approve');
+    Route::post('/validasi-ipk/{id}/reject', [\App\Http\Controllers\Admin\IpkValidationController::class, 'reject'])
+        ->name('validasi.ipk.reject');
+
+    // ===============================
     // VALIDASI ORGANISASI
     // ===============================
     Route::get('/validasi-organisasi', [\App\Http\Controllers\Admin\OrganisasiValidationController::class, 'index'])
@@ -253,6 +263,9 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
+
+    Route::post('/profile/ipk', [ProfileController::class, 'updateIpk'])
+        ->name('profile.updateIpk');
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');

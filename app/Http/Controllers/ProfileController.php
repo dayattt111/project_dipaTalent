@@ -38,6 +38,28 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update IPK mahasiswa (menunggu validasi admin)
+     */
+    public function updateIpk(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'ipk' => 'required|numeric|min:0|max:4',
+        ]);
+
+        $user = $request->user();
+
+        // Update IPK dan reset status ke pending
+        $user->update([
+            'ipk' => $request->ipk,
+            'ipk_status' => 'pending',
+            'ipk_verified_at' => null,
+            'ipk_catatan_admin' => null,
+        ]);
+
+        return Redirect::route('profile.edit')->with('success', 'IPK berhasil diperbarui dan menunggu validasi admin.');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
