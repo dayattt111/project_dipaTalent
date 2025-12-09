@@ -7,7 +7,7 @@
         <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center gap-3 text-sm text-gray-600 mb-4">
-                <a href="{{ route('sertifikasi.index') }}" class="hover:text-blue-600 transition">Sertifikasi</a>
+                <a href="{{ route('mahasiswa.sertifikasi.index') }}" class="hover:text-blue-600 transition">Sertifikasi</a>
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                 </svg>
@@ -19,7 +19,7 @@
 
         <!-- Form -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-            <form action="{{ route('sertifikasi.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('mahasiswa.sertifikasi.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Nama Sertifikat -->
@@ -155,7 +155,7 @@
 
                 <!-- Buttons -->
                 <div class="flex items-center justify-end gap-3 pt-6 border-t border-gray-200">
-                    <a href="{{ route('sertifikasi.index') }}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition">
+                    <a href="{{ route('mahasiswa.sertifikasi.index') }}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition">
                         Batal
                     </a>
                     <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm">

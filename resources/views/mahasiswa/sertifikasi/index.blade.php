@@ -11,7 +11,7 @@
                     <h1 class="text-3xl font-bold text-gray-900">Sertifikasi & Keterampilan</h1>
                     <p class="text-gray-600 mt-2">Kelola data sertifikasi, pelatihan, dan bootcamp Anda</p>
                 </div>
-                <a href="{{ route('sertifikasi.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm">
+                <a href="{{ route('mahasiswa.sertifikasi.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
                     </svg>
@@ -181,13 +181,13 @@
                         </div>
 
                         <div class="flex items-center gap-2 ml-4">
-                            <a href="{{ route('sertifikasi.edit', $item->id) }}" class="inline-flex items-center px-3 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-sm font-medium rounded-lg transition">
+                            <a href="{{ route('mahasiswa.sertifikasi.edit', $item->id) }}" class="inline-flex items-center px-3 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-sm font-medium rounded-lg transition">
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
                                 </svg>
                                 Edit
                             </a>
-                            <form action="{{ route('sertifikasi.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus sertifikasi ini?')">
+                            <form action="{{ route('mahasiswa.sertifikasi.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus sertifikasi ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="inline-flex items-center px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 text-sm font-medium rounded-lg transition">
@@ -211,7 +211,7 @@
             <h3 class="mt-4 text-lg font-medium text-gray-900">Belum ada sertifikasi</h3>
             <p class="mt-2 text-sm text-gray-500">Mulai tambahkan sertifikasi, pelatihan, atau bootcamp yang telah Anda ikuti</p>
             <div class="mt-6">
-                <a href="{{ route('sertifikasi.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition">
+                <a href="{{ route('mahasiswa.sertifikasi.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
                     </svg>
