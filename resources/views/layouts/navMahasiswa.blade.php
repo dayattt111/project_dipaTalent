@@ -14,54 +14,54 @@
             </div>
 
             <!-- Navigation Links - Desktop -->
-            <div class="hidden xl:flex items-center gap-1">
-                <a href="{{ route('mahasiswa.dashboard') }}" class="nav-link {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+            <div class="hidden xl:flex items-center gap-0.5">
+                <a href="{{ route('mahasiswa.dashboard') }}" class="nav-link {{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M2 13.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5A1.5 1.5 0 0 0 13.5 5h-11A1.5 1.5 0 0 0 1 6.5v7z"/>
                         <path d="M2 4a1.5 1.5 0 0 1 1.5-1.5h11A1.5 1.5 0 0 1 16 4"/>
                     </svg>
                     Dashboard
                 </a>
-                <a href="{{ route('mahasiswa.listBeasiswa') }}" class="nav-link {{ request()->routeIs('mahasiswa.listBeasiswa') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                <a href="{{ route('mahasiswa.listBeasiswa') }}" class="nav-link {{ request()->routeIs('mahasiswa.listBeasiswa') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
                     </svg>
                     Beasiswa
                 </a>
-                <a href="{{ route('mahasiswa.riwayatPendaftaran') }}" class="nav-link {{ request()->routeIs('mahasiswa.riwayatPendaftaran') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                <a href="{{ route('mahasiswa.riwayatPendaftaran') }}" class="nav-link {{ request()->routeIs('mahasiswa.riwayatPendaftaran') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                     </svg>
                     Riwayat
                 </a>
-                <a href="{{ route('mahasiswa.prestasi') }}" class="nav-link {{ request()->routeIs('mahasiswa.prestasi') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                <a href="{{ route('mahasiswa.prestasi') }}" class="nav-link {{ request()->routeIs('mahasiswa.prestasi') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M3 14s1 0 8-1t7-6-7-4-8 0H2c0-1 .25-7 7-7s6 7 6 7-4 3-8 4-8 1-8 1z"/>
                     </svg>
                     Prestasi
                 </a>
-                <a href="{{ route('mahasiswa.sertifikasi.index') }}" class="nav-link {{ request()->routeIs('mahasiswa.sertifikasi.*') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                <a href="{{ route('mahasiswa.sertifikasi.index') }}" class="nav-link {{ request()->routeIs('mahasiswa.sertifikasi.*') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                         <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
                     </svg>
                     Sertifikasi
                 </a>
-                <a href="{{ route('mahasiswa.organisasi.index') }}" class="nav-link {{ request()->routeIs('mahasiswa.organisasi.*') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
-                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                <a href="{{ route('mahasiswa.organisasi.index') }}" class="nav-link {{ request()->routeIs('mahasiswa.organisasi.*') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
+                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                     </svg>
                     Organisasi
                 </a>
-                <a href="{{ route('mahasiswa.leaderboard') }}" class="nav-link {{ request()->routeIs('mahasiswa.leaderboard') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                <a href="{{ route('mahasiswa.leaderboard') }}" class="nav-link {{ request()->routeIs('mahasiswa.leaderboard') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
                     </svg>
-                    Leaderboard
+                    Ranking
                 </a>
-                <a href="{{ route('mahasiswa.galeri') }}" class="nav-link {{ request()->routeIs('mahasiswa.galeri') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                <a href="{{ route('mahasiswa.galeri') }}" class="nav-link {{ request()->routeIs('mahasiswa.galeri') ? 'active' : '' }} px-2.5 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="inline mr-1.5">
                         <path d="M2.5 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-11zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                         <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
                     </svg>
