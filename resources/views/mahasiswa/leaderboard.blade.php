@@ -19,7 +19,7 @@
             <div class="border-l-2 border-r-2 border-white border-opacity-30 pl-6 pr-6">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">TOTAL POIN</p>
                 <p class="text-6xl font-bold">{{ number_format($myScore->nilai_akhir ?? 0, 0) }}</p>
-                <p class="text-sm text-indigo-100 mt-1">dari 1000 poin</p>
+                <p class="text-sm text-indigo-100 mt-1">poin prestasi</p>
             </div>
             <div class="text-center">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">DARI TOTAL</p>
@@ -32,7 +32,7 @@
     <!-- Info Box -->
     <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-8">
         <h3 class="font-bold text-blue-900 mb-2">ℹ️ Sistem Poin</h3>
-        <p class="text-sm text-blue-800">Poin dihitung berdasarkan: IPK, Prestasi Akademik & Non-Akademik, Organisasi, dan Sertifikasi. Maksimal 1000 poin. Semakin tinggi poin Anda, semakin besar peluang mendapatkan beasiswa!</p>
+        <p class="text-sm text-blue-800">Poin dihitung berdasarkan: IPK, Prestasi Akademik & Non-Akademik, Organisasi, dan Sertifikasi. Poin akan terus bertambah sesuai pencapaian Anda. Semakin tinggi poin, semakin besar peluang mendapatkan beasiswa!</p>
     </div>
 
     <!-- Leaderboard Table -->
@@ -90,13 +90,14 @@
                         </td>
                         <td class="px-6 py-4">
                             @php
-                                // Hitung persentase dari 1000 poin
-                                $percentage = min(100, max(0, ($poin / 1000) * 100));
+                                // Hitung persentase dari poin tertinggi
+                                $maxPoin = $leaderboard->first()->nilai_akhir ?? 1;
+                                $percentage = min(100, max(0, ($poin / $maxPoin) * 100));
                             @endphp
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-indigo-600 h-2 rounded-full transition-all" style="width: {{ number_format($percentage, 1) }}%"></div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">{{ number_format($percentage, 1) }}% dari maksimal</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ number_format($percentage, 1) }}% dari tertinggi</p>
                         </td>
                     </tr>
                     @empty

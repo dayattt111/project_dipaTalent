@@ -64,7 +64,7 @@
                 <div>
                     <p class="text-sm text-gray-600 mb-2">Total Poin</p>
                     <p class="text-3xl font-bold text-indigo-600">{{ $sawScore ?? '0' }}</p>
-                    <p class="text-xs text-gray-500 mt-1">dari maksimal 1000 poin</p>
+                    <p class="text-xs text-gray-500 mt-1">terus bertambah sesuai prestasi</p>
                 </div>
                 <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-indigo-600">
@@ -150,7 +150,7 @@
                         </svg>
                     </div>
                     <p class="text-3xl font-bold">{{ $sawScore ?? '0' }}</p>
-                    <p class="text-xs text-indigo-100 mt-1">Maksimal 1000 poin</p>
+                    <p class="text-xs text-indigo-100 mt-1">Poin akumulatif prestasi</p>
                 </div>
             </div>
 
