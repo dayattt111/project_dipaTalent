@@ -61,7 +61,7 @@ class MahasiswaController extends Controller
             'prestasiCount' => $prestasiCount,
             'maxIPK' => number_format($maxIPK, 2),
             'ranking' => $ranking,
-            'sawScore' => number_format($skorSawValue, 4),
+            'sawScore' => number_format($skorSawValue, 0),
             'totalUsers' => $totalUsers,
             'recentPendaftaran' => $recentPendaftaran,
             'recentPrestasi' => $recentPrestasi,

@@ -58,13 +58,13 @@
             </div>
         </div>
 
-        <!-- Stat Card 4 - Skor SAW Ranking -->
+        <!-- Stat Card 4 - Total Poin -->
         <div class="bg-white rounded-xl shadow-sm border border-indigo-100 p-6 hover:shadow-lg transition-all hover:scale-105">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 mb-2">Ranking SAW</p>
-                    <p class="text-3xl font-bold text-indigo-600">#{{ $ranking ?? '-' }}</p>
-                    <p class="text-xs text-gray-500 mt-1">posisi Anda saat ini</p>
+                    <p class="text-sm text-gray-600 mb-2">Total Poin</p>
+                    <p class="text-3xl font-bold text-indigo-600">{{ $sawScore ?? '0' }}</p>
+                    <p class="text-xs text-gray-500 mt-1">dari maksimal 1000 poin</p>
                 </div>
                 <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="text-indigo-600">
@@ -137,14 +137,20 @@
         <div>
             <!-- My Ranking Card -->
             <div class="bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl shadow-lg p-6 text-white mb-6">
-                <h3 class="font-bold text-lg mb-4">Peringkat Anda</h3>
+                <h3 class="font-bold text-lg mb-4">🏆 Peringkat Anda</h3>
                 <div class="text-center mb-4">
                     <p class="text-5xl font-bold mb-2">#{{ $ranking ?? '-' }}</p>
                     <p class="text-indigo-100">dari {{ $totalUsers ?? 0 }} mahasiswa</p>
                 </div>
-                <div class="bg-white bg-opacity-20 rounded-lg p-3">
-                    <p class="text-sm text-indigo-50 mb-2">Skor SAW Anda</p>
-                    <p class="text-2xl font-bold">{{ $sawScore ?? '0.00' }}</p>
+                <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-sm text-indigo-50">Total Poin Anda</p>
+                        <svg class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <p class="text-3xl font-bold">{{ $sawScore ?? '0' }}</p>
+                    <p class="text-xs text-indigo-100 mt-1">Maksimal 1000 poin</p>
                 </div>
             </div>
 
@@ -154,7 +160,7 @@
                 <div class="space-y-3">
                     <div class="border-l-4 border-blue-500 pl-3">
                         <p class="text-sm font-medium text-gray-900">Perbanyak Prestasi</p>
-                        <p class="text-xs text-gray-600">Setiap prestasi meningkatkan skor SAW Anda</p>
+                        <p class="text-xs text-gray-600">Setiap prestasi menambah poin Anda</p>
                     </div>
                     <div class="border-l-4 border-green-500 pl-3">
                         <p class="text-sm font-medium text-gray-900">Jaga IPK</p>

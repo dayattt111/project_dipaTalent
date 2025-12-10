@@ -4,8 +4,8 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Page Header -->
     <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900">Leaderboard SAW 🏆</h1>
-        <p class="text-gray-600 mt-2">Peringkat mahasiswa berdasarkan metode Simple Additive Weighting</p>
+        <h1 class="text-4xl font-bold text-gray-900">Leaderboard Mahasiswa 🏆</h1>
+        <p class="text-gray-600 mt-2">Peringkat mahasiswa berdasarkan total poin prestasi dan pencapaian akademik</p>
     </div>
 
     <!-- My Ranking Card -->
@@ -17,9 +17,9 @@
                 <p class="text-6xl font-bold">#{{ $myRanking }}</p>
             </div>
             <div class="border-l-2 border-r-2 border-white border-opacity-30 pl-6 pr-6">
-                <p class="text-indigo-100 text-sm mb-2 font-medium">SKOR SAW</p>
-                <p class="text-6xl font-bold">{{ number_format(($myScore->nilai_akhir ?? $myScore->total_skor ?? 0) * 100, 2) }}</p>
-                <p class="text-sm text-indigo-100 mt-1">dari 100</p>
+                <p class="text-indigo-100 text-sm mb-2 font-medium">TOTAL POIN</p>
+                <p class="text-6xl font-bold">{{ number_format($myScore->nilai_akhir ?? 0, 0) }}</p>
+                <p class="text-sm text-indigo-100 mt-1">dari 1000 poin</p>
             </div>
             <div class="text-center">
                 <p class="text-indigo-100 text-sm mb-2 font-medium">DARI TOTAL</p>
@@ -31,15 +31,15 @@
 
     <!-- Info Box -->
     <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-8">
-        <h3 class="font-bold text-blue-900 mb-2">ℹ️ Tentang Metode SAW</h3>
-        <p class="text-sm text-blue-800">Simple Additive Weighting (SAW) adalah metode pengambilan keputusan multikriteria yang menghitung skor berdasarkan kriteria: IPK, Prestasi, dan kontribusi akademik lainnya.</p>
+        <h3 class="font-bold text-blue-900 mb-2">ℹ️ Sistem Poin</h3>
+        <p class="text-sm text-blue-800">Poin dihitung berdasarkan: IPK, Prestasi Akademik & Non-Akademik, Organisasi, dan Sertifikasi. Maksimal 1000 poin. Semakin tinggi poin Anda, semakin besar peluang mendapatkan beasiswa!</p>
     </div>
 
     <!-- Leaderboard Table -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
         <!-- Header -->
         <div class="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-4">
-            <h2 class="text-lg font-bold text-white">📊 Top 15 Mahasiswa Terbaik</h2>
+            <h2 class="text-lg font-bold text-white">📊 Top Mahasiswa Terbaik</h2>
         </div>
 
         <!-- Table -->
@@ -50,7 +50,7 @@
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Peringkat</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">NIM</th>
-                        <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Skor SAW</th>
+                        <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Total Poin</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Progress</th>
                     </tr>
                 </thead>
@@ -82,22 +82,21 @@
                         <td class="px-6 py-4 text-sm text-gray-600">{{ $leader->user->nim ?? '-' }}</td>
                         <td class="px-6 py-4 text-center">
                             @php
-                                $skor = $leader->nilai_akhir ?? $leader->total_skor ?? 0;
-                                $skorDisplay = $skor * 100; // Convert to 0-100 scale
+                                $poin = $leader->nilai_akhir ?? 0;
                             @endphp
                             <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-bold text-sm">
-                                {{ number_format($skorDisplay, 2) }}
+                                {{ number_format($poin, 0) }}
                             </span>
                         </td>
                         <td class="px-6 py-4">
                             @php
-                                // skorDisplay already calculated above (0-100 scale)
-                                $percentage = min(100, max(0, $skorDisplay)); // Already in 0-100 scale
+                                // Hitung persentase dari 1000 poin
+                                $percentage = min(100, max(0, ($poin / 1000) * 100));
                             @endphp
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-indigo-600 h-2 rounded-full transition-all" style="width: {{ number_format($percentage, 1) }}%"></div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">{{ number_format($percentage, 1) }}%</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ number_format($percentage, 1) }}% dari maksimal</p>
                         </td>
                     </tr>
                     @empty

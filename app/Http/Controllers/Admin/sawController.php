@@ -221,12 +221,15 @@ class SawController extends Controller
                 $totalSkor += $nilaiNormalisasi * $kriteria->bobot;
             }
 
+            // Konversi skor SAW (0-1) ke sistem poin (0-1000)
+            $poin = round($totalSkor * 1000, 2);
+
             // Update atau buat skor
             SkorSaw::updateOrCreate(
                 ['user_id' => $userId],
                 [
                     'total_skor' => round($totalSkor, 4),
-                    'nilai_akhir' => round($totalSkor, 4)
+                    'nilai_akhir' => $poin
                 ]
             );
         }
