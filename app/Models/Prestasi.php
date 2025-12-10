@@ -17,6 +17,7 @@ class Prestasi extends Model
         'tahun',
         'file_sertifikat',
         'status',
+        'catatan_admin',
         'deskripsi',
         'tanggal_pencapaian',
         'penyelenggara',

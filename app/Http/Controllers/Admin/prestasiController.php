@@ -64,7 +64,41 @@ class PrestasiController extends Controller
     public function edit($id)
     {
         $prestasi = Prestasi::with('user')->findOrFail($id);
-        return view('admin.verifikasiPrestasi.form', compact('prestasi'));
+        
+        // Get user's additional data
+        $user = $prestasi->user;
+        
+        // Get user's statistics
+        $totalPrestasi = Prestasi::where('user_id', $user->id)->where('status', 'valid')->count();
+        $totalPrestasiAkademik = Prestasi::where('user_id', $user->id)
+            ->where('jenis', 'akademik')
+            ->where('status', 'valid')
+            ->count();
+        $totalPrestasiNonAkademik = Prestasi::where('user_id', $user->id)
+            ->where('jenis', 'non-akademik')
+            ->where('status', 'valid')
+            ->count();
+        
+        // Get user's SAW score and ranking
+        $skorSaw = \App\Models\SkorSaw::where('user_id', $user->id)->first();
+        $leaderboard = \App\Models\Leaderboard::where('user_id', $user->id)->first();
+        
+        // Get other prestasi from this user
+        $prestasiLainnya = Prestasi::where('user_id', $user->id)
+            ->where('id', '!=', $id)
+            ->where('status', 'valid')
+            ->get();
+        
+        return view('admin.verifikasiPrestasi.form', compact(
+            'prestasi',
+            'user',
+            'totalPrestasi',
+            'totalPrestasiAkademik',
+            'totalPrestasiNonAkademik',
+            'skorSaw',
+            'leaderboard',
+            'prestasiLainnya'
+        ));
     }
 
     // Update status prestasi
@@ -74,11 +108,20 @@ class PrestasiController extends Controller
 
         $request->validate([
             'status' => 'required|in:menunggu,valid,invalid',
+            'catatan_admin' => 'nullable|string',
         ]);
 
         $prestasi->update([
             'status' => $request->status,
+            'catatan_admin' => $request->catatan_admin,
         ]);
+
+        // Recalculate SAW if status is valid
+        if ($request->status === 'valid') {
+            $sawController = new \App\Http\Controllers\Admin\SawController();
+            $sawController->hitungNormalisasiSaw();
+            $sawController->hitungSkorSaw();
+        }
 
         return redirect()->route('admin.verifikasiPrestasi.index')
             ->with('success', 'Status prestasi berhasil diperbarui.');
