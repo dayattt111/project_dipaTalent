@@ -28,12 +28,56 @@
           <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 flex-row-reverse bg-[#f0f1f4] text-[#121317] text-sm font-medium leading-normal w-fit">
             <span class="truncate">{{ $pendaftaran->beasiswa->nama_beasiswa }}</span>
           </button>
+
+          <!-- Poin Mahasiswa Card -->
+          <div class="bg-gradient-to-r from-indigo-500 to-blue-600 rounded-lg p-4 text-white">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-sm text-indigo-100 mb-1">Total Poin Mahasiswa</p>
+                <p class="text-3xl font-bold">{{ number_format($skorSaw->nilai_akhir ?? 0, 0) }}</p>
+              </div>
+              <div class="text-center bg-white bg-opacity-20 rounded-lg px-3 py-2">
+                <p class="text-xs text-indigo-100">Peringkat</p>
+                <p class="text-2xl font-bold">#{{ $leaderboard->peringkat ?? '-' }}</p>
+              </div>
+            </div>
+            <div class="border-t border-white border-opacity-20 pt-2 text-xs text-indigo-100">
+              <p>Poin dihitung otomatis berdasarkan prestasi dan pencapaian mahasiswa</p>
+            </div>
+          </div>
         </div>
 
         <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex-1"
           style='background-image: url("{{ $pendaftaran->foto ?? 'https://via.placeholder.com/300x200' }}");'>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Detail Breakdown Poin -->
+    <div class="mx-4 mb-4 bg-gray-50 rounded-lg p-4">
+      <h4 class="text-sm font-bold text-gray-900 mb-3">📊 Rincian Poin Mahasiswa</h4>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div class="bg-white rounded-lg p-3 border border-gray-200">
+          <p class="text-xs text-gray-600 mb-1">IPK</p>
+          <p class="text-lg font-bold text-gray-900">{{ number_format($detailPoin['ipk'], 2) }}</p>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-gray-200">
+          <p class="text-xs text-gray-600 mb-1">Prestasi Akademik</p>
+          <p class="text-lg font-bold text-green-600">{{ $detailPoin['prestasi_akademik'] }} poin</p>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-gray-200">
+          <p class="text-xs text-gray-600 mb-1">Prestasi Non-Akademik</p>
+          <p class="text-lg font-bold text-blue-600">{{ $detailPoin['prestasi_non_akademik'] }} poin</p>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-gray-200">
+          <p class="text-xs text-gray-600 mb-1">Organisasi</p>
+          <p class="text-lg font-bold text-purple-600">{{ $detailPoin['organisasi'] }} aktif</p>
+        </div>
+        <div class="bg-white rounded-lg p-3 border border-gray-200">
+          <p class="text-xs text-gray-600 mb-1">Sertifikasi</p>
+          <p class="text-lg font-bold text-indigo-600">{{ $detailPoin['sertifikasi'] }} poin</p>
+        </div>
       </div>
     </div>
 

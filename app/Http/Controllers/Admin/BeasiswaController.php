@@ -29,7 +29,24 @@ class BeasiswaController extends Controller
             abort(404, 'Data pendaftar tidak ditemukan');
         }
 
-        return view('admin.verifikasiPendaftar.forms', compact('pendaftaran'));
+        // Ambil data poin mahasiswa dari skor_saw dan leaderboard
+        $skorSaw = \App\Models\SkorSaw::where('user_id', $pendaftaran->user_id)->first();
+        $leaderboard = \App\Models\Leaderboard::where('user_id', $pendaftaran->user_id)->first();
+        
+        // Hitung detail poin dari setiap kriteria
+        $detailPoin = [
+            'ipk' => $pendaftaran->user->ipk ?? 0,
+            'prestasi_akademik' => $pendaftaran->user->prestasi()->valid()->akademik()->get()->sum(function($p) {
+                return $p->poin;
+            }),
+            'prestasi_non_akademik' => $pendaftaran->user->prestasi()->valid()->nonAkademik()->get()->sum(function($p) {
+                return $p->poin;
+            }),
+            'organisasi' => $pendaftaran->user->organisasi()->valid()->count(),
+            'sertifikasi' => $pendaftaran->user->sertifikasi()->valid()->sum('poin'),
+        ];
+
+        return view('admin.verifikasiPendaftar.forms', compact('pendaftaran', 'skorSaw', 'leaderboard', 'detailPoin'));
     }
 
     public function update(Request $request, $id)
