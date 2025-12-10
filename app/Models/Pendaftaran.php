@@ -18,8 +18,10 @@ class Pendaftaran extends Model
         'prestasi',
         'organisasi',
         'keterampilan',
+        'alasan',
         'transkrip',
         'foto',
+        'foto_formal',
         'status',
         'catatan_admin',
     ];

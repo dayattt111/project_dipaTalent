@@ -92,30 +92,35 @@ class MahasiswaController extends Controller
     {
         $validated = request()->validate([
             'beasiswa_id' => 'required|exists:beasiswas,id',
-            'ipk' => 'required|numeric|min:0|max:4',
-            'prestasi_akademik' => 'required|string',
-            'organisasi' => 'required|string',
-            'keterampilan' => 'required|string',
+            'alasan' => 'required|string|min:50',
             'transkrip' => 'required|mimes:pdf|max:5120',
-            'foto' => 'required|mimes:jpeg,png|max:3072',
+            'foto_formal' => 'required|mimes:jpeg,png,jpg|max:3072',
         ]);
 
         $user = Auth::user();
         
+        // Check if user already applied for this beasiswa
+        $existingPendaftaran = Pendaftaran::where('user_id', $user->id)
+            ->where('beasiswa_id', $validated['beasiswa_id'])
+            ->first();
+        
+        if ($existingPendaftaran) {
+            return redirect()->back()
+                ->withErrors(['beasiswa_id' => 'Anda sudah mengajukan beasiswa ini sebelumnya.'])
+                ->withInput();
+        }
+        
         // Store files
         $transkripPath = request()->file('transkrip')->store('pendaftaran/transkrip', 'public');
-        $fotoPath = request()->file('foto')->store('pendaftaran/foto', 'public');
+        $fotoFormalPath = request()->file('foto_formal')->store('pendaftaran/foto_formal', 'public');
         
         // Create pendaftaran
         Pendaftaran::create([
             'user_id' => $user->id,
             'beasiswa_id' => $validated['beasiswa_id'],
-            'ipk' => $validated['ipk'],
-            'prestasi_akademik' => $validated['prestasi_akademik'],
-            'organisasi' => $validated['organisasi'],
-            'keterampilan' => $validated['keterampilan'],
+            'alasan' => $validated['alasan'],
             'transkrip' => $transkripPath,
-            'foto' => $fotoPath,
+            'foto_formal' => $fotoFormalPath,
             'status' => 'menunggu',
         ]);
 
