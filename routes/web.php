@@ -240,6 +240,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Galeri Routes
         Route::get('/galeri', [\App\Http\Controllers\MahasiswaController::class, 'galeri'])->name('galeri');
         
+        // Perhitungan SAW Routes
+        Route::get('/perhitungan-saw', [\App\Http\Controllers\MahasiswaController::class, 'perhitunganSaw'])->name('perhitunganSaw');
+        
         // Organisasi Routes
         Route::resource('organisasi', \App\Http\Controllers\OrganisasiController::class)->except(['show']);
         

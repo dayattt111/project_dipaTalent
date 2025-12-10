@@ -312,4 +312,108 @@ class MahasiswaController extends Controller
         
         return view('mahasiswa.galeri', ['galeri' => $galeri]);
     }
+
+    public function perhitunganSaw()
+    {
+        // Ambil 5 mahasiswa dengan skor SAW terbaik
+        $mahasiswas = \App\Models\User::where('role', 'mahasiswa')
+            ->whereHas('skorSaw')
+            ->with(['skorSaw', 'prestasi' => function($query) {
+                $query->where('status', 'valid');
+            }, 'organisasi', 'sertifikasi'])
+            ->take(5)
+            ->get();
+        
+        // Ambil bobot kriteria
+        $bobotKriteria = \App\Models\BobotKriteria::all();
+        
+        // Data perhitungan untuk setiap mahasiswa
+        $dataPerhitungan = [];
+        
+        foreach ($mahasiswas as $mahasiswa) {
+            // Hitung nilai setiap kriteria
+            $ipk = $mahasiswa->ipk ?? 0;
+            
+            // Prestasi Akademik (jumlah prestasi akademik valid)
+            $prestasiAkademik = $mahasiswa->prestasi->where('jenis', 'akademik')->count();
+            
+            // Keaktifan Organisasi (jumlah organisasi)
+            $organisasi = $mahasiswa->organisasi->count();
+            
+            // Keterampilan & Sertifikasi (jumlah sertifikasi)
+            $sertifikasi = $mahasiswa->sertifikasi->count();
+            
+            // Prestasi Non-Akademik (jumlah prestasi non akademik valid)
+            $prestasiNonAkademik = $mahasiswa->prestasi->where('jenis', 'non_akademik')->count();
+            
+            $dataPerhitungan[] = [
+                'mahasiswa' => $mahasiswa,
+                'nilai_asli' => [
+                    'ipk' => $ipk,
+                    'prestasi_akademik' => $prestasiAkademik,
+                    'organisasi' => $organisasi,
+                    'sertifikasi' => $sertifikasi,
+                    'prestasi_non_akademik' => $prestasiNonAkademik,
+                ],
+            ];
+        }
+        
+        // Cari nilai max untuk normalisasi (benefit)
+        $maxIPK = max(array_column(array_column($dataPerhitungan, 'nilai_asli'), 'ipk')) ?: 1;
+        $maxPrestasiAkademik = max(array_column(array_column($dataPerhitungan, 'nilai_asli'), 'prestasi_akademik')) ?: 1;
+        $maxOrganisasi = max(array_column(array_column($dataPerhitungan, 'nilai_asli'), 'organisasi')) ?: 1;
+        $maxSertifikasi = max(array_column(array_column($dataPerhitungan, 'nilai_asli'), 'sertifikasi')) ?: 1;
+        $maxPrestasiNonAkademik = max(array_column(array_column($dataPerhitungan, 'nilai_asli'), 'prestasi_non_akademik')) ?: 1;
+        
+        // Hitung normalisasi dan nilai akhir untuk setiap mahasiswa
+        foreach ($dataPerhitungan as &$data) {
+            $nilai = $data['nilai_asli'];
+            
+            // Normalisasi (benefit: nilai/max)
+            $normalisasi = [
+                'ipk' => $nilai['ipk'] / $maxIPK,
+                'prestasi_akademik' => $nilai['prestasi_akademik'] / $maxPrestasiAkademik,
+                'organisasi' => $nilai['organisasi'] / $maxOrganisasi,
+                'sertifikasi' => $nilai['sertifikasi'] / $maxSertifikasi,
+                'prestasi_non_akademik' => $nilai['prestasi_non_akademik'] / $maxPrestasiNonAkademik,
+            ];
+            
+            // Hitung nilai akhir SAW
+            $nilaiAkhir = 0;
+            $nilaiAkhir += $normalisasi['ipk'] * 0.25; // 25%
+            $nilaiAkhir += $normalisasi['prestasi_akademik'] * 0.22; // 22%
+            $nilaiAkhir += $normalisasi['organisasi'] * 0.15; // 15%
+            $nilaiAkhir += $normalisasi['sertifikasi'] * 0.17; // 17%
+            $nilaiAkhir += $normalisasi['prestasi_non_akademik'] * 0.21; // 21%
+            
+            // Konversi ke poin (skala 0-1000)
+            $poin = round($nilaiAkhir * 1000);
+            
+            $data['normalisasi'] = $normalisasi;
+            $data['nilai_akhir'] = $nilaiAkhir;
+            $data['poin'] = $poin;
+        }
+        
+        // Sort by poin descending
+        usort($dataPerhitungan, function($a, $b) {
+            return $b['poin'] <=> $a['poin'];
+        });
+        
+        // Tambahkan ranking
+        foreach ($dataPerhitungan as $index => &$data) {
+            $data['ranking'] = $index + 1;
+        }
+        
+        return view('mahasiswa.perhitungan-saw', [
+            'dataPerhitungan' => $dataPerhitungan,
+            'bobotKriteria' => $bobotKriteria,
+            'maxValues' => [
+                'ipk' => $maxIPK,
+                'prestasi_akademik' => $maxPrestasiAkademik,
+                'organisasi' => $maxOrganisasi,
+                'sertifikasi' => $maxSertifikasi,
+                'prestasi_non_akademik' => $maxPrestasiNonAkademik,
+            ],
+        ]);
+    }
 }
