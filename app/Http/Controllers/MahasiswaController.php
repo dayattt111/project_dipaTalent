@@ -20,9 +20,8 @@ class MahasiswaController extends Controller
         // Get count of pendaftaran
         $pendaftaranCount = Pendaftaran::where('user_id', $user->id)->count();
         
-        // Get max IPK dari pendaftaran
-        $maxIPK = Pendaftaran::where('user_id', $user->id)
-            ->max('ipk') ?? 0;
+        // Get IPK from user table (validated IPK)
+        $maxIPK = $user->ipk ?? 0;
         
         // Get count of prestasi
         $prestasiCount = Prestasi::where('user_id', $user->id)->count();
@@ -40,14 +39,19 @@ class MahasiswaController extends Controller
             ->take(5)
             ->get();
         
-        // Get SAW score and ranking from leaderboard
-        $leaderboard = Leaderboard::where('user_id', $user->id)
-            ->with('skorSaw')
+        // Get SAW score from skor_saw table
+        $skorSaw = SkorSaw::where('user_id', $user->id)
             ->latest()
             ->first();
         
+        $skorSawValue = $skorSaw?->nilai_akhir ?? 0;
+        
+        // Get ranking from leaderboard
+        $leaderboard = Leaderboard::where('user_id', $user->id)
+            ->orderBy('peringkat', 'asc')
+            ->first();
+        
         $ranking = $leaderboard?->peringkat ?? '-';
-        $skorSawValue = $leaderboard?->skorSaw?->nilai_akhir ?? 0;
         
         // Get total users (mahasiswa)
         $totalUsers = \App\Models\User::where('role', 'mahasiswa')->count();
@@ -57,7 +61,7 @@ class MahasiswaController extends Controller
             'prestasiCount' => $prestasiCount,
             'maxIPK' => number_format($maxIPK, 2),
             'ranking' => $ranking,
-            'sawScore' => number_format($skorSawValue, 2),
+            'sawScore' => number_format($skorSawValue, 4),
             'totalUsers' => $totalUsers,
             'recentPendaftaran' => $recentPendaftaran,
             'recentPrestasi' => $recentPrestasi,
