@@ -48,6 +48,12 @@
                     </svg>
                     Sertifikasi
                 </a>
+                <a href="{{ route('mahasiswa.organisasi.index') }}" class="nav-link {{ request()->routeIs('mahasiswa.organisasi.*') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
+                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Organisasi
+                </a>
                 <a href="{{ route('mahasiswa.leaderboard') }}" class="nav-link {{ request()->routeIs('mahasiswa.leaderboard') ? 'active' : '' }} px-4 py-2 rounded-lg text-sm font-medium transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="inline mr-2">
                         <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
@@ -123,6 +129,8 @@
             <a href="{{ route('mahasiswa.listBeasiswa') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Beasiswa</a>
             <a href="{{ route('mahasiswa.riwayatPendaftaran') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Riwayat</a>
             <a href="{{ route('mahasiswa.prestasi') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Prestasi</a>
+            <a href="{{ route('mahasiswa.sertifikasi.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Sertifikasi</a>
+            <a href="{{ route('mahasiswa.organisasi.index') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Organisasi</a>
             <a href="{{ route('mahasiswa.leaderboard') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Leaderboard</a>
             <a href="{{ route('mahasiswa.galeri') }}" class="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">Galeri</a>
         </div>
