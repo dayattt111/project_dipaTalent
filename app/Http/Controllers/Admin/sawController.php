@@ -165,12 +165,31 @@ class SawController extends Controller
 
         // Kumpulkan data mentah setiap mahasiswa
         foreach ($users as $user) {
+            // Hitung poin prestasi akademik
+            $prestasiAkademik = $user->prestasi()->valid()->akademik()->get();
+            $poinPrestasiAkademik = $prestasiAkademik->sum(function($prestasi) {
+                return $prestasi->poin; // Gunakan accessor
+            });
+
+            // Hitung jumlah organisasi valid
+            $jumlahOrganisasi = $user->organisasi()->valid()->count();
+
+            // Hitung poin sertifikasi
+            $sertifikasi = $user->sertifikasi()->valid()->get();
+            $poinSertifikasi = $sertifikasi->sum('poin'); // Kolom poin ada di tabel
+
+            // Hitung poin prestasi non-akademik
+            $prestasiNonAkademik = $user->prestasi()->valid()->nonAkademik()->get();
+            $poinPrestasiNonAkademik = $prestasiNonAkademik->sum(function($prestasi) {
+                return $prestasi->poin; // Gunakan accessor
+            });
+
             $dataMahasiswa[$user->id] = [
                 'ipk' => $user->ipk ?? 0,
-                'prestasi_akademik' => $user->prestasi()->valid()->akademik()->get()->sum('poin'),
-                'organisasi' => $user->organisasi()->valid()->count(),
-                'sertifikasi' => $user->sertifikasi()->valid()->get()->sum('poin'),
-                'prestasi_non_akademik' => $user->prestasi()->valid()->nonAkademik()->get()->sum('poin'),
+                'prestasi_akademik' => $poinPrestasiAkademik,
+                'organisasi' => $jumlahOrganisasi,
+                'sertifikasi' => $poinSertifikasi,
+                'prestasi_non_akademik' => $poinPrestasiNonAkademik,
             ];
         }
 
