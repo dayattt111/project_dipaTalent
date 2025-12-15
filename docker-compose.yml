@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dipatalent_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    ports:
+      - "8000:80"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=dipatalent
+      - DB_USERNAME=dipatalent_user
+      - DB_PASSWORD=dipatalent_password
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./public/storage:/var/www/html/public/storage
+    depends_on:
+      - db
+    networks:
+      - dipatalent_network
+
+  db:
+    image: mysql:8.0
+    container_name: dipatalent_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: dipatalent
+      MYSQL_USER: dipatalent_user
+      MYSQL_PASSWORD: dipatalent_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - dipatalent_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dipatalent_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - dipatalent_network
+
+volumes:
+  dbdata:
+    driver: local
+
+networks:
+  dipatalent_network:
+    driver: bridge
