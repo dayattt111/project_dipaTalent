@@ -1,0 +1,66 @@
+services:
+  # Web Service - Laravel Application
+  - type: web
+    name: dipatalent-app
+    runtime: docker
+    plan: free # atau starter, standard, pro
+    region: singapore # atau oregon, frankfurt, ohio
+    branch: master
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_NAME
+        value: Dipa Talent
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        value: https://dipatalent-app.onrender.com
+      - key: APP_TIMEZONE
+        value: Asia/Jakarta
+      - key: LOG_CHANNEL
+        value: errorlog
+      - key: LOG_LEVEL
+        value: error
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromDatabase:
+          name: dipatalent-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: dipatalent-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: dipatalent-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: dipatalent-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: dipatalent-db
+          property: password
+      - key: RUN_MIGRATIONS
+        value: true
+    healthCheckPath: /
+    autoDeploy: true
+
+databases:
+  # MySQL Database
+  - name: dipatalent-db
+    databaseName: dipatalent
+    plan: free # atau starter, standard, pro
+    region: singapore
