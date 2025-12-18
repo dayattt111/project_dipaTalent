@@ -276,21 +276,10 @@ Route::middleware('auth')->group(function () {
 // ===============================
 // VERIFIKASI EMAIL
 // ===============================
-Route::get('/email/verify', fn() => view('auth.verify-email'))
-    ->middleware('auth')
-    ->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/dashboard');
-})->middleware(['auth', 'signed'])
-  ->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Link verifikasi telah dikirim ulang!');
-})->middleware(['auth', 'throttle:6,1'])
-  ->name('verification.send');
+// Catatan: route verifikasi email sudah didefinisikan di routes/auth.php
+// melalui EmailVerificationPromptController, VerifyEmailController, dll.
+// Untuk menghindari duplikasi nama (verification.notice, verification.verify,
+// verification.send), definisi manual di bawah ini dihapus.
 
 
 // ===============================
