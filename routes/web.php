@@ -126,8 +126,6 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdmin::c
 
     Route::post('/verifikasi-prestasi/{id}/update-status', [PrestasiController::class, 'updateStatus'])
         ->name('verifikasiPrestasi.updateStatus');
-    Route::put('/verifikasi-prestasi/{id}/update-status', [PrestasiController::class, 'updateStatus'])
-        ->name('verifikasiPrestasi.updateStatus');
 
     Route::delete('/verifikasi-prestasi/{id}/delete', [PrestasiController::class, 'destroy'])
         ->name('verifikasiPrestasi.destroy');
