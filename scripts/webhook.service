@@ -1,0 +1,14 @@
+[Unit]
+Description=Webhook Service for Dipa Talent Auto-Deploy
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/home/YOUR_USERNAME/scripts
+ExecStart=/usr/bin/webhook -hooks /home/YOUR_USERNAME/scripts/webhook-hooks.json -verbose -port 9000 -hotreload
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

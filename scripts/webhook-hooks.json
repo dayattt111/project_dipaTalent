@@ -1,0 +1,33 @@
+[
+  {
+    "id": "deploy-dipatalent",
+    "execute-command": "/home/YOUR_USERNAME/scripts/deploy-dipatalent-webhook.sh",
+    "command-working-directory": "/home/YOUR_USERNAME/projects/dipaTalent_project",
+    "response-message": "Deployment triggered successfully!",
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "payload-hmac-sha256",
+            "secret": "YOUR_WEBHOOK_SECRET_HERE",
+            "parameter": {
+              "source": "header",
+              "name": "X-Hub-Signature-256"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/main",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        }
+      ]
+    },
+    "trigger-rule-mismatch-http-response-code": 400
+  }
+]

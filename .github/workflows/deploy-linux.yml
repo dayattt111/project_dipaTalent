@@ -1,0 +1,63 @@
+name: Deploy to Linux Server
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Create .env file
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+            echo "APP_KEY=${{ secrets.APP_KEY }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          fi
+      
+      - name: Stop existing containers
+        run: docker-compose down
+        continue-on-error: true
+      
+      - name: Build Docker images
+        run: docker-compose build --no-cache
+      
+      - name: Start containers
+        run: docker-compose up -d
+      
+      - name: Wait for containers to be ready
+        run: sleep 15
+      
+      - name: Run database migrations
+        run: docker-compose exec -T app php artisan migrate --force
+        
+      - name: Optimize application
+        run: |
+          docker-compose exec -T app php artisan config:cache
+          docker-compose exec -T app php artisan route:cache
+          docker-compose exec -T app php artisan view:cache
+      
+      - name: Fix permissions
+        run: |
+          docker-compose exec -T app chown -R www-data:www-data /var/www/html/storage
+          docker-compose exec -T app chmod -R 775 /var/www/html/storage
+      
+      - name: Health check
+        run: |
+          sleep 5
+          curl -f http://localhost:8000 || exit 1
+      
+      - name: Send notification
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment failed!"
+          fi

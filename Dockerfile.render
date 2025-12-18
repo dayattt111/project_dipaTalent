@@ -11,16 +11,20 @@ RUN apk add --no-cache \
     freetype-dev \
     libzip-dev \
     oniguruma-dev \
+    postgresql-dev \
     mysql-client \
     git \
     unzip \
     nodejs \
-    npm
+    npm \
+    bash
 
-# Install PHP extensions
+# Install PHP extensions (including PostgreSQL)
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     pdo_mysql \
+    pdo_pgsql \
+    pgsql \
     mbstring \
     exif \
     pcntl \
@@ -59,11 +63,11 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
 # Copy nginx configuration
-COPY docker/nginx/nginx.render.conf /etc/nginx/nginx.conf
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY docker/nginx/default.render.conf /etc/nginx/http.d/default.conf
 
 # Copy supervisor configuration
-COPY docker/supervisor/supervisord.render.conf /etc/supervisord.conf
+COPY docker/supervisor/supervisord.conf /etc/supervisord.conf
 
 # Create necessary directories
 RUN mkdir -p /var/www/html/storage/logs \
@@ -73,14 +77,14 @@ RUN mkdir -p /var/www/html/storage/logs \
     && mkdir -p /run/nginx
 
 # Copy and set permissions for entrypoint
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint-render.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expose port (Render uses PORT environment variable)
-EXPOSE ${PORT:-80}
+EXPOSE ${PORT:-8080}
 
 # Entrypoint
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Start supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
