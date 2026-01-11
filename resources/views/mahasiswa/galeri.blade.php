@@ -35,14 +35,47 @@
             @forelse($galeri as $prestasi)
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow prestasi-card" data-jenis="{{ $prestasi->jenis }}" data-nama="{{ strtolower($prestasi->nama_prestasi) }}">
                 <!-- Image Section -->
-                <div class="relative bg-gradient-to-br from-blue-400 to-indigo-600 h-48 overflow-hidden flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16" class="text-white opacity-30">
-                        <path d="M.5 1a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5V1.5a.5.5 0 0 0-.5-.5H.5zm1 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
-                        <path d="m3 5 2-2 3 3-2 5 3-1 2-6 3 1v5l-6-1-4-5z"/>
-                    </svg>
+                <div class="relative h-48 overflow-hidden">
+                    @php
+                        // Generate image berdasarkan jenis prestasi
+                        $imageUrl = '';
+                        $namaPrestasi = strtolower($prestasi->nama_prestasi);
+                        
+                        if (str_contains($namaPrestasi, 'programming') || str_contains($namaPrestasi, 'pemrograman') || str_contains($namaPrestasi, 'hackathon')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'paper') || str_contains($namaPrestasi, 'publikasi') || str_contains($namaPrestasi, 'karya tulis')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'futsal') || str_contains($namaPrestasi, 'olahraga') || str_contains($namaPrestasi, 'badminton')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'debat') || str_contains($namaPrestasi, 'lomba debat')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'fotografi') || str_contains($namaPrestasi, 'foto')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'teknologi') || str_contains($namaPrestasi, 'inovasi')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'sains') || str_contains($namaPrestasi, 'olimpiade')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'matematika')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&h=400&fit=crop&q=80';
+                        } elseif (str_contains($namaPrestasi, 'workshop') || str_contains($namaPrestasi, 'research')) {
+                            $imageUrl = 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=400&fit=crop&q=80';
+                        } else {
+                            // Default: Academic achievement
+                            $imageUrl = 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop&q=80';
+                        }
+                    @endphp
+                    
+                    <img src="{{ $imageUrl }}" 
+                         alt="{{ $prestasi->nama_prestasi }}" 
+                         class="w-full h-full object-cover"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400/4F46E5/FFFFFF?text={{ urlencode(substr($prestasi->nama_prestasi, 0, 20)) }}';">
+                    
+                    <!-- Overlay gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    
                     <!-- Badge -->
                     <div class="absolute top-3 right-3">
-                        <span class="inline-block px-3 py-1 bg-white bg-opacity-90 text-indigo-600 text-xs font-bold rounded-full">
+                        <span class="inline-block px-3 py-1 bg-white bg-opacity-95 text-indigo-600 text-xs font-bold rounded-full shadow-lg">
                             {{ ucwords(str_replace('_', ' ', $prestasi->tingkat)) }}
                         </span>
                     </div>
