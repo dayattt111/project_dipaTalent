@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         // Jalankan semua seeder secara otomatis
         $this->call([
             UserSeeder::class,
+            // UserRealSeeder::class,
             BeasiswaSeeder::class,
             PendaftaranSeeder::class,
             PrestasiSeeder::class,
