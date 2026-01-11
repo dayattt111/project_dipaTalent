@@ -34,6 +34,8 @@ class UserRealSeeder extends Seeder
             ['name' => 'Wayan Mappanyukki', 'nim' => '20240020'],
         ];
 
+        $loginInfo = [];
+        
         foreach ($mahasiswa as $mhs) {
             // Generate email dari nama (lowercase, replace space dengan dot)
             $email = strtolower(str_replace(' ', '.', $mhs['name'])) . '@mail.com';
@@ -50,8 +52,20 @@ class UserRealSeeder extends Seeder
                     'remember_token' => Str::random(10),
                 ]
             );
+            
+            $loginInfo[] = [
+                'name' => $mhs['name'],
+                'email' => $email,
+                'nim' => $mhs['nim'],
+            ];
         }
 
         $this->command->info('✓ 20 mahasiswa berhasil di-seed!');
+        $this->command->newLine();
+        $this->command->info('📧 Info Login (Password semua: password123):');
+        $this->command->table(
+            ['Nama', 'Email', 'NIM'],
+            array_map(fn($info) => [$info['name'], $info['email'], $info['nim']], $loginInfo)
+        );
     }
 }
