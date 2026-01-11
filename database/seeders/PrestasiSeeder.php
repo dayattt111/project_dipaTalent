@@ -106,7 +106,7 @@ class PrestasiSeeder extends Seeder
                     'nama_prestasi' => $prestasi['nama_prestasi'],
                     'tingkat' => $prestasi['tingkat'],
                     'tahun' => $prestasi['tahun'],
-                    'file_sertifikat' => 'sertifikat/' . strtolower(str_replace(' ', '_', $prestasi['nama_prestasi'])) . '.pdf',
+                    'sertifikat' => 'sertifikat/' . strtolower(str_replace(' ', '_', $prestasi['nama_prestasi'])) . '.pdf',
                     'status' => $prestasi['status'],
                     'deskripsi' => $prestasi['deskripsi'],
                     'tanggal_pencapaian' => $prestasi['tanggal_pencapaian'],
