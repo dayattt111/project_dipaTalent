@@ -106,7 +106,79 @@
                 </div>
             </div>
 
-            <!-- Step 3: Dokumen Pendukung -->
+            <!-- Step 3: Data Akademik -->
+            <div class="border-b border-gray-200 p-6">
+                <div class="flex items-start gap-3 mb-6">
+                    <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">3</div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900">Data Akademik</h2>
+                        <p class="text-sm text-gray-600">Verifikasi atau input data IPK Anda</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="ipk" class="block text-sm font-medium text-gray-700 mb-2">
+                            IPK (Indeks Prestasi Kumulatif) <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input 
+                                type="number" 
+                                id="ipk" 
+                                name="ipk" 
+                                step="0.01" 
+                                min="0" 
+                                max="4.00" 
+                                value="{{ old('ipk', auth()->user()->ipk ?? '') }}" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent {{ $errors->has('ipk') ? 'border-red-500' : '' }}" 
+                                placeholder="Contoh: 3.50" 
+                                required>
+                            @if(auth()->user()->ipk)
+                            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+                                    Auto-filled
+                                </span>
+                            </div>
+                            @endif
+                        </div>
+                        @error('ipk')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                        <div class="mt-2 space-y-1">
+                            @if(auth()->user()->ipk)
+                            <p class="text-xs text-green-600">
+                                ✓ IPK terdeteksi dari profil Anda: <strong>{{ number_format(auth()->user()->ipk, 2) }}</strong>
+                            </p>
+                            <p class="text-xs text-gray-500">
+                                Anda dapat mengubah nilai jika IPK telah berubah atau tidak sesuai
+                            </p>
+                            @else
+                            <p class="text-xs text-amber-600">
+                                ⚠ IPK tidak ditemukan di profil Anda. Silakan input manual.
+                            </p>
+                            <p class="text-xs text-gray-500">
+                                IPK akan diverifikasi dengan transkrip yang Anda upload
+                            </p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p class="text-sm text-blue-800 font-medium mb-2">📊 Informasi IPK:</p>
+                        <ul class="text-xs text-blue-700 space-y-1">
+                            <li>• IPK adalah nilai rata-rata prestasi akademik dengan skala 0.00 - 4.00</li>
+                            <li>• Pastikan IPK yang diinput sesuai dengan transkrip nilai terbaru</li>
+                            <li>• Admin akan memverifikasi IPK dengan transkrip yang Anda upload</li>
+                            <li>• IPK minimal untuk beasiswa umumnya 2.75 - 3.00 (tergantung program)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Dokumen Pendukung -->
             <div class="border-b border-gray-200 p-6">
                 <div class="flex items-start gap-3 mb-6">
                     <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">4</div>
