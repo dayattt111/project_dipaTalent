@@ -79,10 +79,17 @@
                 </tbody>
             </table>
         </div>
+        
+        {{-- Pagination --}}
+        @if($pendaftaran->hasPages())
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            {{ $pendaftaran->links() }}
+        </div>
+        @endif
     </div>
 
     {{-- Empty State --}}
-    @if(count($pendaftaran) === 0)
+    @if($pendaftaran->total() === 0)
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="mx-auto text-gray-400 mb-3">
             <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>

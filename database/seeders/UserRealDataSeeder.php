@@ -127,7 +127,7 @@ class UserRealDataSeeder extends Seeder
                 $numSertifikasi = rand(2, 4);
                 $selectedSertifikasi = collect($sertifikasiTemplates)->random($numSertifikasi);
                 
-                foreach ($selectedSertifikasi as $sert) {
+                foreach ($selectedSertifikasi as $sertIndex => $sert) {
                     Sertifikasi::create([
                         'user_id' => $user->id,
                         'nama_sertifikat' => $sert['nama'],
@@ -136,7 +136,7 @@ class UserRealDataSeeder extends Seeder
                         'nomor_sertifikat' => 'CERT-' . strtoupper(substr(md5($user->nim . $sert['nama']), 0, 8)),
                         'tanggal_terbit' => now()->subMonths(rand(1, 24)),
                         'tanggal_expired' => now()->addYears(rand(1, 3)),
-                        'bukti_file' => 'sertifikat/' . strtolower(str_replace(' ', '_', $sert['nama'])) . '.pdf',
+                        'bukti_file' => 'https://picsum.photos/seed/cert' . $user->id . $sertIndex . '/800/600',
                         'deskripsi' => 'Sertifikat ' . $sert['nama'] . ' yang diterbitkan oleh ' . $sert['penerbit'],
                         'status' => collect(['valid', 'valid', 'valid', 'pending'])->random(),
                         'poin' => $sert['poin'],
@@ -147,14 +147,14 @@ class UserRealDataSeeder extends Seeder
                 $numOrganisasi = rand(2, 3);
                 $selectedOrganisasi = collect($organisasiTemplates)->random($numOrganisasi);
                 
-                foreach ($selectedOrganisasi as $org) {
+                foreach ($selectedOrganisasi as $orgIndex => $org) {
                     Organisasi::create([
                         'user_id' => $user->id,
                         'nama_organisasi' => $org['nama'],
                         'jabatan' => $org['jabatan'],
                         'periode' => $org['periode'],
                         'deskripsi' => 'Aktif sebagai ' . $org['jabatan'] . ' di ' . $org['nama'] . ' periode ' . $org['periode'],
-                        'bukti_file' => 'organisasi/' . strtolower(str_replace(' ', '_', $org['nama'])) . '.pdf',
+                        'bukti_file' => 'https://picsum.photos/seed/org' . $user->id . $orgIndex . '/800/600',
                         'status' => collect(['valid', 'valid', 'valid', 'pending'])->random(),
                         'poin' => $org['poin'],
                     ]);
@@ -164,14 +164,14 @@ class UserRealDataSeeder extends Seeder
                 $numPrestasi = rand(2, 4);
                 $selectedPrestasi = collect($prestasiTemplates)->random($numPrestasi);
                 
-                foreach ($selectedPrestasi as $prestasi) {
+                foreach ($selectedPrestasi as $prestasiIndex => $prestasi) {
                     Prestasi::create([
                         'user_id' => $user->id,
                         'jenis' => $prestasi['jenis'],
                         'nama_prestasi' => $prestasi['nama'],
                         'tingkat' => $prestasi['tingkat'],
                         'tahun' => rand(2023, 2025),
-                        'sertifikat' => 'prestasi/' . strtolower(str_replace(' ', '_', $prestasi['nama'])) . '.pdf',
+                        'sertifikat' => 'https://picsum.photos/seed/prestasi' . $user->id . $prestasiIndex . '/800/600',
                         'status' => collect(['valid', 'valid', 'valid', 'menunggu'])->random(),
                         'deskripsi' => 'Prestasi ' . $prestasi['nama'] . ' tingkat ' . $prestasi['tingkat'],
                         'tanggal_pencapaian' => now()->subMonths(rand(1, 18))->format('Y-m-d'),

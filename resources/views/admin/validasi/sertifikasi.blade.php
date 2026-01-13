@@ -97,12 +97,22 @@
 
                                 @if($sertifikasi->bukti_file)
                                 <div>
-                                    <a href="{{ Storage::url($sertifikasi->bukti_file) }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium rounded-lg transition">
-                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
-                                        </svg>
-                                        Lihat Bukti Sertifikat
-                                    </a>
+                                    @php
+                                        $adminSertFileUrl = filter_var($sertifikasi->bukti_file, FILTER_VALIDATE_URL) 
+                                            ? $sertifikasi->bukti_file 
+                                            : Storage::url($sertifikasi->bukti_file);
+                                    @endphp
+                                    <div class="flex items-center space-x-3">
+                                        <img src="{{ $adminSertFileUrl }}" alt="Preview" class="w-16 h-16 object-cover rounded-lg border border-gray-200 cursor-pointer hover:opacity-80"
+                                             onclick="window.open('{{ $adminSertFileUrl }}', '_blank')"
+                                             onerror="this.src='https://via.placeholder.com/100x100/E5E7EB/9CA3AF?text=No+Preview'">
+                                        <a href="{{ $adminSertFileUrl }}" target="_blank" class="inline-flex items-center px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium rounded-lg transition">
+                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
+                                            </svg>
+                                            Lihat Full
+                                        </a>
+                                    </div>
                                 </div>
                                 @endif
                             </div>
@@ -201,7 +211,12 @@
 
                                 @if($sertifikasi->bukti_file)
                                 <div>
-                                    <a href="{{ Storage::url($sertifikasi->bukti_file) }}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-700">
+                                    @php
+                                        $adminSertFileUrl2 = filter_var($sertifikasi->bukti_file, FILTER_VALIDATE_URL) 
+                                            ? $sertifikasi->bukti_file 
+                                            : Storage::url($sertifikasi->bukti_file);
+                                    @endphp
+                                    <a href="{{ $adminSertFileUrl2 }}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-700">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
                                         </svg>

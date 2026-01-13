@@ -122,7 +122,12 @@
 
                 <!-- Footer -->
                 <div class="px-6 py-3 border-t border-gray-200 bg-gray-50">
-                    <a href="{{ Storage::url($prestasi->sertifikat) }}" target="_blank" class="w-full block px-4 py-2 text-center bg-indigo-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-100 transition-colors">
+                    @php
+                        $galeriFileUrl = filter_var($prestasi->sertifikat, FILTER_VALIDATE_URL) 
+                            ? $prestasi->sertifikat 
+                            : Storage::url($prestasi->sertifikat);
+                    @endphp
+                    <a href="{{ $galeriFileUrl }}" target="_blank" class="w-full block px-4 py-2 text-center bg-indigo-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-100 transition-colors">
                         Lihat Sertifikat
                     </a>
                 </div>

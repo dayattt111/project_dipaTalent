@@ -133,25 +133,28 @@
                     @endif
 
                     {{-- Document Preview --}}
-                    @if($prestasi->file_sertifikat)
+                    @if($prestasi->sertifikat)
                     <div>
                         <label class="text-sm font-medium text-gray-500 block mb-2">Dokumen Sertifikat</label>
+                        @php
+                            $formPrestasiFileUrl = filter_var($prestasi->sertifikat, FILTER_VALIDATE_URL) 
+                                ? $prestasi->sertifikat 
+                                : Storage::url($prestasi->sertifikat);
+                        @endphp
+                        <div class="mb-3">
+                            <img src="{{ $formPrestasiFileUrl }}" alt="Preview Sertifikat" 
+                                 class="w-full max-w-md h-48 object-cover rounded-lg border border-gray-200 cursor-pointer hover:opacity-80"
+                                 onclick="window.open('{{ $formPrestasiFileUrl }}', '_blank')"
+                                 onerror="this.src='https://via.placeholder.com/400x200/E5E7EB/9CA3AF?text=Preview+Tidak+Tersedia'">
+                        </div>
                         <div class="flex gap-2">
-                            <button type="button" onclick="openModalPreview('{{ route('admin.verifikasiPrestasi.bukti', $prestasi->id) }}')" 
+                            <a href="{{ $formPrestasiFileUrl }}" target="_blank"
                                 class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                                     <path d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4zm10-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/>
                                 </svg>
-                                Preview Dokumen
-                            </button>
-                            <a href="{{ route('admin.verifikasiPrestasi.bukti', $prestasi->id) }}" target="_blank" download
-                                class="inline-flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                </svg>
-                                Download
+                                Buka Full
                             </a>
                         </div>
                     </div>

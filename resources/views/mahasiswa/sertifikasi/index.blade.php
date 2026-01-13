@@ -169,12 +169,27 @@
                             @endif
 
                             @if($item->bukti_file)
-                            <div class="mt-3">
-                                <a href="{{ Storage::url($item->bukti_file) }}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-700">
+                            <div class="mt-4">
+                                <p class="text-xs text-gray-500 mb-2">Preview Sertifikat:</p>
+                                @php
+                                    $fileUrl = filter_var($item->bukti_file, FILTER_VALIDATE_URL) 
+                                        ? $item->bukti_file 
+                                        : Storage::url($item->bukti_file);
+                                @endphp
+                                <div class="relative group">
+                                    <img src="{{ $fileUrl }}" alt="Sertifikat {{ $item->nama_sertifikat }}" 
+                                         class="w-48 h-32 object-cover rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition cursor-pointer"
+                                         onclick="window.open('{{ $fileUrl }}', '_blank')"
+                                         onerror="this.src='https://via.placeholder.com/400x300/E5E7EB/9CA3AF?text=Preview+Tidak+Tersedia'">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition flex items-center justify-center">
+                                        <span class="text-white opacity-0 group-hover:opacity-100 text-sm font-medium">Klik untuk memperbesar</span>
+                                    </div>
+                                </div>
+                                <a href="{{ $fileUrl }}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 mt-2">
                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
                                     </svg>
-                                    Lihat Bukti Sertifikat
+                                    Lihat Full Sertifikat
                                 </a>
                             </div>
                             @endif

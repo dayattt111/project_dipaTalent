@@ -111,14 +111,24 @@
 
                                         @if($org->bukti_file)
                                             <div class="pt-2">
-                                                <a href="{{ Storage::url($org->bukti_file) }}" 
-                                                   target="_blank"
-                                                   class="inline-flex items-center text-xs text-indigo-600 hover:text-indigo-700 font-medium">
-                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                                    </svg>
-                                                    Lihat Bukti File
-                                                </a>
+                                                @php
+                                                    $adminOrgFileUrl = filter_var($org->bukti_file, FILTER_VALIDATE_URL) 
+                                                        ? $org->bukti_file 
+                                                        : Storage::url($org->bukti_file);
+                                                @endphp
+                                                <div class="flex items-center space-x-2">
+                                                    <img src="{{ $adminOrgFileUrl }}" alt="Preview" class="w-12 h-12 object-cover rounded border border-gray-200 cursor-pointer"
+                                                         onclick="window.open('{{ $adminOrgFileUrl }}', '_blank')"
+                                                         onerror="this.src='https://via.placeholder.com/100x100/E5E7EB/9CA3AF?text=No+Preview'">
+                                                    <a href="{{ $adminOrgFileUrl }}" 
+                                                       target="_blank"
+                                                       class="inline-flex items-center text-xs text-indigo-600 hover:text-indigo-700 font-medium">
+                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                        </svg>
+                                                        Lihat Full
+                                                    </a>
+                                                </div>
                                             </div>
                                         @endif
                                     </div>
@@ -187,7 +197,12 @@
                                         <td class="px-6 py-4">
                                             <div class="text-sm font-medium text-gray-900">{{ $org->nama_organisasi }}</div>
                                             @if($org->bukti_file)
-                                                <a href="{{ Storage::url($org->bukti_file) }}" 
+                                                @php
+                                                    $adminOrgFileUrl2 = filter_var($org->bukti_file, FILTER_VALIDATE_URL) 
+                                                        ? $org->bukti_file 
+                                                        : Storage::url($org->bukti_file);
+                                                @endphp
+                                                <a href="{{ $adminOrgFileUrl2 }}" 
                                                    target="_blank"
                                                    class="text-xs text-indigo-600 hover:text-indigo-700">
                                                     Lihat Bukti

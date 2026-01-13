@@ -15,7 +15,9 @@ class BeasiswaController extends Controller
 {
     public function index()
     {
-        $pendaftaran = Pendaftaran::with(['user', 'beasiswa'])->get();
+        $pendaftaran = Pendaftaran::with(['user', 'beasiswa'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('admin.verifikasiPendaftar.index', compact('pendaftaran'));
     }
 

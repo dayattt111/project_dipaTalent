@@ -102,6 +102,21 @@
                     </div>
                     @endif
 
+                    @if($item->sertifikat)
+                    <div>
+                        <span class="text-sm text-gray-500 mb-2 block">Preview Sertifikat</span>
+                        @php
+                            $prestasiFileUrl = filter_var($item->sertifikat, FILTER_VALIDATE_URL) 
+                                ? $item->sertifikat 
+                                : Storage::url($item->sertifikat);
+                        @endphp
+                        <img src="{{ $prestasiFileUrl }}" alt="Preview Sertifikat" 
+                             class="w-full h-32 object-cover rounded-lg border border-gray-200 cursor-pointer hover:opacity-80 transition"
+                             onclick="window.open('{{ $prestasiFileUrl }}', '_blank')"
+                             onerror="this.src='https://via.placeholder.com/400x200/E5E7EB/9CA3AF?text=Preview+Tidak+Tersedia'">
+                    </div>
+                    @endif
+
                     <div class="pt-4 flex gap-2">
                         <a href="{{ route('admin.verifikasiPrestasi.edit', $item->id) }}" 
                             class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors">
@@ -110,13 +125,13 @@
                             </svg>
                             Verifikasi Detail
                         </a>
-                        @if($item->file_sertifikat)
-                        <button onclick="openModal('{{ route('admin.verifikasiPrestasi.bukti', $item->id) }}')" 
+                        @if($item->sertifikat)
+                        <a href="{{ $prestasiFileUrl }}" target="_blank"
                             class="px-4 py-2 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg font-medium transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M1.5 1a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H1.5z"/>
                             </svg>
-                        </button>
+                        </a>
                         @endif
                     </div>
                 </div>

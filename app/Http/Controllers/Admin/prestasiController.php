@@ -140,16 +140,22 @@ class PrestasiController extends Controller
     // Tampilkan dokumen (PDF/JPG) di modal
     public function showBukti($id)
     {
-    $prestasi = Prestasi::findOrFail($id);
+        $prestasi = Prestasi::findOrFail($id);
 
-    // Pastikan nama kolom dan folder benar!
-    $path = storage_path('app/public/' . $prestasi->file_sertifikat);
+        // Cek apakah sertifikat adalah URL external
+        if (filter_var($prestasi->sertifikat, FILTER_VALIDATE_URL)) {
+            // Redirect ke URL external
+            return redirect($prestasi->sertifikat);
+        }
 
-    if (!file_exists($path)) {
-        abort(404, 'File tidak ditemukan');
-    }
+        // Pastikan nama kolom dan folder benar!
+        $path = storage_path('app/public/' . $prestasi->sertifikat);
 
-    return response()->file($path);
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        return response()->file($path);
     }
 
 

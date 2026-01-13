@@ -132,12 +132,21 @@
                 @if($sertifikasi->bukti_file)
                 <div class="mb-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-2">File Saat Ini</label>
-                    <a href="{{ Storage::url($sertifikasi->bukti_file) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
-                        </svg>
-                        Lihat File
-                    </a>
+                    @php
+                        $editSertFileUrl = filter_var($sertifikasi->bukti_file, FILTER_VALIDATE_URL) 
+                            ? $sertifikasi->bukti_file 
+                            : Storage::url($sertifikasi->bukti_file);
+                    @endphp
+                    <div class="flex items-center space-x-4">
+                        <img src="{{ $editSertFileUrl }}" alt="Preview Sertifikat" class="w-32 h-24 object-cover rounded-lg border border-gray-200"
+                             onerror="this.src='https://via.placeholder.com/200x150/E5E7EB/9CA3AF?text=Preview'">
+                        <a href="{{ $editSertFileUrl }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/>
+                            </svg>
+                            Lihat Full
+                        </a>
+                    </div>
                 </div>
                 @endif
 
